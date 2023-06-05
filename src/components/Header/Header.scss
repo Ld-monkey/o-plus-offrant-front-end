@@ -1,0 +1,26 @@
+.header {
+  background-color: #143642;
+  display: flex;
+  justify-content: center;
+  padding: 25px;
+
+  &-logo {
+    width: 48px;
+    border-radius: 20px;
+  }
+
+  &-title {
+    font-size: 1.6rem;
+    margin: auto 0;
+    padding-left: 10px;
+  }
+
+  &-searchbar {
+    background-color: rgb(190, 190, 190);
+    border-radius: 5px;
+    border: none;
+    padding: 5px;
+    margin: auto 50px;
+  }
+
+}
