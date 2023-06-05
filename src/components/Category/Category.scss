@@ -3,19 +3,38 @@
 };
 
 .cardCat{
-    width: 600px;
+    width: 400px;
     border: solid 10px rgb(92, 196, 167);
     border-radius: 5%;
-    margin: 100px;
+    margin: 50px;
     padding: 30px;
 };
 
 .containerCardCat{
     display: flex;
-    flex-direction: row;
+    // flex-direction: row;
+    flex-wrap: wrap;
+    margin: auto;
 };
 
 button{
     margin: 10px;
-    background-color: rgb(92, 196, 167)
+    background-color: rgb(92, 196, 167);
+    color: rgb(77, 58, 196);
+    font-weight: bolder;
 };
+
+.Category{
+    padding: 5px;
+};
+
+input{
+    margin: 20px;
+};
+
+body {
+    color: rgb(77, 58, 196);
+    font-weight: bolder;
+}
+
+
