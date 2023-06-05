@@ -1,5 +1,5 @@
-import SearchIcon from '../UI/Icon/Search/Search';
-import UserIcon from '../UI/Icon/User/User';
+import SearchIcon from '../UI/Icon/Search/SearchIcon';
+import UserIcon from '../UI/Icon/User/UserIcon';
 
 import './Header.scss';
 
