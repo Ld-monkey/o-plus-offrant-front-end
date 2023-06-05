@@ -1,1 +1,1 @@
-# projet-06-o-plus-offrant-front
+# Projet 06 (Font End): O + Offrant
