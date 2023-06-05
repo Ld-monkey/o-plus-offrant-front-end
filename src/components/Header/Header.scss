@@ -1,26 +1,52 @@
 .header {
-  background-color: #143642;
-  display: flex;
-  justify-content: center;
   padding: 25px;
+  border-bottom: 1px solid gray;
+
+  &-navbar {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
 
   &-logo {
-    width: 48px;
-    border-radius: 20px;
+    width: 50px;
+    border-radius: 50%;
   }
 
   &-title {
-    font-size: 1.6rem;
+    font-size: 1.5rem;
+    font-weight: 500;
     margin: auto 0;
-    padding-left: 10px;
   }
 
   &-searchbar {
-    background-color: rgb(190, 190, 190);
+    background-color: rgb(235, 235, 235);
     border-radius: 5px;
     border: none;
-    padding: 5px;
-    margin: auto 50px;
+    outline: none;
+    padding: 10px;
+    margin-left: 10px;
   }
 
+  &-category, &-sell {
+    background-color: white;
+  }
+
+  &-login {
+    background-color: rgb(162, 211, 207);
+    color: white;
+    border-radius: 5px;
+  }
+}
+
+.icon-user {
+  padding-right: 5px;
+  margin: auto 0;
+}
+
+button {
+  height: 40px;
+  padding: 0 15px;
+  outline: none;
+  border: none;
 }
