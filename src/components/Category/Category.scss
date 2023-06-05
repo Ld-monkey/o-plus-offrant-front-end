@@ -1,0 +1,21 @@
+.Tri {
+    flex-direction: row;
+};
+
+.cardCat{
+    width: 600px;
+    border: solid 10px rgb(92, 196, 167);
+    border-radius: 5%;
+    margin: 100px;
+    padding: 30px;
+};
+
+.containerCardCat{
+    display: flex;
+    flex-direction: row;
+};
+
+button{
+    margin: 10px;
+    background-color: rgb(92, 196, 167)
+};
