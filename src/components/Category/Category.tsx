@@ -25,59 +25,59 @@ function Category() {
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div><div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div><div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 
 <div className='cardCat'>
 <img src="../../public/DualSense-Edge-Main.webp" alt="" />
 <p>Descriptif de l'objet</p>
 <p>Prix Initial : 30,00 €</p>
-<p>Prix Enchère Actuelle : 50,00€ <button>Surenchérir !</button></p>
+<p>Prix Enchère Actuelle : 50,00 € <button>Surenchérir !</button></p>
 </div>
 </div>
 
