@@ -1,6 +1,12 @@
 @use '../../styles/variables' as v;
 
-#wrapper {
-    max-width: 50rem;
-    width: 90vw;
+
+.App {
+    text-align: center;
+
+    #wrapper {
+        margin: 0 auto;
+        max-width: 50rem;
+        width: 90vw; 
+    }
 }

@@ -1,8 +1,11 @@
 .header {
   background-color: #143642;
-  display: flex;
-  justify-content: center;
   padding: 25px;
+
+  nav {
+    display: flex;
+    justify-content: space-around;
+  }
 
   &-logo {
     width: 48px;
