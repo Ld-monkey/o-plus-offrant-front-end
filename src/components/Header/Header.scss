@@ -1,48 +1,59 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
 .header {
   padding: 25px;
   border-bottom: 1px solid gray;
 
   &-navbar {
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
+    @include m.flex-center;
+    justify-content: space-between;
   }
 
   &-title {
-    font-size: 1.5rem;
-    font-weight: 500;
+    font-size: 2.5rem;
     margin: auto 0;
   }
 
   &-searchbar {
-    background-color: rgb(235, 235, 235);
-    border-radius: 30px;
-    border: none;
-    outline: none;
-    padding: 10px;
-    margin-left: 10px;
+    @include m.remove-border;
+    height: 40px;
+    background-color: v.$color-searchbar;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 15px;
   }
 
   &-category, &-sell {
-    background-color: white;
+    background-color: v.$color-text;
   }
 
   &-login {
-    background-color: rgb(12, 126, 180);
-    color: white;
+    background-color: v.$color-primary;
+    color: v.$color-text;
     border-radius: 5px;
   }
 }
 
-.icon-user {
-  padding-right: 5px;
+button {
+  @include m.flex-center;
+  @include m.remove-border;
+  height: 40px;
+  padding: 0 10px;
+  cursor: pointer;
 }
 
-button {
-  height: 40px;
-  outline: none;
-  border: none;
-  display: flex;
-  align-items: center;
-  padding: 0 10px;
+.wrapper-cart, .wrapper-category, .searchbar-container {
+  @include m.flex-center;
+}
+
+.icon-magnify {
+  background-color: v.$color-searchbar;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  padding: 13px 0 13px 15px;
+}
+
+.icon-user {
+  padding-right: 10px;
 }
