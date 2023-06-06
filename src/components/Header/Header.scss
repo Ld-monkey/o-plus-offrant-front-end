@@ -8,11 +8,6 @@
     align-items: center;
   }
 
-  &-logo {
-    width: 50px;
-    border-radius: 50%;
-  }
-
   &-title {
     font-size: 1.5rem;
     font-weight: 500;
@@ -21,7 +16,7 @@
 
   &-searchbar {
     background-color: rgb(235, 235, 235);
-    border-radius: 5px;
+    border-radius: 30px;
     border: none;
     outline: none;
     padding: 10px;
@@ -33,7 +28,7 @@
   }
 
   &-login {
-    background-color: rgb(162, 211, 207);
+    background-color: rgb(12, 126, 180);
     color: white;
     border-radius: 5px;
   }
@@ -41,12 +36,13 @@
 
 .icon-user {
   padding-right: 5px;
-  margin: auto 0;
 }
 
 button {
   height: 40px;
-  padding: 0 15px;
   outline: none;
   border: none;
+  display: flex;
+  align-items: center;
+  padding: 0 10px;
 }
