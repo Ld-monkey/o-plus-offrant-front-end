@@ -49,6 +49,7 @@ function Header() {
                 Vendre
               </button>
             </div>
+<<<<<<< HEAD
             <div className="wrapper-category">
               <FontAwesomeIcon
                 icon={faToolbox}
@@ -76,6 +77,20 @@ function Header() {
               x
             </button>
           </div>
+=======
+          </form>
+          <div className="wrapper-cart">
+            <FontAwesomeIcon icon={faCartShopping} size="lg" style={{color: "#0c7eb4",}}/>
+            <a href='#' className="header-sell">Vendre</a>
+          </div>
+          <div className="wrapper-category">
+            <FontAwesomeIcon icon={faToolbox} size="lg" style={{color: "#0c7eb4",}}/>
+            <a href='#' className="header-category">Catégories</a>
+          </div>
+          <a href='#' className="header-login">
+            <FontAwesomeIcon icon={faCircleUser} size="lg" style={{color: "#ffffff",}} className="icon-user" />
+            Connectez-vous</a>
+>>>>>>> develop
         </nav>
       </div>
     </header>

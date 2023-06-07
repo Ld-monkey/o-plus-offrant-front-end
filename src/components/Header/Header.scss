@@ -42,6 +42,7 @@ $layout-breakpoint-desktop: 960px;
   &-btn-category {
     background-color: v.$color-text;
     @include m.buttons-style;
+    color: black;
   }
 
   &-btn-login {
