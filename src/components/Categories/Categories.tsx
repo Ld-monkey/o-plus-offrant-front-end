@@ -4,21 +4,21 @@ function Categories() {
   return(
     <div id="wrapper">
       <nav className="categories-navbar">
-        <button type="button" className="categories-button">
+        <a href='#' className="categories-link">
           Sport & Loisirs
-        </button>
-        <button type="button" className="categories-button">
+        </a>
+        <a href='#' className="categories-link">
           Maison & Jardin
-        </button>
-        <button type="button" className="categories-button">
+        </a>
+        <a href='#' className="categories-link">
           High Tech
-        </button>
-        <button type="button" className="categories-button">
+        </a>
+        <a href='#' className="categories-link">
           Mode
-        </button>
-        <button type="button" className="categories-button">
+        </a>
+        <a href='#' className="categories-link">
           Livres
-        </button>
+        </a>
       </nav>
     </div>
   )

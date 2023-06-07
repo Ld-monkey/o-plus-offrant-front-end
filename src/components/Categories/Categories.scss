@@ -6,15 +6,16 @@
   margin: 30px 0;
 }
 
-.categories-button {
+.categories-link {
   width: 150px;
   border-radius: 30px;
   background-color: v.$color-text;
   border: 1px solid v.$color-secondary;
   color: v.$color-secondary;
+  text-decoration: none;
 }
 
-.categories-button:focus {
+.categories-link:hover, .categories-link:focus {
   background-color: v.$color-primary;
   color: v.$color-text;
   border: none;
