@@ -22,21 +22,16 @@
 
   &-category, &-sell {
     background-color: v.$color-text;
+    @include m.buttons-style;
+    color: black;
   }
 
   &-login {
+    @include m.buttons-style;
     background-color: v.$color-primary;
     color: v.$color-text;
     border-radius: 5px;
   }
-}
-
-button {
-  @include m.flex-center;
-  @include m.remove-border;
-  height: 40px;
-  padding: 0 10px;
-  cursor: pointer;
 }
 
 .wrapper-cart, .wrapper-category {
