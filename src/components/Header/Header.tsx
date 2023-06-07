@@ -1,12 +1,12 @@
-import "./Header.scss";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import './Header.scss';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
   faCartShopping,
   faToolbox,
   faCircleUser,
-} from "@fortawesome/free-solid-svg-icons";
-import { useState } from "react";
+} from '@fortawesome/free-solid-svg-icons';
+import { useState } from 'react';
 
 function Header() {
   const [isOpen, setIsOpen] = useState(false);
@@ -29,7 +29,7 @@ function Header() {
                 <FontAwesomeIcon
                   icon={faMagnifyingGlass}
                   size="sm"
-                  style={{ color: "#000000" }}
+                  style={{ color: '#000000' }}
                 />
                 <input
                   type="text"
@@ -43,18 +43,17 @@ function Header() {
               <FontAwesomeIcon
                 icon={faCartShopping}
                 size="lg"
-                style={{ color: "#0c7eb4" }}
+                style={{ color: '#0c7eb4' }}
               />
               <button type="button" className="header-btn-sell">
                 Vendre
               </button>
             </div>
-<<<<<<< HEAD
             <div className="wrapper-category">
               <FontAwesomeIcon
                 icon={faToolbox}
                 size="lg"
-                style={{ color: "#0c7eb4" }}
+                style={{ color: '#0c7eb4' }}
               />
               <button type="button" className="header-btn-category">
                 Catégories
@@ -64,7 +63,7 @@ function Header() {
               <FontAwesomeIcon
                 icon={faCircleUser}
                 size="lg"
-                style={{ color: "#ffffff" }}
+                style={{ color: '#ffffff' }}
                 className="icon-user"
               />
               Connectez-vous
@@ -77,20 +76,6 @@ function Header() {
               x
             </button>
           </div>
-=======
-          </form>
-          <div className="wrapper-cart">
-            <FontAwesomeIcon icon={faCartShopping} size="lg" style={{color: "#0c7eb4",}}/>
-            <a href='#' className="header-sell">Vendre</a>
-          </div>
-          <div className="wrapper-category">
-            <FontAwesomeIcon icon={faToolbox} size="lg" style={{color: "#0c7eb4",}}/>
-            <a href='#' className="header-category">Catégories</a>
-          </div>
-          <a href='#' className="header-login">
-            <FontAwesomeIcon icon={faCircleUser} size="lg" style={{color: "#ffffff",}} className="icon-user" />
-            Connectez-vous</a>
->>>>>>> develop
         </nav>
       </div>
     </header>
