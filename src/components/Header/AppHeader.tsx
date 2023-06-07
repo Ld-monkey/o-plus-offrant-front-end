@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 
-function AppHeaderBis() {
+function AppHeader() {
   const [isOpen, setIsOpen] = useState(false);
 
   /**
@@ -86,4 +86,4 @@ function AppHeaderBis() {
   );
 }
 
-export default AppHeaderBis;
+export default AppHeader;
