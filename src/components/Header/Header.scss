@@ -23,6 +23,7 @@
   &-category, &-sell {
     background-color: v.$color-text;
     @include m.buttons-style;
+    color: black;
   }
 
   &-login {
