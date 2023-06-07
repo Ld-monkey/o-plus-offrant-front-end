@@ -1,0 +1,59 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.header {
+  padding: 25px;
+  border-bottom: 1px solid gray;
+
+  &-navbar {
+    @include m.flex-center;
+    justify-content: space-between;
+  }
+
+  &-title {
+    font-size: 2.5rem;
+    margin: auto 0;
+  }
+
+  &-searchbar {
+    @include m.remove-border;
+    height: 40px;
+    background-color: v.$color-searchbar;
+    border-top-right-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding: 15px;
+  }
+
+  &-category, &-sell {
+    background-color: v.$color-text;
+  }
+
+  &-login {
+    background-color: v.$color-primary;
+    color: v.$color-text;
+    border-radius: 5px;
+  }
+}
+
+button {
+  @include m.flex-center;
+  @include m.remove-border;
+  height: 40px;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.wrapper-cart, .wrapper-category, .searchbar-container {
+  @include m.flex-center;
+}
+
+.icon-magnify {
+  background-color: v.$color-searchbar;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  padding: 13px 0 13px 15px;
+}
+
+.icon-user {
+  padding-right: 10px;
+}

@@ -1,9 +1,27 @@
 @use 'reset';
 @use 'variables' as v;
 
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Open Sans';
+  font-weight: 400;
+  src: url('../assets/Fonts/Open-Sans.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Antic Didone';
+  font-weight: 400;
+  src: url('../assets/Fonts/Antic-Didone.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+
 body {
+  font-family: 'Antic Didone', 'Open Sans';
   margin: 0;
-  font-family: 'Roboto', 'Helvetica Neue', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+h1 {
+  font-family: 'Antic Didone', 'Open Sans';
 }
