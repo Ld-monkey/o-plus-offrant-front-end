@@ -1,12 +1,12 @@
 import Header from '../Header/Header';
-import HeaderBis from '../Header/HeaderBis';
+import AppHeaderBis from '../Header/AppHeader';
 import './App.scss';
 
 function App() {
   return (
     <div className="app">
-      <Header />
-      <HeaderBis />
+      {/* <Header /> */}
+      <AppHeaderBis />
     </div>
   );
 }
