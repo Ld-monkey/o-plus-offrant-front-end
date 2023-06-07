@@ -6,6 +6,7 @@ function handleCat(){
 
 function handlePriceMore() {
 //Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
+//modale/pop up : Confirmez vous votre enchère à Montant+5% ? OUI / ANNULER
 }
 
 function Category() {
