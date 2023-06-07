@@ -10,7 +10,7 @@ function Header() {
           <h1 className="header-title">O+ Offrant</h1>
           <form className="header-form">
             <div className="searchbar-container">
-              <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" style={{color: "#000000",}} className="icon-magnify"/>
+              <FontAwesomeIcon icon={faMagnifyingGlass} size="sm" style={{color: "#000000",}}/>
               <input type="text" name= "search" className="header-searchbar" placeholder='Que cherchez-vous ?' />
             </div>
           </form>
