@@ -1,3 +1,5 @@
+import './Categories.scss';
+
 function Categories() {
   return(
     <div id="wrapper">
@@ -9,7 +11,7 @@ function Categories() {
           Maison & Jardin
         </button>
         <button type="button" className="categories-button">
-          Ghigh Tech
+          High Tech
         </button>
         <button type="button" className="categories-button">
           Mode

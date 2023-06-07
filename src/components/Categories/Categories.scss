@@ -1,0 +1,21 @@
+@use '../../styles/variables' as v;
+
+.categories-navbar {
+  display: flex;
+  justify-content: space-between;
+  margin: 30px 0;
+}
+
+.categories-button {
+  width: 150px;
+  border-radius: 30px;
+  background-color: v.$color-text;
+  border: 1px solid v.$color-secondary;
+  color: v.$color-secondary;
+}
+
+.categories-button:focus {
+  background-color: v.$color-primary;
+  color: v.$color-text;
+  border: none;
+}
