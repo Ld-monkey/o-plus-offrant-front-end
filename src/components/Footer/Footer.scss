@@ -1,0 +1,11 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+
+.Footer{
+    background-color: v.$color-primary;
+    padding: 50px;
+    position: fixed;
+    bottom: 0;
+    display: inline;
+}
