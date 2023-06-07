@@ -17,11 +17,7 @@
 
   &-searchbar {
     @include m.remove-border;
-    height: 40px;
     background-color: v.$color-searchbar;
-    border-top-right-radius: 30px;
-    border-bottom-right-radius: 30px;
-    padding: 15px;
   }
 
   &-category, &-sell {
@@ -43,15 +39,17 @@ button {
   cursor: pointer;
 }
 
-.wrapper-cart, .wrapper-category, .searchbar-container {
+.wrapper-cart, .wrapper-category {
   @include m.flex-center;
 }
 
-.icon-magnify {
+.searchbar-container {
+  @include m.flex-center;
+  height: 40px;
   background-color: v.$color-searchbar;
-  border-top-left-radius: 30px;
-  border-bottom-left-radius: 30px;
-  padding: 13px 0 13px 15px;
+  padding: 0 15px;
+  gap: 10px;
+  border-radius: 30px;
 }
 
 .icon-user {

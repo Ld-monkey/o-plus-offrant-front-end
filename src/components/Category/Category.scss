@@ -6,11 +6,12 @@
 };
 
 .cardCat{
-    width: 400px;
-    border: solid 5px rgb(92, 196, 167);
+    width: 300px;
+    // border: solid 5px rgb(92, 196, 167);
     border-radius: 5%;
     margin: 30px;
     // padding: 30px;
+    background-color: rgba(240, 232, 194, 0.8)
 };
 
 .containerCardCat{
@@ -22,24 +23,26 @@
 };
 
 .liveAuction-button{
+    justify-content:center ;
     margin: 10px;
-    background-color: rgb(92, 196, 167);
-    color: rgb(77, 58, 196);
+    background-color: rgb(109, 163, 187);
+    color: rgb(255, 255, 255);
     font-weight: bolder;
+    border-radius: 55%;
 };
 
 input{
     margin: 20px;
 };
 
-body {
-    // color: rgb(77, 58, 196);
-    font-weight: bolder;
-}
+// body {
+//     // color: rgb(77, 58, 196);
+//     // font-weight: bolder;
+// }
 
-.liveAuction{
-    border-top: solid 5px rgb(92, 196, 167);;
-}
-.pictureItem{
-    border-radius: 25%;
-}
+// .liveAuction{
+//     // border-top: solid 5px rgb(92, 196, 167);;
+// }
+// .pictureItem{
+//     border-radius: 25%;
+// }
