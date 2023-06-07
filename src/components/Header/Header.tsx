@@ -16,15 +16,15 @@ function Header() {
           </form>
           <div className="wrapper-cart">
             <FontAwesomeIcon icon={faCartShopping} size="lg" style={{color: "#0c7eb4",}}/>
-            <button type='button' className="header-sell">Vendre</button>
+            <a href='#' className="header-sell">Vendre</a>
           </div>
           <div className="wrapper-category">
             <FontAwesomeIcon icon={faToolbox} size="lg" style={{color: "#0c7eb4",}}/>
-            <button type='button' className="header-category">Catégories</button>
+            <a href='#' className="header-category">Catégories</a>
           </div>
-          <button type='button' className="header-login">
+          <a href='#' className="header-login">
             <FontAwesomeIcon icon={faCircleUser} size="lg" style={{color: "#ffffff",}} className="icon-user" />
-            Connectez-vous</button>
+            Connectez-vous</a>
         </nav>
       </div>
     </header>
