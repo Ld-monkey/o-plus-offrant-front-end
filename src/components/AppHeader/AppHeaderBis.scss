@@ -1,0 +1,62 @@
+@use '../../styles/variables' as v;
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  border-bottom: 1px solid #d9d9d9;
+
+  &-logo {
+    font-size: 1.5rem;
+  }
+
+  &-navbar {
+    display: flex;
+    //justify-content: space-between;
+    align-items: center;
+    gap: 0.75rem;
+
+    // &-container {
+    //   display: flex;
+    //   justify-content: center;
+    //   align-items: center;
+    //   gap: 0.75rem;
+    // }
+  }
+
+  &-btn-sell,
+  &-btn-category,
+  &-btn-login {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+
+    span {
+      display: none;
+    }
+
+    @media (min-width: v.$layout-breakpoint-tablet) {
+      span {
+        display: inline;
+      }
+
+      svg {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  .searchbar {
+    border: 1px solid green;
+    flex: 2;
+
+    display: flex;
+    justify-content: center;
+
+    input {
+      width: 100%;
+      border: 1px solid red;
+    }
+  }
+}
