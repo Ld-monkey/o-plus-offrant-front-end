@@ -24,7 +24,23 @@ function AppHeader() {
       <header className="header">
         <div id="wrapper">
           <nav className="header-navbar">
-            <h1 className="header-logo">O+ Offrant</h1>
+            <div className="header-navbar-container">
+              <h1 className="header-logo">O+ Offrant</h1>
+              {/* inside navbar */}
+              <div className="inside-navbar">
+                <form className="searchbar" role="search">
+                  <button type="button">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  </button>
+                  <input
+                    type="search"
+                    name="searchbar"
+                    placeholder="Que cherchez-vous ?"
+                    aria-label="Search article through site content"
+                  />
+                </form>
+              </div>
+            </div>
             <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
@@ -61,6 +77,22 @@ function AppHeader() {
           </nav>
         </div>
       </header>
+      {/* outside navbar */}
+      <div className="outside-navbar">
+        <div id="wrapper">
+          <form className="searchbar" role="search">
+            <button type="button">
+              <FontAwesomeIcon icon={faMagnifyingGlass} />
+            </button>
+            <input
+              type="search"
+              name="searchbar"
+              placeholder="Que cherchez-vous ?"
+              aria-label="Search article through site content"
+            />
+          </form>
+        </div>
+      </div>
       {isOpen && (
         <aside>
           <ul className="menu-items">

@@ -1,6 +1,5 @@
 @use '../../styles/variables' as v;
 
-
 .header {
   display: flex;
   align-items: center;
@@ -14,11 +13,11 @@
   &-navbar {
     display: flex;
     justify-content: space-between;
-    align-items: center;
 
     &-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 0.75rem;
     }
   }
@@ -118,5 +117,49 @@
 
   .hamburger-line.is-active .line:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+.inside-navbar,
+.outside-navbar {
+  max-width: 1000px;
+}
+
+.searchbar {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+  background-color: v.$color-searchbar;
+  border-radius: 30px;
+
+  button {
+    outline: none;
+    border: none;
+    background: none;
+    padding-top: 5px;
+    //padding-left: 10px;
+    //padding-right: 20px;
+
+    svg {
+      height: 22px;
+    }
+  }
+
+  input {
+    display: none;
+    outline: none;
+    border: none;
+    background-color: inherit;
+    width: 100%;
+  }
+
+  @media (min-width: 920px) {
+    input {
+      display: inline;
+    }
+  }
+
+  @media (max-width: 600px) {
+    display: none;
   }
 }
