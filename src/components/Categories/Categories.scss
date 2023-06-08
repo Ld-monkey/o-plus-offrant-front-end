@@ -1,9 +1,11 @@
-@use '../../styles/variables' as v;
+@use "../../styles/variables" as v;
 
 .categories-navbar {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 1rem;
   margin: 30px 0;
+  flex-wrap: wrap;
 }
 
 .categories-link {
@@ -13,10 +15,25 @@
   border: 1px solid v.$color-secondary;
   color: v.$color-secondary;
   text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+@media screen and (max-width: v.$layout-breakpoint-desktop) {
+  font-size: 0.8rem;
+  min-width: fit-content;
+  width: 100px;
+  padding: 5px 10px;
+}
+
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: 0.5rem;
+    width: 75px;
+  }
 }
 
 .categories-link:hover {
-  background-color: v.$color-primary;
+  background-color: #e1aa70;
   color: v.$color-text;
   border: none;
 }
