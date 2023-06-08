@@ -1,18 +1,20 @@
 import './Footer.scss';
 
 function Footer() {
-  return <div className="Footer">O + Offrant
-  Inscription
-  Connectez-vous 
-  Vendre 
-  Catégories 
-  Contactez-nous 
-  Pseudo 1 
-  Pseudo 2
-  Pseudo 3
-  Pseudo 4
-  Pseudo 5
-  </div>;
+  return (<div className="Footer">
+  
+  <div className='Footer__info'>  O + Offrant</div> 
+  <div className='Footer__info'>Inscription</div> 
+  <div className='Footer__info'>Connectez-vous</div>
+  <div className='Footer__info'>Vendre</div>
+  <div className='Footer__info'>Catégories</div>
+  <div className='Footer__info'>Contactez-nous</div>
+  <div className='Footer__Pseudo'>Pseudo 1</div>
+  <div className='Footer__Pseudo'>Pseudo 2</div>
+  <div className='Footer__Pseudo'>Pseudo 3</div>
+  <div className='Footer__Pseudo'>Pseudo 4</div>
+  <div className='Footer__Pseudo'>Pseudo 5</div>
+  </div>);
 }
 
 export default Footer;
