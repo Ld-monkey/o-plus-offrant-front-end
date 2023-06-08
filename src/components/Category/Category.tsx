@@ -15,15 +15,13 @@ function Category() {
       <div className="Category">
         <p className="Tri">Trier par : 
           <input className="inputCat" type="checkbox" onClick={handleCat}/>
-          <label className='categoryName'>Prix</label>
+          <label className='categoryName'>Prix croissant</label>
           <input className="inputCat" type="checkbox" onClick={handleCat}/>
-          <label className='categoryName'></label>
+          <label className='categoryName'>Prix décroissant</label>
           <input className="inputCat" type="checkbox" onClick={handleCat}/>
-          <label className='categoryName'>Maison & Jardin</label>
+          <label className='categoryName'>Temps restant croissant</label>
           <input className="inputCat" type="checkbox" onClick={handleCat}/>
-          <label className='categoryName'>Mode</label>
-          <input className="inputCat" type="checkbox" onClick={handleCat}/>
-          <label className='categoryName'>Livres</label>
+          <label className='categoryName'>Temps restant décroissant</label>
         </p>
       </div>
 
