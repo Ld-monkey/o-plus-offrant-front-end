@@ -40,8 +40,8 @@ function AppHeader() {
                   />
                 </form>
               </div>
-            </div>
-            <div className="header-navbar-container">
+              {/* </div>
+            <div className="header-navbar-container"> */}
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
                 <span>Vendre</span>
@@ -94,7 +94,7 @@ function AppHeader() {
         </div>
       </div>
       {isOpen && (
-        <aside>
+        <aside className="aside-menu">
           <ul className="menu-items">
             <li>
               <a href="#home">Home</a>

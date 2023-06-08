@@ -8,11 +8,13 @@
 
   &-logo {
     font-size: 1.5rem;
+    flex: 15;
   }
 
   &-navbar {
     display: flex;
     justify-content: space-between;
+    align-items: center;
 
     &-container {
       display: flex;
@@ -43,6 +45,15 @@
         padding-right: 10px;
       }
     }
+  }
+
+  &-btn-sell,
+  &-btn-category {
+    flex: 4;
+  }
+
+  &-btn-login {
+    flex: 8;
   }
 
   .icon-dollar,
@@ -120,14 +131,14 @@
   }
 }
 
-.inside-navbar,
-.outside-navbar {
-  max-width: 1000px;
+.inside-navbar {
+  flex-grow: 16;
 }
 
 .searchbar {
   display: flex;
   align-items: center;
+  //max-width: 500px;
   padding: 8px;
   background-color: v.$color-searchbar;
   border-radius: 30px;
@@ -160,6 +171,12 @@
   }
 
   @media (max-width: 600px) {
+    display: none;
+  }
+}
+
+.aside-menu {
+  @media (min-width: v.$layout-breakpoint-tablet) {
     display: none;
   }
 }
