@@ -12,20 +12,20 @@ function handlePriceMore() {
 function Category() {
   return (
     <>
-  <div className="Category">
-  <p className="Tri">Trier par : 
-  <input className="inputCat" type="checkbox" onClick={handleCat}/>
-  <label className='categoryName'>Sport & Loisirs</label>
-  <input className="inputCat" type="checkbox" onClick={handleCat}/>
-  <label className='categoryName'>High Tech</label>
-  <input className="inputCat" type="checkbox" onClick={handleCat}/>
-  <label className='categoryName'>Maison & Jardin</label>
-  <input className="inputCat" type="checkbox" onClick={handleCat}/>
-  <label className='categoryName'>Mode</label>
-  <input className="inputCat" type="checkbox" onClick={handleCat}/>
-  <label className='categoryName'>Livres</label>
-  </p>
-  </div>
+      <div className="Category">
+        <p className="Tri">Trier par : 
+          <input className="inputCat" type="checkbox" onClick={handleCat}/>
+          <label className='categoryName'>Prix</label>
+          <input className="inputCat" type="checkbox" onClick={handleCat}/>
+          <label className='categoryName'></label>
+          <input className="inputCat" type="checkbox" onClick={handleCat}/>
+          <label className='categoryName'>Maison & Jardin</label>
+          <input className="inputCat" type="checkbox" onClick={handleCat}/>
+          <label className='categoryName'>Mode</label>
+          <input className="inputCat" type="checkbox" onClick={handleCat}/>
+          <label className='categoryName'>Livres</label>
+        </p>
+      </div>
 
   <div className='containerCardCat'>
   <div className='cardCat'>
@@ -127,9 +127,9 @@ function Category() {
 </div>
 </div>
 
-<div className='buttonPage'>
-  <div><button className="buttonPrevious">Page précédente</button>
-  <button className="buttonNext">Page suivante</button></div>
+<div>
+  <div><button className="buttonPage">Page précédente</button>
+  <button className="buttonPage">Page suivante</button></div>
 </div>
 </>
   )

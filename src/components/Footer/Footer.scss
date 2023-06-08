@@ -1,0 +1,26 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+
+.Footer{
+    color: v.$color-text ;
+    font-weight: bold;
+    background-color: v.$color-primary;
+    padding: 50px;
+    position: fixed;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    gap : 150px;
+    line-height: 2rem;
+    justify-content: center;
+    &__info {
+        padding: 2px;
+    }
+    &__Pseudo {
+            padding: 2px;
+}}
+
+.Footer > div > span {
+    display: block;
+}
