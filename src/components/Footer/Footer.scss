@@ -11,10 +11,16 @@
     bottom: 0;
     width: 100%;
     display: flex;
+    gap : 150px;
+    line-height: 2rem;
     justify-content: center;
-    &__info{
-        padding: 10px;
+    &__info {
+        padding: 2px;
     }
     &__Pseudo {
-            padding: 10px;
+            padding: 2px;
 }}
+
+.Footer > div > span {
+    display: block;
+}
