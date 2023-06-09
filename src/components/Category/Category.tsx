@@ -38,7 +38,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -61,7 +61,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -84,7 +84,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -107,7 +107,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -130,7 +130,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -153,7 +153,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -176,7 +176,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -199,7 +199,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -222,7 +222,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
@@ -245,7 +245,7 @@ function Category() {
         <div className="cardCat">
           <img
             className="pictureItem"
-            src="../../public/DualSense-Edge-Main.webp"
+            src="../../src/assets/DualSense-Edge-Main.webp"
             alt=""
           />
           <p className="descriptItem">Descriptif de l&apos;objet</p>
