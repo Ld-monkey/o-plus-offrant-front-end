@@ -47,7 +47,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -70,7 +70,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -93,7 +93,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -116,7 +116,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -139,7 +139,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -162,7 +162,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -185,7 +185,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -208,7 +208,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -231,7 +231,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
@@ -254,7 +254,7 @@ function Category() {
           <div className="liveAuction">
             <p className="timerAuction">Temps restant : 1:30:35</p>
             <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €\
+              Prix enchère actuelle : 50,00 €
               <button
                 type="button"
                 className="liveAuction-button"
