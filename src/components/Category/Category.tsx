@@ -1,38 +1,75 @@
+import { useState } from 'react';
 import './Category.scss';
 
-function handleCat() {
-  // Quand cliqué il faut filter pour garder uniquement les articles de cette catégorie
+/**
+ * Sort increase price.
+ */
+function sortIncreasePrice() {
+  console.log('sortIncreasePrice');
 }
 
-function handlePriceMore() {
-  // Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
-  // modale/pop up : Confirmez vous votre enchère à Montant+5% ? OUI / ANNULER
+/**
+ * Sort decrease price.
+ */
+function sortDecreasePrice() {
+  console.log('sortDecreasePrice');
 }
+
+/**
+ * Check the checkbox.
+ */
+function checkCategory() {
+  const isChecked = event?.target.checked;
+  const value = event?.target.value;
+
+  if (!isChecked) {
+    return;
+  }
+
+  switch (value) {
+    case 'increase':
+      sortIncreasePrice();
+      break;
+    case 'decrease':
+      sortDecreasePrice();
+      break;
+    default:
+      console.log('unknow action');
+      break;
+  }
+}
+
+/**
+ * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
+ * modale/pop up : Confirmez vous votre enchère à Montant+5% ? OUI / ANNULER
+ */
+function handlePriceMore() {}
 
 function Category() {
+  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
-      <div className="Category">
+      <form>
         <p className="Tri">
           Trier par :
-          <input className="inputCat" type="checkbox" onClick={handleCat} />
           <label htmlFor="Prix croissant" className="categoryName">
-            Prix croissant
+            <input type="checkbox" value="increase" onChange={checkCategory} />
+            <span>Prix croissant</span>
           </label>
-          <input className="inputCat" type="checkbox" onClick={handleCat} />
           <label htmlFor="Prix décroissant" className="categoryName">
-            Prix décroissant
+            <input type="checkbox" value="decrease" onClick={checkCategory} />
+            <span>Prix décroissant</span>
           </label>
-          <input className="inputCat" type="checkbox" onClick={handleCat} />
           <label htmlFor="Temps restant croissant" className="categoryName">
-            Temps restant croissant
+            <input type="checkbox" onClick={checkCategory} />
+            <span>Temps restant croissant</span>
           </label>
-          <input className="inputCat" type="checkbox" onClick={handleCat} />
-          <label htmlFor="Temps restant décroissant" className="categoryName">
-            Temps restant décroissant
+          <label htmlFor="Temps restant croissant" className="categoryName">
+            <input type="checkbox" onClick={checkCategory} />
+            <span>Temps restant décroissant</span>
           </label>
         </p>
-      </div>
+      </form>
 
       <div className="containerCardCat">
         <div className="cardCat">

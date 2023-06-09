@@ -1,16 +1,11 @@
 .Tri {
-    flex-direction: row;
     color: rgb(222, 190, 75);
-    margin: 0px 0 10px 0;
+    margin-bottom : 10;
     font-weight: bolder;
-    border-bottom: solid 1px black
-};
-
-.cardCat{
-    width: 370px;
-    border-radius: 5%;
-    margin: 30px;
-    background-color: rgb(253,245,234)
+    border-bottom: solid 1px black;
+    input{
+        margin: 20px;
+    };
 };
 
 .containerCardCat{
@@ -22,6 +17,12 @@
     flex-grow: 0;
 };
 
+.cardCat{
+    width: 370px;
+    border-radius: 5%;
+    margin: 30px;
+    background-color: rgb(253,245,234)
+};
 .liveAuction-button{
     margin: 10px;
     background-color: rgb(109, 163, 187);
@@ -30,9 +31,6 @@
     border-radius: 55%;
 };
 
-input{
-    margin: 20px;
-};
 
 .buttonPage{
         background-color: rgb(109, 163, 187);
