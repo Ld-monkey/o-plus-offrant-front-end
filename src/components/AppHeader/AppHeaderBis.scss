@@ -22,6 +22,9 @@
     //   align-items: center;
     //   gap: 0.75rem;
     // }
+    @media (max-width: 830px) {
+      justify-content: space-between;
+    }
   }
 
   &-btn-sell,
@@ -47,16 +50,68 @@
     }
   }
 
+  .icon-dollar,
+  .icon-category,
+  .icon-user {
+    height: 1.2rem;
+  }
+
+  .icon-dollar {
+    color: v.$color-secondary;
+  }
+
+  .icon-category {
+    color: v.$color-primary;
+  }
+
+  &-btn-login {
+    display: none;
+
+    @media (min-width: v.$layout-breakpoint-tablet) {
+      display: inline;
+      padding: 10px;
+      background-color: v.$color-primary;
+      color: v.$color-text;
+      border-radius: 5px;
+    }
+  }
+
   .searchbar {
-    border: 1px solid green;
+    // border: 1px solid green;
     flex: 2;
 
     display: flex;
     justify-content: center;
 
+    padding: 8px;
+    background-color: v.$color-searchbar;
+    border-radius: 30px;
+
+    button {
+      outline: none;
+      border: none;
+      background: none;
+      padding-top: 5px;
+    }
+
     input {
+      outline: none;
+      border: none;
+      background-color: inherit;
       width: 100%;
-      border: 1px solid red;
+      // border: 1px solid red;
+    }
+
+    @media (max-width: 900px) {
+      background-color: white;
+      justify-content: start;
+      input {
+        display: none;
+      }
+    }
+
+    @media (max-width: 610px) {
+      display: none;
     }
   }
 }

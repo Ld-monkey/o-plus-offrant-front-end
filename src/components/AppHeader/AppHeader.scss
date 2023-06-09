@@ -164,14 +164,10 @@
     width: 100%;
   }
 
-  @media (min-width: 920px) {
+  @media (min-width: 900px) {
     input {
-      display: inline;
+      display: none;
     }
-  }
-
-  @media (max-width: 600px) {
-    display: none;
   }
 }
 

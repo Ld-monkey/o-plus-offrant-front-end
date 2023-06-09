@@ -36,18 +36,20 @@ function AppHeaderBis() {
                 aria-label="Search article through site content"
               />
             </form>
-            <button type="button" className="header-btn-sell">
-              <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-              <span>Vendre</span>
-            </button>
-            <button type="button" className="header-btn-category">
-              <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-              <span>Categories</span>
-            </button>
-            <button type="button" className="header-btn-login">
-              <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
-              <span>Connectez-vous</span>
-            </button>
+            <div>
+              <button type="button" className="header-btn-sell">
+                <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
+                <span>Vendre</span>
+              </button>
+              <button type="button" className="header-btn-category">
+                <FontAwesomeIcon icon={faToolbox} className="icon-category" />
+                <span>Categories</span>
+              </button>
+              <button type="button" className="header-btn-login">
+                <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+                <span>Connectez-vous</span>
+              </button>
+            </div>
           </nav>
         </div>
       </header>
