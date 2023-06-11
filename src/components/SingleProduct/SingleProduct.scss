@@ -1,0 +1,60 @@
+@use "../../styles/variables" as v;
+
+.single-product {
+  display: flex;
+  align-items: center;
+
+  &-media {
+    position: relative;
+    margin-right: 1rem;
+    width: 50%;
+    
+    .photo {
+      width: 100%;
+    }
+
+    .fave-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: yellow;
+    }
+  }
+
+  &-details {
+    width: 50%;
+    margin-left: 1rem;
+    text-align: left;
+  }
+
+  &-title, &-description {
+    margin-bottom: 1rem;
+  }
+
+  .auction-remaining-time {
+    border: 5px red;
+    border-style: dotted solid;
+    padding: 0.5rem;
+  }
+
+  .auction-amount {
+    margin-top: 1.5rem;
+
+    .auction-current-price {
+      margin-right: 1rem;
+    }
+
+    .participate-btn {
+      background-color: v.$color-primary;
+      border: none;
+      color: v.$color-text;
+      border-radius: 5px;
+      padding: 5px 10px;
+      cursor: pointer;
+    }
+  }
+}
+
+.auction-history {
+  margin-top: 5rem;
+}

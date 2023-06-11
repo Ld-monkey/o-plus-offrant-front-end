@@ -6,12 +6,13 @@ function SingleProduct() {
   return (
     <div id="wrapper">
       <section className="single-product">
-        <div className="single-product-photo">
+        <div className="single-product-media">
           <img
             src="https://www.slate.fr/sites/default/files/styles/1060x523/public/kbo-bike-6s20vsn5gsy-unsplash.jpg"
             alt="product"
+            className="photo"
           />
-          <FontAwesomeIcon icon={faStar} className="single-product-fave-icon" />
+          <FontAwesomeIcon icon={faStar} className="fave-icon" />
         </div>
         <div className="single-product-details">
           <h2 className="single-product-title">Titre du produit</h2>
@@ -30,7 +31,7 @@ function SingleProduct() {
             <span className="auction-current-price">
               Montant actuel : 1000 Tokens
             </span>
-            <button className="auction-participate-btn" type="button">
+            <button className="participate-btn" type="button">
               Enchérir
             </button>
           </div>
