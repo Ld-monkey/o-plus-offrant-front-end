@@ -3,11 +3,24 @@
 .single-product {
   display: flex;
   align-items: center;
+  @media screen and (max-width: v.$layout-breakpoint-desktop) {
+    flex-wrap: wrap;
+    font-size: 0.8rem;
+  }
+
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: 0.5rem;
+  }
+
 
   &-media {
     position: relative;
     margin-right: 1rem;
     width: 50%;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      width: 100%;
+      margin: 0
+    }
     
     .photo {
       width: 100%;
@@ -25,10 +38,18 @@
     width: 50%;
     margin-left: 1rem;
     text-align: left;
+
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      width: 100%;
+      margin: 0;
+    }
   }
 
   &-title, &-description {
     margin-bottom: 1rem;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      margin-top: 1rem;
+    }
   }
 
   .auction-remaining-time {
