@@ -1,12 +1,12 @@
 import Cards from '../Cards/Cards';
+import AppHeader from '../AppHeader/AppHeader';
 import Categories from '../Categories/Categories';
-import Header from '../Header/Header';
 import './App.scss';
 
 function App() {
   return (
     <div className="app">
-      <Header />
+      <AppHeader />
       <Categories />
       <Cards />
     </div>
