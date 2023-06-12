@@ -8,19 +8,21 @@
 
   &-logo {
     font-size: 1.5rem;
-    flex: 15;
   }
 
   &-navbar {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 0.75rem;
 
     &-container {
       display: flex;
       justify-content: center;
-      align-items: center;
       gap: 0.75rem;
+    }
+
+    @media (max-width: 830px) {
+      justify-content: space-between;
     }
   }
 
@@ -49,11 +51,14 @@
 
   &-btn-sell,
   &-btn-category {
-    flex: 4;
-  }
-
-  &-btn-login {
-    flex: 8;
+    &:hover {
+      svg {
+        opacity: 0.8;
+      }
+      span {
+        text-decoration: underline;
+      }
+    }
   }
 
   .icon-dollar,
@@ -79,11 +84,17 @@
       background-color: v.$color-primary;
       color: v.$color-text;
       border-radius: 5px;
+      border: 3px solid #fff;
+
+      &:hover {
+        border: 3px solid #88b4ba;
+      }
     }
   }
 
   // Hamburger Menu.
   .hamburger-menu {
+    display: inline-block;
     position: relative;
 
     @media (min-width: v.$layout-breakpoint-tablet) {
@@ -131,14 +142,13 @@
   }
 }
 
-.inside-navbar {
-  flex-grow: 16;
-}
-
+// Searchbar inside & outside.
 .searchbar {
+  flex: 2;
+
   display: flex;
-  align-items: center;
-  //max-width: 500px;
+  justify-content: center;
+
   padding: 8px;
   background-color: v.$color-searchbar;
   border-radius: 30px;
@@ -148,31 +158,39 @@
     border: none;
     background: none;
     padding-top: 5px;
-    //padding-left: 10px;
-    //padding-right: 20px;
-
-    svg {
-      height: 22px;
-    }
   }
 
   input {
-    display: none;
     outline: none;
     border: none;
     background-color: inherit;
     width: 100%;
   }
 
-  @media (min-width: 900px) {
-    input {
+  &.inside-navbar {
+    @media (max-width: 900px) {
+      background-color: white;
+      justify-content: start;
+
+      button {
+        display: none;
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
       display: none;
     }
   }
-}
 
-.aside-menu {
-  @media (min-width: v.$layout-breakpoint-tablet) {
-    display: none;
+  &.outside-navbar {
+    margin-top: 15px;
+
+    @media (min-width: 901px) {
+      display: none;
+    }
   }
 }

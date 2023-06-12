@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
-  faCartShopping,
   faSackDollar,
   faToolbox,
   faCircleUser,
@@ -11,6 +10,7 @@ import './AppHeader.scss';
 
 function AppHeader() {
   const [isOpen, setIsOpen] = useState(false);
+  const [contentSearchBar, setContentSearchBar] = useState('');
 
   /**
    * Toggle the item list when the hamburger menu is clicked.
@@ -19,29 +19,45 @@ function AppHeader() {
     setIsOpen(!isOpen);
   }
 
+  /**
+   * Updates searchbar content.
+   */
+  function changeInputContent() {
+    setContentSearchBar(event?.target.value);
+  }
+
+  /**
+   * Submit search.
+   */
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log(contentSearchBar);
+  }
+
   return (
     <>
       <header className="header">
         <div id="wrapper">
           <nav className="header-navbar">
+            <h1 className="header-logo">O+ Offrant</h1>
+            {/* inside navbar */}
+            <form
+              className="searchbar inside-navbar"
+              role="search"
+              onSubmit={handleSubmit}
+            >
+              <button type="button">
+                <FontAwesomeIcon icon={faMagnifyingGlass} />
+              </button>
+              <input
+                type="search"
+                name="searchbar"
+                placeholder="Que cherchez-vous ?"
+                aria-label="Search article through site content"
+                onClick={changeInputContent}
+              />
+            </form>
             <div className="header-navbar-container">
-              <h1 className="header-logo">O+ Offrant</h1>
-              {/* inside navbar */}
-              <div className="inside-navbar">
-                <form className="searchbar" role="search">
-                  <button type="button">
-                    <FontAwesomeIcon icon={faMagnifyingGlass} />
-                  </button>
-                  <input
-                    type="search"
-                    name="searchbar"
-                    placeholder="Que cherchez-vous ?"
-                    aria-label="Search article through site content"
-                  />
-                </form>
-              </div>
-              {/* </div>
-            <div className="header-navbar-container"> */}
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
                 <span>Vendre</span>
@@ -54,7 +70,6 @@ function AppHeader() {
                 <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
                 <span>Connectez-vous</span>
               </button>
-
               {/* Hamburger menu */}
               <div className="hamburger-menu">
                 <input
@@ -78,20 +93,18 @@ function AppHeader() {
         </div>
       </header>
       {/* outside navbar */}
-      <div className="outside-navbar">
-        <div id="wrapper">
-          <form className="searchbar" role="search">
-            <button type="button">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-            <input
-              type="search"
-              name="searchbar"
-              placeholder="Que cherchez-vous ?"
-              aria-label="Search article through site content"
-            />
-          </form>
-        </div>
+      <div id="wrapper">
+        <form className="searchbar outside-navbar" role="search">
+          <button type="button">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+          <input
+            type="search"
+            name="searchbar"
+            placeholder="Que cherchez-vous ?"
+            aria-label="Search article through site content"
+          />
+        </form>
       </div>
       {isOpen && (
         <aside className="aside-menu">
