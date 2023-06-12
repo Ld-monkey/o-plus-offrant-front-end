@@ -2,22 +2,43 @@
 
 h2 {
   font-size: 2.5rem;
+  @media screen and (max-width : v.$layout-breakpoint-desktop) {
+    font-size: 1.5rem;  // remplacer par les variables une fois merge
+  }
+  @media screen and (max-width : v.$layout-breakpoint-tablet) {
+    font-size: 1rem; // remplacer par les variables une fois merge
+  }
 }
 
 .add-article-form {
   margin: 2rem auto;
   width: 50%;
   text-align: left;
+  @media screen and (max-width : v.$layout-breakpoint-desktop) {
+    width : 60%;
+    font-size: 0.8rem; // remplacer par les variables une fois merge
+  }
+  @media screen and (max-width : v.$layout-breakpoint-tablet) {
+    width : 100%;
+    font-size: 0.5rem; // remplacer par les variables une fois merge
+  }
   
   div {
     display: flex;
     justify-content: space-between;
     margin-bottom: 1.5rem;
-
+    @media screen and (max-width : v.$layout-breakpoint-tablet) {
+      flex-direction: column;
+      width: 100%;
+    }
     input, textarea {
       width: 300px;
       outline: none;
       padding: 5px;
+      @media screen and (max-width : v.$layout-breakpoint-tablet) {
+        width: 100%;
+        margin-top: 0.5rem;
+      }
     }
   }
 
@@ -27,8 +48,14 @@ h2 {
       margin-right: 5px;
     }
 
-    label {
-      margin-left: 15px;
+    .wrapper {
+      label {
+        margin-left: 15px;
+      }
+      @media screen and (max-width : v.$layout-breakpoint-tablet) {
+        flex-direction: row;
+        justify-content: space-around;
+      }
     }
   }
 
