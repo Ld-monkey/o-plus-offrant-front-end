@@ -3,6 +3,7 @@ import Cards from '../Cards/Cards';
 import AppHeader from '../AppHeader/AppHeader';
 import Categories from '../Categories/Categories';
 import Login from '../Login/Login';
+import Footer from '../Footer/Footer';
 import './App.scss';
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
       <Categories />
       <Cards />
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
+      <Footer />
     </div>
   );
 }

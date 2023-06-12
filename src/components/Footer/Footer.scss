@@ -1,0 +1,24 @@
+@use '../../styles/variables' as v;
+
+.Footer {
+  display: flex;
+  justify-content: center;
+  gap: 150px;
+  background-color: v.$color-primary;
+  color: v.$color-text;
+  padding: 50px;
+  line-height: 2rem;
+
+  &__info,
+  &__Pseudo {
+    padding: 2px;
+  }
+
+  a {
+    display: block;
+    color: v.$color-text;
+    &:hover {
+        text-decoration: underline;
+    }
+  }
+}
