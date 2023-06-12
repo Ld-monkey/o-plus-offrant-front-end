@@ -59,6 +59,14 @@ h2 {
 
       .auction-original-price {
         margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        @media screen and (max-width: v.$layout-breakpoint-desktop) {
+          font-size: 1rem;
+        }
+        @media screen and (max-width: v.$layout-breakpoint-tablet) {
+          font-size: 0.65rem;
+    }
+
       }
     }
   }
@@ -78,9 +86,13 @@ h2 {
     font-weight: bolder;
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
       font-size: v.$tablet-font-size-major;
+      border: 1.5px dotted v.$color-secondary;
+
     }
     @media screen and (max-width: v.$layout-breakpoint-tablet) {
       font-size: v.$mobile-font-size-major;
+      border: 0.75px dotted v.$color-secondary;
+
     }
   }
 
@@ -91,6 +103,15 @@ h2 {
 
     .auction-current-price {
       margin-right: 1rem;
+      font-size: 1.5rem;
+      color: v.$color-primary;
+      @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      font-size: v.$tablet-font-size-major;
+      }
+      @media screen and (max-width: v.$layout-breakpoint-tablet) {
+        font-size: v.$mobile-font-size-major;
+      }
+
     }
 
     .participate-btn {
@@ -112,14 +133,24 @@ h2 {
 }
 
 .auction-history {
-  margin-top: 5rem;
+  padding: 5rem 0; // TODO: à remettre en margin une fois le footer récupéré
 
   &-title {
     margin-bottom: 2rem;
   }
 
-  div{
-  display: flex;
-  flex-direction: column;
+  &-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+
+    thead {
+      font-size: 1.2rem;
+      background-color: v.$color-searchbar;
+    }
+
+    td {
+      padding: 15px 37px;
+      border: solid 1px black;
+    }
   }
 }

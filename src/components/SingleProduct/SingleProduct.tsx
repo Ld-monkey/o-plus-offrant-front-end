@@ -26,7 +26,7 @@ function SingleProduct() {
           </p>
           <div className="auction-infos">
             <span className="auction-original-price">
-              Mise de départ: 500 Tokens
+              Prix de départ: 500 Tokens
             </span>
             <span className="auction-remaining-time">
               Temps restant : 01:59:00
@@ -34,7 +34,7 @@ function SingleProduct() {
           </div>
           <div className="auction-amount">
             <span className="auction-current-price">
-              Montant actuel : 667 Tokens
+              Mise actuelle : 667 Tokens
             </span>
             <button className="participate-btn" type="button">
               Enchérir
@@ -45,6 +45,54 @@ function SingleProduct() {
 
       <section className="auction-history">
         {/* GRID ? */}
+
+        <h2 className="auction-history-title">Historique des enchères</h2>
+        <table className="auction-history-table">
+          <thead>
+            <tr>
+              <td>Nom de l&apos;enchérisseur</td>
+              <td>Montant de l&apos;enchère</td>
+              <td>Date de l&apos;enchère</td>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td className="auction-history-auctioner">Monsieur BLABLA 1 </td>
+              <td className="auction-history-price">635 Tokens</td>
+              <td className="auction-history-date">
+                Heure de l&apos;enchère : 01/01/2023 à 2h00mins30sec
+              </td>
+            </tr>
+            <tr>
+              <td className="auction-history-auctioner">Monsieur BLABLA 2 </td>
+              <td className="auction-history-price">605 Tokens</td>
+              <td className="auction-history-date">
+                Heure de l&apos;enchère : 01/01/2023 à 1h45mins30sec
+              </td>
+            </tr>
+            <tr>
+              <td className="auction-history-auctioner">Monsieur BLABLA 3 </td>
+              <td className="auction-history-price">577 Tokens</td>
+              <td className="auction-history-date">
+                Heure de l&apos;enchère : 01/01/2023 à 1h30mins30sec
+              </td>
+            </tr>
+            <tr>
+              <td className="auction-history-auctioner">Monsieur BLABLA 4 </td>
+              <td className="auction-history-price">550 Tokens</td>
+              <td className="auction-history-date">
+                Heure de l&apos;enchère : 01/01/2023 à 1h10mins30sec
+              </td>
+            </tr>
+            <tr>
+              <td className="auction-history-auctioner">Monsieur BLABLA 5 </td>
+              <td className="auction-history-price">525 Tokens</td>
+              <td className="auction-history-date">
+                Heure de l&apos;enchère : 01/01/2023 à 1h00mins30sec
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </section>
     </div>
   );
