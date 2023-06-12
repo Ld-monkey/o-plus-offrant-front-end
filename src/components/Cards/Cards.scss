@@ -7,13 +7,18 @@
 
     &-root {
         display: flex;
-        // border: 1px solid red;
         gap: 15px;
     }
 
     .cards-container {
+        border-radius: 5px;
         background-color: v.$color-on-lake;
         box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: rgba(12, 126, 180, 0.10); 
+        }
     }
 
     .first-card {
@@ -33,8 +38,7 @@
         position: relative;
         height: 25rem;
         overflow: hidden;
-        // border: 2px solid green;
-        margin: 0 auto;
+
         display: flex;
         justify-content: center;
         align-items: center;
@@ -53,19 +57,15 @@
         }
 
         img {
-            // max-width: fit-content;
-            //width: 100%;
             height: auto;
         }
     }
 
     .card-legend {
         display: flex;
-        justify-content: center;
-        align-items: center;
         flex-direction: column;
-        gap: 10px;
-        margin: 10px auto;
+        justify-content: center;
+        gap: 20px;
 
         p {
             text-align: center;
@@ -73,11 +73,19 @@
         }
 
         &__data {
-            display: flex;
             width: 100%;
-            // border: 1px solid red;
+            display: flex;
             justify-content: space-between;
+            flex-wrap: wrap;
             padding: 0 50px;
+        }
+
+        &__tokens {
+            color: v.$color-primary;
+        }
+
+        &__times {
+            font-family: "Open Sans";
         }
     }
 }
