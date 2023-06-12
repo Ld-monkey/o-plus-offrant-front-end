@@ -2,11 +2,15 @@
 
 .Footer {
   display: flex;
+  flex-direction: column;
+
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  text-align: center; 
+
   gap: 50px;
+
+  text-align: center; 
+
   background-color: v.$color-primary;
   color: v.$color-text;
   padding: 50px;
