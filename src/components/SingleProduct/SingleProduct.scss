@@ -40,6 +40,15 @@
       width: 100%;
       margin: 0;
     }
+
+    .auction-infos {
+      display: grid;
+      text-align: center;
+
+      .auction-original-price {
+        margin-bottom: 0.5rem;
+      }
+    }
   }
 
   &-title, &-description {
@@ -50,13 +59,23 @@
   }
 
   .auction-remaining-time {
-    border: 5px red;
-    border-style: dotted solid;
+    border: 3px dotted v.$color-secondary;
     padding: 0.5rem;
+    border-radius: 5rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      font-size: v.$tablet-font-size;
+    }
+    @media screen and (max-width: v.$layout-breakpoint-tablet) {
+      font-size: v.$mobile-font-size;
+    }
   }
 
   .auction-amount {
-    margin-top: 1.5rem;
+    margin-top: 1rem;
+    text-align: center;
+
 
     .auction-current-price {
       margin-right: 1rem;
@@ -67,8 +86,15 @@
       border: none;
       color: v.$color-text;
       border-radius: 5px;
-      padding: 5px 10px;
+      padding: 10px 20px;
+      font-size: 1.5rem;
       cursor: pointer;
+      @media screen and (max-width: v.$layout-breakpoint-desktop) {
+        font-size: v.$tablet-font-size;
+      }
+      @media screen and (max-width: v.$layout-breakpoint-tablet) {
+        font-size: v.$mobile-font-size;
+      }
     }
   }
 }

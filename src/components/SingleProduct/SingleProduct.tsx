@@ -24,9 +24,14 @@ function SingleProduct() {
             officia necessitatibus pariatur incidunt minima libero ex cumque, in
             consequatur esse cum eaque sint reiciendis ad iste
           </p>
-          <span className="auction-remaining-time">
-            Temps restant : 01:59:00
-          </span>
+          <div className="auction-infos">
+            <span className="auction-original-price">
+              Mise de départ: 500 Tokens
+            </span>
+            <span className="auction-remaining-time">
+              Temps restant : 01:59:00
+            </span>
+          </div>
           <div className="auction-amount">
             <span className="auction-current-price">
               Montant actuel : 1000 Tokens
@@ -40,6 +45,8 @@ function SingleProduct() {
 
       <section className="auction-history">
         <h2 className="auction-history-title">Historique des enchères</h2>
+
+
         {/* GRID ? */}
       </section>
     </div>
