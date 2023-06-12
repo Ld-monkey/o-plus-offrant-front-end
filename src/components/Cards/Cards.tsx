@@ -10,12 +10,14 @@ function Cards() {
             <div className="card">
               <div className="card-img">
                 <span className="current-auction">Dernière chance</span>
-                <img src="../../src/assets/bike.jpg" alt="bike" />
+                <img src="../../src/assets/images/bike.jpg" alt="bike" />
               </div>
               <div className="card-legend">
                 <p>Vélo pour tomber (1,80m minimum)</p>
-                <span>100 Tokens</span>
-                <span>00:01:20</span>
+                <div className="card-legend__data">
+                  <span>100 Tokens</span>
+                  <span>00:01:20</span>
+                </div>
               </div>
             </div>
           </div>
@@ -23,12 +25,14 @@ function Cards() {
             <div className="card">
               <div className="card-img">
                 <span className="current-auction">Dernière chance</span>
-                <img src="../../src/assets/bike.jpg" alt="bike" />
+                <img src="../../src/assets/images/banane.jpg" alt="bike" />
               </div>
               <div className="card-legend">
-                <p>Vélo pour tomber (1,80m minimum)</p>
-                <span>100 Tokens</span>
-                <span>00:01:20</span>
+                <p>Banane (sans pesticide)</p>
+                <div className="card-legend__data">
+                  <span>100 Tokens</span>
+                  <span>00:01:20</span>
+                </div>
               </div>
             </div>
           </div>

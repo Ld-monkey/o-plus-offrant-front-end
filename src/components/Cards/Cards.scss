@@ -7,11 +7,13 @@
 
     &-root {
         display: flex;
-        border: 1px solid red;
+        // border: 1px solid red;
+        gap: 15px;
     }
 
-    .card-container {
-        height: 100%;
+    .cards-container {
+        background-color: v.$color-on-lake;
+        box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
     }
 
     .first-card {
@@ -20,15 +22,28 @@
 
     .second-card {
         flex: 1;
+        display: none;
+
+        @media (min-width: v.$layout-breakpoint-tablet) {
+            display: block;
+        }
     }
 
     .card-img {
-        height: 15rem;
-        border: 2px solid green;
+        position: relative;
+        height: 25rem;
+        overflow: hidden;
+        // border: 2px solid green;
+        margin: 0 auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-bottom: 1px solid gray;
 
         span {
+            font-family: "Open Sans";
             font-size: 0.7rem;
-            position: relative;
+            position: absolute;
             top: 10px;
             left: 10px;
             background-color: #6DA4AA;
@@ -39,8 +54,30 @@
 
         img {
             // max-width: fit-content;
+            //width: 100%;
             height: auto;
         }
     }
 
+    .card-legend {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        gap: 10px;
+        margin: 10px auto;
+
+        p {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        &__data {
+            display: flex;
+            width: 100%;
+            // border: 1px solid red;
+            justify-content: space-between;
+            padding: 0 50px;
+        }
+    }
 }
