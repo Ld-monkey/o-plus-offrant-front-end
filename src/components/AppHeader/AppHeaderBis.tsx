@@ -36,7 +36,7 @@ function AppHeaderBis() {
                 aria-label="Search article through site content"
               />
             </form>
-            <div>
+            <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
                 <span>Vendre</span>
@@ -49,6 +49,24 @@ function AppHeaderBis() {
                 <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
                 <span>Connectez-vous</span>
               </button>
+              {/* Hamburger menu */}
+              <div className="hamburger-menu">
+                <input
+                  className="toggler-hamburger"
+                  type="checkbox"
+                  name="toggler-hamburger"
+                  onClick={handleClickToggle}
+                />
+                <div
+                  className={
+                    isOpen ? 'hamburger-line is-active' : 'hamburger-line'
+                  }
+                >
+                  <span className="line" />
+                  <span className="line" />
+                  <span className="line" />
+                </div>
+              </div>
             </div>
           </nav>
         </div>
