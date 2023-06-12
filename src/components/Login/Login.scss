@@ -7,7 +7,7 @@
   &.is-active {
     visibility: visible;
     z-index: 1;
-    position: absolute;
+    position: fixed;
     top: 0;
     background-color: rgba(127, 127, 127, 0.65);
     width: 100vw;
@@ -16,18 +16,25 @@
 }
 
 .modal-login {
-  visibility: hidden;
+  display: none;
+
+  .close-login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+  }
 
   &.is-active {
-    visibility: visible;
     z-index: 2;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    transform: translate(-50%, -30%);
+    position: fixed;
+    top: 30%; 
+    left: 0;
+    transform: translate(calc(50vw - 50%), -30%);
+    display: flex;
+    text-align: center;
     background-color: #ffffff;
-    margin: 10px 10px;
-    width: 28rem;
+    max-width: 28rem;
     height: 430px;
     padding: 3.375rem;
     border-radius: 5px;
