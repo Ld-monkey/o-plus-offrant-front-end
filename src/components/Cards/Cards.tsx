@@ -13,7 +13,7 @@ function Cards() {
                 <img src="../../src/assets/images/bike.jpg" alt="bike" />
               </div>
               <div className="card-legend">
-                <p>Vélo pour tomber (1,80m minimum)</p>
+                <p>Vélo (en carbone)</p>
                 <div className="card-legend__data">
                   <span className="card-legend__tokens">100 Tokens</span>
                   <span className="card-legend__times">00:01:20</span>
