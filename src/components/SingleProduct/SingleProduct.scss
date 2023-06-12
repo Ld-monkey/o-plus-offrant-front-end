@@ -1,14 +1,26 @@
 @use "../../styles/variables" as v;
 
+h2 {
+  font-size: 2rem;
+
+  @media screen and (max-width: v.$layout-breakpoint-desktop) {
+    font-size: v.$tablet-font-size-title;
+  }
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: v.$mobile-font-size-title;
+  }
+}
+
 .single-product {
   display: flex;
   align-items: center;
+
   @media screen and (max-width: v.$layout-breakpoint-desktop) {
     flex-wrap: wrap;
-    font-size: v.$tablet-font-size;
+    font-size: v.$tablet-font-size-text;
   }
   @media screen and (max-width: v.$layout-breakpoint-tablet) {
-    font-size: v.$mobile-font-size;
+    font-size: v.$mobile-font-size-text;
   }
 
   &-media {
@@ -65,10 +77,10 @@
     font-size: 1.5rem;
     font-weight: bolder;
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
-      font-size: v.$tablet-font-size;
+      font-size: v.$tablet-font-size-major;
     }
     @media screen and (max-width: v.$layout-breakpoint-tablet) {
-      font-size: v.$mobile-font-size;
+      font-size: v.$mobile-font-size-major;
     }
   }
 
@@ -90,10 +102,10 @@
       font-size: 1.5rem;
       cursor: pointer;
       @media screen and (max-width: v.$layout-breakpoint-desktop) {
-        font-size: v.$tablet-font-size;
+        font-size: v.$tablet-font-size-major;
       }
       @media screen and (max-width: v.$layout-breakpoint-tablet) {
-        font-size: v.$mobile-font-size;
+        font-size: v.$mobile-font-size-major;
       }
     }
   }
@@ -101,4 +113,13 @@
 
 .auction-history {
   margin-top: 5rem;
+
+  &-title {
+    margin-bottom: 2rem;
+  }
+
+  div{
+  display: flex;
+  flex-direction: column;
+  }
 }

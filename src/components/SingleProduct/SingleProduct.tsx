@@ -34,7 +34,7 @@ function SingleProduct() {
           </div>
           <div className="auction-amount">
             <span className="auction-current-price">
-              Montant actuel : 1000 Tokens
+              Montant actuel : 667 Tokens
             </span>
             <button className="participate-btn" type="button">
               Enchérir
@@ -44,9 +44,6 @@ function SingleProduct() {
       </section>
 
       <section className="auction-history">
-        <h2 className="auction-history-title">Historique des enchères</h2>
-
-
         {/* GRID ? */}
       </section>
     </div>
