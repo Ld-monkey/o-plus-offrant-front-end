@@ -49,6 +49,18 @@
     }
   }
 
+  &-btn-sell,
+  &-btn-category {
+    &:hover {
+      svg {
+        opacity: 0.8;
+      }
+      span {
+        text-decoration: underline;
+      }
+    }
+  }
+
   .icon-dollar,
   .icon-category,
   .icon-user {
@@ -72,49 +84,16 @@
       background-color: v.$color-primary;
       color: v.$color-text;
       border-radius: 5px;
-    }
-  }
+      border: 3px solid #fff;
 
-  .searchbar {
-    flex: 2;
-
-    display: flex;
-    justify-content: center;
-
-    padding: 8px;
-    background-color: v.$color-searchbar;
-    border-radius: 30px;
-
-    button {
-      outline: none;
-      border: none;
-      background: none;
-      padding-top: 5px;
-    }
-
-    input {
-      outline: none;
-      border: none;
-      background-color: inherit;
-      width: 100%;
-      // border: 1px solid red;
-    }
-
-    @media (max-width: 900px) {
-      background-color: white;
-      justify-content: start;
-      input {
-        display: none;
+      &:hover {
+        border: 3px solid #88b4ba;
       }
     }
-
-    @media (max-width: 640px) {
-      display: none;
-    }
   }
 
-   // Hamburger Menu.
-   .hamburger-menu {
+  // Hamburger Menu.
+  .hamburger-menu {
     display: inline-block;
     position: relative;
 
@@ -160,5 +139,58 @@
 
   .hamburger-line.is-active .line:nth-child(3) {
     transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+// Searchbar inside & outside.
+.searchbar {
+  flex: 2;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 8px;
+  background-color: v.$color-searchbar;
+  border-radius: 30px;
+
+  button {
+    outline: none;
+    border: none;
+    background: none;
+    padding-top: 5px;
+  }
+
+  input {
+    outline: none;
+    border: none;
+    background-color: inherit;
+    width: 100%;
+  }
+
+  &.inside-navbar {
+    @media (max-width: 900px) {
+      background-color: white;
+      justify-content: start;
+
+      button {
+        display: none;
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      display: none;
+    }
+  }
+
+  &.outside-navbar {
+    margin-top: 15px;
+
+    @media (min-width: 901px) {
+      display: none;
+    }
   }
 }

@@ -25,6 +25,7 @@ function AppHeaderBis() {
         <div id="wrapper">
           <nav className="header-navbar">
             <h1 className="header-logo">O+ Offrant</h1>
+            {/* inside navbar */}
             <form className="searchbar inside-navbar" role="search">
               <button type="button">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
@@ -72,21 +73,19 @@ function AppHeaderBis() {
         </div>
       </header>
       {/* outside navbar */}
-      {/* <div className="outside-navbar">
-        <div id="wrapper">
-          <form className="searchbar" role="search">
-            <button type="button">
-              <FontAwesomeIcon icon={faMagnifyingGlass} />
-            </button>
-            <input
-              type="search"
-              name="searchbar"
-              placeholder="Que cherchez-vous ?"
-              aria-label="Search article through site content"
-            />
-          </form>
-        </div>
-      </div> */}
+      <div id="wrapper">
+        <form className="searchbar outside-navbar" role="search">
+          <button type="button">
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+          <input
+            type="search"
+            name="searchbar"
+            placeholder="Que cherchez-vous ?"
+            aria-label="Search article through site content"
+          />
+        </form>
+      </div>
       {isOpen && (
         <aside className="aside-menu">
           <ul className="menu-items">
