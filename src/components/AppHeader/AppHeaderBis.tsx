@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { useState, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {
   faMagnifyingGlass,
-  faCartShopping,
   faSackDollar,
   faToolbox,
   faCircleUser,
@@ -11,6 +10,7 @@ import './AppHeaderBis.scss';
 
 function AppHeaderBis() {
   const [isOpen, setIsOpen] = useState(false);
+  const [contentSearchBar, setContentSearchBar] = useState('');
 
   /**
    * Toggle the item list when the hamburger menu is clicked.
@@ -19,6 +19,22 @@ function AppHeaderBis() {
     setIsOpen(!isOpen);
   }
 
+  /**
+   * Updates searchbar content.
+   */
+  function changeInputContent() {
+    setContentSearchBar(event?.target.value);
+  }
+
+  /**
+   * Submit search.
+   * @param event 
+   */
+  function handleSubmit(event: FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    console.log(contentSearchBar);
+  };
+
   return (
     <>
       <header className="header">
@@ -26,7 +42,11 @@ function AppHeaderBis() {
           <nav className="header-navbar">
             <h1 className="header-logo">O+ Offrant</h1>
             {/* inside navbar */}
-            <form className="searchbar inside-navbar" role="search">
+            <form
+              className="searchbar inside-navbar"
+              role="search"
+              onSubmit={handleSubmit}
+            >
               <button type="button">
                 <FontAwesomeIcon icon={faMagnifyingGlass} />
               </button>
@@ -35,6 +55,7 @@ function AppHeaderBis() {
                 name="searchbar"
                 placeholder="Que cherchez-vous ?"
                 aria-label="Search article through site content"
+                onClick={changeInputContent}
               />
             </form>
             <div className="header-navbar-container">
