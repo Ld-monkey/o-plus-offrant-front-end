@@ -1,0 +1,39 @@
+@use "../../styles/variables" as v;
+
+.categories-navbar {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin: 30px 0;
+  flex-wrap: wrap;
+}
+
+.categories-link {
+  width: 150px;
+  border-radius: 30px;
+  background-color: v.$color-text;
+  border: 1px solid v.$color-secondary;
+  color: v.$color-secondary;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 5px 0;
+@media screen and (max-width: v.$layout-breakpoint-desktop) {
+  font-size: v.$tablet-font-size;
+  min-width: fit-content;
+  width: 100px;
+  padding: 5px 10px;
+}
+
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: v.$mobile-font-size;
+    width: 75px;
+  }
+}
+
+.categories-link:hover {
+  background-color: #e1aa70;
+  color: v.$color-text;
+  border: none;
+}

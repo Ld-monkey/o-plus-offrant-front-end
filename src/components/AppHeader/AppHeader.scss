@@ -38,7 +38,7 @@
       display: none;
     }
 
-    @media (min-width: v.$layout-breakpoint-tablet) {
+    @media (min-width: 435px) {
       span {
         display: inline;
       }
@@ -78,7 +78,7 @@
   &-btn-login {
     display: none;
 
-    @media (min-width: v.$layout-breakpoint-tablet) {
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
       display: inline;
       padding: 10px;
       background-color: v.$color-primary;
@@ -97,7 +97,7 @@
     display: inline-block;
     position: relative;
 
-    @media (min-width: v.$layout-breakpoint-tablet) {
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
       display: none;
     }
   }
