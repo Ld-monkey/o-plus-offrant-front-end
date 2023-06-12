@@ -34,12 +34,12 @@
     background: none;
     cursor: pointer;
 
-    span {
+    a {
       display: none;
     }
 
     @media (min-width: 435px) {
-      span {
+      a {
         display: inline;
       }
 

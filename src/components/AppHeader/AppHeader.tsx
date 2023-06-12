@@ -8,7 +8,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 
-function AppHeader() {
+function AppHeader({ toggleModalLogin }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
 
@@ -60,13 +60,17 @@ function AppHeader() {
             <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <span>Vendre</span>
+                <a href="#vendre">Vendre</a>
               </button>
               <button type="button" className="header-btn-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <span>Categories</span>
+                <a href="#categories">Categories</a>
               </button>
-              <button type="button" className="header-btn-login">
+              <button
+                type="button"
+                className="header-btn-login"
+                onClick={toggleModalLogin}
+              >
                 <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
                 <span>Connectez-vous</span>
               </button>
