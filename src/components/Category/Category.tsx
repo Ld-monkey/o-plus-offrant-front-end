@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './Category.scss';
+import { Link } from 'react-router-dom';
 
 /**
  * Sort increase price.
@@ -77,7 +78,7 @@ function Category() {
         </form>
       </div>
       <div className="containerCardCat">
-        <div className="cardCat">
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -99,8 +100,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -122,8 +123,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -145,8 +146,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -168,8 +169,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -191,8 +192,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -214,8 +215,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -237,8 +238,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -260,8 +261,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -283,8 +284,8 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
-        <div className="cardCat">
+        </Link>
+        <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
             src="../../src/assets/DualSense-Edge-Main.webp"
@@ -306,7 +307,7 @@ function Category() {
               </button>
             </p>
           </div>
-        </div>
+        </Link>
       </div>
 
       <div id="wrapper">
