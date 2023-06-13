@@ -1,24 +1,31 @@
+import { NavLink } from 'react-router-dom';
 import './Categories.scss';
 
 function Categories() {
   return (
     <div id="wrapper">
       <nav className="categories-navbar">
-        <a href="/#" className="categories-link">
+        <NavLink
+          to="/category/sport-et-loisir/produits"
+          className="categories-link"
+        >
           Sport & Loisirs
-        </a>
-        <a href="/#" className="categories-link">
+        </NavLink>
+        <NavLink
+          to="/category/maison-et-jardin/produits"
+          className="categories-link"
+        >
           Maison & Jardin
-        </a>
-        <a href="/#" className="categories-link">
+        </NavLink>
+        <NavLink to="/category/high-tech/produits" className="categories-link">
           High Tech
-        </a>
-        <a href="/#" className="categories-link">
+        </NavLink>
+        <NavLink to="/category/mode/produits" className="categories-link">
           Mode
-        </a>
-        <a href="/#" className="categories-link">
+        </NavLink>
+        <NavLink to="/category/livres/produits" className="categories-link">
           Livres
-        </a>
+        </NavLink>
       </nav>
     </div>
   );
