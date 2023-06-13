@@ -1,11 +1,12 @@
 import { useState } from 'react';
-import Cards from '../Cards/Cards';
+import { Outlet } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
 import Categories from '../Categories/Categories';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import './App.scss';
-import CarouselItem from '../Carousel/Carousel';
+// import CarouselItem from '../Carousel/Carousel';
+// import Cards from '../Cards/Cards';
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -18,8 +19,9 @@ function App() {
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
       <Categories />
-      <Cards />
-      <CarouselItem />
+      <Outlet />
+      {/* <Cards />
+      <CarouselItem /> */}
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer />
     </div>

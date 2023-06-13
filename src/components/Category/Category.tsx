@@ -49,28 +49,33 @@ function Category() {
   const [isChecked, setIsChecked] = useState(false);
   return (
     <>
-      <form>
-        <p className="Tri">
-          Trier par :
-          <label htmlFor="Prix croissant" className="categoryName">
-            <input type="checkbox" value="increase" onChange={checkCategory} />
-            <span>Prix croissant</span>
-          </label>
-          <label htmlFor="Prix décroissant" className="categoryName">
-            <input type="checkbox" value="decrease" onClick={checkCategory} />
-            <span>Prix décroissant</span>
-          </label>
-          <label htmlFor="Temps restant croissant" className="categoryName">
-            <input type="checkbox" onClick={checkCategory} />
-            <span>Temps restant croissant</span>
-          </label>
-          <label htmlFor="Temps restant croissant" className="categoryName">
-            <input type="checkbox" onClick={checkCategory} />
-            <span>Temps restant décroissant</span>
-          </label>
-        </p>
-      </form>
-
+      <div id="wrapper">
+        <form>
+          <p className="Tri">
+            Trier par :
+            <label htmlFor="Prix croissant" className="categoryName">
+              <input
+                type="checkbox"
+                value="increase"
+                onChange={checkCategory}
+              />
+              <span>Prix croissant</span>
+            </label>
+            <label htmlFor="Prix décroissant" className="categoryName">
+              <input type="checkbox" value="decrease" onClick={checkCategory} />
+              <span>Prix décroissant</span>
+            </label>
+            <label htmlFor="Temps restant croissant" className="categoryName">
+              <input type="checkbox" onClick={checkCategory} />
+              <span>Temps restant croissant</span>
+            </label>
+            <label htmlFor="Temps restant croissant" className="categoryName">
+              <input type="checkbox" onClick={checkCategory} />
+              <span>Temps restant décroissant</span>
+            </label>
+          </p>
+        </form>
+      </div>
       <div className="containerCardCat">
         <div className="cardCat">
           <img
@@ -304,14 +309,16 @@ function Category() {
         </div>
       </div>
 
-      <div>
+      <div id="wrapper">
         <div>
-          <button type="button" className="buttonPage">
-            Page précédente
-          </button>
-          <button type="button" className="buttonPage">
-            Page suivante
-          </button>
+          <div>
+            <button type="button" className="buttonPage">
+              Page précédente
+            </button>
+            <button type="button" className="buttonPage">
+              Page suivante
+            </button>
+          </div>
         </div>
       </div>
     </>

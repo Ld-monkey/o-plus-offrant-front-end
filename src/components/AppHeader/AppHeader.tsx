@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import {
   faMagnifyingGlass,
   faSackDollar,
@@ -39,7 +40,9 @@ function AppHeader({ toggleModalLogin }) {
       <header className="header">
         <div id="wrapper">
           <nav className="header-navbar">
-            <h1 className="header-logo">O+ Offrant</h1>
+            <Link to="/">
+              <h1 className="header-logo">O+ Offrant</h1>
+            </Link>
             {/* inside navbar */}
             <form
               className="searchbar inside-navbar"
@@ -64,7 +67,7 @@ function AppHeader({ toggleModalLogin }) {
               </button>
               <button type="button" className="header-btn-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <a href="#categories">Categories</a>
+                <Link to="produits">Categories</Link>
               </button>
               <button
                 type="button"
