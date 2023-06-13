@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Footer.scss';
 
 function Footer() {
@@ -5,10 +6,10 @@ function Footer() {
     <footer className="Footer">
       <div className="Footer__info">
         <h2>O + Offrant</h2>
-        <a href="#incscription">Inscription</a>
-        <a href="#login">Connectez-vous</a>
-        <a href="#vendre">Vendre</a>
-        <a href="#category">Catégories</a>
+        <Link to="#incscription">Inscription</Link>
+        <Link to="#login">Connectez-vous</Link>
+        <Link to="/produit/creation">Vendre</Link>
+        <Link to="/produits">Catégories</Link>
       </div>
       <div className="Footer__Pseudo">
         <h2>Contactez-nous</h2>
