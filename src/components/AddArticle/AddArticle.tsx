@@ -15,6 +15,20 @@ function AddArticle() {
           <textarea rows={5} placeholder="Détail de l'article..." />
         </div>
 
+        <div className="article-category">
+          <label htmlFor="category">Catégorie :</label>
+          <select>
+            <option className="default-option" value="" selected>
+              -- Veuillez-sélectionner --
+            </option>
+            <option value="category-1">Catégorie 1</option>
+            <option value="category-2">Catégorie 2</option>
+            <option value="category-3">Catégorie 3</option>
+            <option value="category-4">Catégorie 4</option>
+            <option value="category-N">Catégorie N</option>
+          </select>
+        </div>
+
         <div className="article-price">
           <label htmlFor="price">Prix de départ :</label>
           <input type="text" placeholder="100 Tokens" />
