@@ -63,7 +63,7 @@ function AppHeader({ toggleModalLogin }) {
             <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <a href="#vendre">Vendre</a>
+                <Link to="produit/creation">Vendre</Link>
               </button>
               <button type="button" className="header-btn-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />

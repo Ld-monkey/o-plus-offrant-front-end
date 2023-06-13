@@ -6,6 +6,7 @@ import './styles/index.scss';
 import App from './components/App/App';
 import Category from './components/Category/Category';
 import Home from './components/Home/Home';
+import AddArticle from './components/AddArticle/AddArticle';
 
 const router = createBrowserRouter([
   {
@@ -19,6 +20,10 @@ const router = createBrowserRouter([
       {
         path: 'produits',
         element: <Category />,
+      },
+      {
+        path: 'produit/creation',
+        element: <AddArticle />,
       },
     ],
   },
