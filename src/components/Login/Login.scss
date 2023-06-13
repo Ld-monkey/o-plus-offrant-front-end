@@ -1,0 +1,73 @@
+@use '../../styles/variables' as v;
+@use '../../styles/mixins' as m;
+
+.entire-shadow-screen {
+  visibility: hidden;
+
+  &.is-active {
+    visibility: visible;
+    z-index: 1;
+    position: fixed;
+    top: 0;
+    background-color: rgba(127, 127, 127, 0.65);
+    width: 100vw;
+    height: 100vh;
+  }
+}
+
+.modal-login {
+  display: none;
+
+  .close-login {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    cursor: pointer;
+  }
+
+  &.is-active {
+    z-index: 2;
+    position: fixed;
+    top: 30%; 
+    left: 0;
+    transform: translate(calc(50vw - 50%), -30%);
+    display: flex;
+    text-align: center;
+    background-color: #ffffff;
+    max-width: 28rem;
+    height: 430px;
+    padding: 3.375rem;
+    border-radius: 5px;
+  }
+
+  input {
+    outline: none;
+    width: 100%;
+    border: 3px solid v.$color-primary;
+    border-radius: 5px;
+    padding: 10px;
+    font-family: 'Open Sans';
+    margin-bottom: 10px;
+  }
+
+  button {
+    @include m.buttons-style;
+    width: 100%;
+    padding: 25px;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    color: #ffffff;
+    cursor: pointer;
+  }
+
+  .login {
+    margin: 1.5rem auto;
+    background-color: v.$color-lake;
+  }
+
+  .create-account {
+    margin-top: 1.2rem;
+    background-color: v.$color-primary;
+  }
+}

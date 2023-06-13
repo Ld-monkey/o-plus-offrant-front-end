@@ -1,0 +1,92 @@
+@use "../../styles/variables" as v;
+
+.cards {
+    margin-bottom: 2.5rem;
+
+    h2 {
+        margin-bottom: 1rem;
+    }
+
+    &-root {
+        display: flex;
+        gap: 15px;
+    }
+
+    .cards-container {
+        border-radius: 5px;
+        background-color: v.$color-on-lake;
+        box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
+        transition: background-color 0.3s;
+
+        &:hover {
+            background-color: rgba(12, 126, 180, 0.10); 
+        }
+    }
+
+    .first-card {
+        flex: 2;
+    }
+
+    .second-card {
+        flex: 1;
+        display: none;
+
+        @media (min-width: v.$layout-breakpoint-tablet) {
+            display: block;
+        }
+    }
+
+    .card-img {
+        position: relative;
+        height: 25rem;
+        overflow: hidden;
+
+        display: flex;
+        justify-content: center;
+        align-items: center;
+
+        span {
+            font-family: "Open Sans";
+            font-size: 0.7rem;
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background-color: #6DA4AA;
+            color: #ffff;
+            padding: 4px;
+            border-radius: 5px;
+        }
+
+        img {
+            height: auto;
+        }
+    }
+
+    .card-legend {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        gap: 20px;
+
+        p {
+            text-align: center;
+            font-size: 1.5rem;
+        }
+
+        &__data {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            padding: 0 50px;
+        }
+
+        &__tokens {
+            color: v.$color-primary;
+        }
+
+        &__times {
+            font-family: "Open Sans";
+        }
+    }
+}

@@ -1,0 +1,196 @@
+@use '../../styles/variables' as v;
+
+.header {
+  display: flex;
+  align-items: center;
+  height: 6rem;
+  border-bottom: 1px solid #d9d9d9;
+
+  &-logo {
+    font-size: 1.5rem;
+  }
+
+  &-navbar {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+
+    &-container {
+      display: flex;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    @media (max-width: 830px) {
+      justify-content: space-between;
+    }
+  }
+
+  &-btn-sell,
+  &-btn-category,
+  &-btn-login {
+    border: none;
+    outline: none;
+    background: none;
+    cursor: pointer;
+
+    a {
+      display: none;
+    }
+
+    @media (min-width: 435px) {
+      a {
+        display: inline;
+      }
+
+      svg {
+        padding-right: 10px;
+      }
+    }
+  }
+
+  &-btn-sell,
+  &-btn-category {
+    &:hover {
+      svg {
+        opacity: 0.8;
+      }
+      a {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  .icon-dollar,
+  .icon-category,
+  .icon-user {
+    height: 1.2rem;
+  }
+
+  .icon-dollar {
+    color: v.$color-secondary;
+  }
+
+  .icon-category {
+    color: v.$color-primary;
+  }
+
+  &-btn-login {
+    display: none;
+
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+      display: inline;
+      padding: 10px;
+      background-color: v.$color-primary;
+      color: v.$color-text;
+      border-radius: 5px;
+      border: 3px solid #fff;
+
+      &:hover {
+        border: 3px solid #88b4ba;
+      }
+    }
+  }
+
+  // Hamburger Menu.
+  .hamburger-menu {
+    display: inline-block;
+    position: relative;
+
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+      display: none;
+    }
+  }
+
+  .toggler-hamburger,
+  .hamburger-lines {
+    position: absolute;
+    display: block;
+  }
+
+  .toggler-hamburger {
+    z-index: 1;
+    opacity: 0;
+    width: 100%;
+    height: 100%;
+  }
+
+  .toggler-hamburger:hover {
+    cursor: pointer;
+  }
+
+  .line {
+    display: block;
+    width: 30px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: gray;
+    margin: 4px auto;
+    transition: all 0.3s ease-in-out;
+  }
+
+  .hamburger-line.is-active .line:nth-child(2) {
+    opacity: 0;
+  }
+
+  .hamburger-line.is-active .line:nth-child(1) {
+    transform: translateY(8px) rotate(45deg);
+  }
+
+  .hamburger-line.is-active .line:nth-child(3) {
+    transform: translateY(-8px) rotate(-45deg);
+  }
+}
+
+// Searchbar inside & outside.
+.searchbar {
+  flex: 2;
+
+  display: flex;
+  justify-content: center;
+
+  padding: 8px;
+  background-color: v.$color-searchbar;
+  border-radius: 30px;
+
+  button {
+    outline: none;
+    border: none;
+    background: none;
+    padding-top: 5px;
+  }
+
+  input {
+    outline: none;
+    border: none;
+    background-color: inherit;
+    width: 100%;
+  }
+
+  &.inside-navbar {
+    @media (max-width: 900px) {
+      background-color: white;
+      justify-content: start;
+
+      button {
+        display: none;
+      }
+
+      input {
+        display: none;
+      }
+    }
+
+    @media (max-width: 640px) {
+      display: none;
+    }
+  }
+
+  &.outside-navbar {
+    margin-top: 15px;
+
+    @media (min-width: 901px) {
+      display: none;
+    }
+  }
+}
