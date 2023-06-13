@@ -27,7 +27,7 @@
 }
 
   @media screen and (max-width: v.$layout-breakpoint-tablet) {
-    font-size: v.$mobile-font-size;
+    font-size: v.$mobile-font-size-tablet;
     width: 75px;
   }
 }
