@@ -23,7 +23,7 @@ function Cards() {
             </Link>
           </div>
           <div className="cards-container second-card">
-            <a href="#article2" className="card">
+            <Link to="produit/2" className="card">
               <div className="card-img">
                 <span className="current-auction">Dernière chance</span>
                 <img src="../../src/assets/images/banane.jpg" alt="bike" />
@@ -35,7 +35,7 @@ function Cards() {
                   <span className="card-legend__times">00:01:20</span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
       </div>

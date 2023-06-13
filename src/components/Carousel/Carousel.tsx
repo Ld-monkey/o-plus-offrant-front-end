@@ -1,6 +1,7 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import '../Cards/Cards.scss';
+import { Link } from 'react-router-dom';
 
 function CarouselItem() {
   const responsive = {
@@ -31,7 +32,7 @@ function CarouselItem() {
             className="cards-container first-card"
             style={{ backgroundColor: '#FDF5EA' }}
           >
-            <a href="#article1" className="card">
+            <Link to="produit/1" className="card">
               <div className="card-img">
                 <img src="../../src/assets/images/bike.jpg" alt="bike" />
               </div>
@@ -42,7 +43,7 @@ function CarouselItem() {
                   <span className="card-legend__times">00:01:20</span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
         <div>
