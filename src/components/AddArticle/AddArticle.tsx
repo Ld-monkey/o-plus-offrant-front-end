@@ -17,8 +17,8 @@ function AddArticle() {
 
         <div className="article-category">
           <label htmlFor="category">Catégorie :</label>
-          <select>
-            <option className="default-option" value="" selected>
+          <select required>
+            <option className="default-option" value="" selected disabled>
               -- Veuillez-sélectionner --
             </option>
             <option value="category-1">Catégorie 1</option>
