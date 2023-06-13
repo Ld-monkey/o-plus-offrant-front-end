@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import './Cards.scss';
 
 function Cards() {
@@ -7,7 +8,7 @@ function Cards() {
         <h2>Enchères</h2>
         <div className="cards-root">
           <div className="cards-container first-card">
-            <a href="#article1" className="card">
+            <Link to="produit/1" className="card">
               <div className="card-img">
                 <span className="current-auction">Dernière chance</span>
                 <img src="../../src/assets/images/bike.jpg" alt="bike" />
@@ -19,7 +20,7 @@ function Cards() {
                   <span className="card-legend__times">00:01:20</span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
           <div className="cards-container second-card">
             <a href="#article2" className="card">

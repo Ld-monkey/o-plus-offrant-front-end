@@ -7,6 +7,7 @@ import App from './components/App/App';
 import Category from './components/Category/Category';
 import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
+import SingleProduct from './components/SingleProduct/SingleProduct';
 
 const router = createBrowserRouter([
   {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
       {
         path: 'produits',
         element: <Category />,
+      },
+      {
+        path: 'produit/:idArticle',
+        element: <SingleProduct />,
       },
       {
         path: 'produit/creation',
