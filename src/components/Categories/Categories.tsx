@@ -1,34 +1,42 @@
 import { NavLink } from 'react-router-dom';
-import './Categories.scss';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
 
-function Categories() {
+import './Categories.scss';
+import { Category } from '../Interface/Index';
+
+function CategoriesBar() {
+  const [categories, setCategories] = useState<Category[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get(
+          'https://didierlam-server.eddi.cloud/api/categories'
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCategories();
+  }, []);
+
   return (
     <div id="wrapper">
       <nav className="categories-navbar">
-        <NavLink
-          to="/category/sport-et-loisir/produits"
-          className="categories-link"
-        >
-          Sport & Loisirs
-        </NavLink>
-        <NavLink
-          to="/category/maison-et-jardin/produits"
-          className="categories-link"
-        >
-          Maison & Jardin
-        </NavLink>
-        <NavLink to="/category/high-tech/produits" className="categories-link">
-          High Tech
-        </NavLink>
-        <NavLink to="/category/mode/produits" className="categories-link">
-          Mode
-        </NavLink>
-        <NavLink to="/category/livres/produits" className="categories-link">
-          Livres
-        </NavLink>
+        {categories.map((category) => (
+          <NavLink
+            key={category.id}
+            to={`/category/${category.id}/produits`}
+            className="categories-link"
+          >
+            {category.nom}
+          </NavLink>
+        ))}
       </nav>
     </div>
   );
 }
 
-export default Categories;
+export default CategoriesBar;
