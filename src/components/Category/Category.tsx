@@ -1,5 +1,8 @@
+import { useEffect, useState } from 'react';
 import './Category.scss';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+import ICategory from './ICategory';
 
 /**
  * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
@@ -8,6 +11,22 @@ import { Link } from 'react-router-dom';
 function handlePriceMore() {}
 
 function Category() {
+  const [articles, setArticles] = useState<ICategory[]>([]);
+
+  useEffect(() => {
+    async function getArticles() {
+      try {
+        const response = await axios.get(
+          'https://didierlam-server.eddi.cloud/api/products'
+        );
+        setArticles(response.data.allProducts);
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    getArticles();
+  }, []);
+
   return (
     <>
       <div id="wrapper">
