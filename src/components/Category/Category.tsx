@@ -1,44 +1,5 @@
-import { useState } from 'react';
 import './Category.scss';
 import { Link } from 'react-router-dom';
-
-/**
- * Sort increase price.
- */
-function sortIncreasePrice() {
-  console.log('sortIncreasePrice');
-}
-
-/**
- * Sort decrease price.
- */
-function sortDecreasePrice() {
-  console.log('sortDecreasePrice');
-}
-
-/**
- * Check the checkbox.
- */
-function checkCategory() {
-  const isChecked = event?.target.checked;
-  const value = event?.target.value;
-
-  if (!isChecked) {
-    return;
-  }
-
-  switch (value) {
-    case 'increase':
-      sortIncreasePrice();
-      break;
-    case 'decrease':
-      sortDecreasePrice();
-      break;
-    default:
-      console.log('unknow action');
-      break;
-  }
-}
 
 /**
  * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
@@ -47,7 +8,6 @@ function checkCategory() {
 function handlePriceMore() {}
 
 function Category() {
-  const [isChecked, setIsChecked] = useState(false);
   return (
     <>
       <div id="wrapper">
@@ -55,23 +15,19 @@ function Category() {
           <p className="Tri">
             Trier par :
             <label htmlFor="Prix croissant" className="categoryName">
-              <input
-                type="checkbox"
-                value="increase"
-                onChange={checkCategory}
-              />
+              <input type="checkbox" value="increase" />
               <span>Prix croissant</span>
             </label>
             <label htmlFor="Prix décroissant" className="categoryName">
-              <input type="checkbox" value="decrease" onClick={checkCategory} />
+              <input type="checkbox" value="decrease" />
               <span>Prix décroissant</span>
             </label>
             <label htmlFor="Temps restant croissant" className="categoryName">
-              <input type="checkbox" onClick={checkCategory} />
+              <input type="checkbox" />
               <span>Temps restant croissant</span>
             </label>
             <label htmlFor="Temps restant croissant" className="categoryName">
-              <input type="checkbox" onClick={checkCategory} />
+              <input type="checkbox" />
               <span>Temps restant décroissant</span>
             </label>
           </p>
