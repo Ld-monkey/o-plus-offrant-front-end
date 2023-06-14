@@ -5,8 +5,6 @@ import Categories from '../Categories/Categories';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import './App.scss';
-// import CarouselItem from '../Carousel/Carousel';
-// import Cards from '../Cards/Cards';
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState(false);
@@ -28,8 +26,6 @@ function App() {
       <AppHeader toggleModalLogin={checkOpenModal} />
       <Categories />
       <Outlet />
-      {/* <Cards />
-      <CarouselItem /> */}
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer />
     </div>
