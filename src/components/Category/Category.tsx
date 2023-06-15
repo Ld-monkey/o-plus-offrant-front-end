@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import './Category.scss';
 import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 /**
  * Sort increase price.
@@ -60,6 +61,20 @@ function Category() {
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
 
   const { idCategory } = useParams();
+
+  useEffect(() => {
+    async function fetchArticlesByCategory() {
+      try {
+        const response = await axios.get(
+          `https://didierlam-server.eddi.cloud/api/category/${idCategory}/articles`
+        );
+        setArticles(response.data.filteredArticles);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchArticlesByCategory();
+  }, [idCategory]);
 
   return (
     <>
