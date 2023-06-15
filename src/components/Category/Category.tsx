@@ -57,6 +57,7 @@ interface ArticlesProps {
 
 function Category() {
   const [isChecked, setIsChecked] = useState(false);
+  const [articles, setArticles] = useState<ArticlesProps[]>([]);
 
   return (
     <>
