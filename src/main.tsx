@@ -8,6 +8,8 @@ import Category from './components/Category/Category';
 import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
 import SingleProduct from './components/SingleProduct/SingleProduct';
+import { Provider } from 'react-redux';
+import store from './store/store';
 
 const router = createBrowserRouter([
   {
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );

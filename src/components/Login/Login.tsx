@@ -1,28 +1,36 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
-import { FormEvent, useState } from 'react';
-import axios from '../../api/axios';
+import { FormEvent } from 'react';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { login } from '../../store/reducer/user';
 import './Login.scss';
 
 function Login({ toggleModalLogin, isOpenModal }) {
   const isOpenLogin = isOpenModal;
+  const { logged: isLogged, token } = useAppSelector((state) => state.user);
+  const dispatch = useAppDispatch();
+
+  console.log('isLogged :', isLogged);
+  console.log('token ?', token);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);
-    const [email, password] = formData.values();
 
-    try {
-      const response = await axios.post('/api/login', {
-        adresse_mail: email,
-        mot_de_passe: password,
-      });
-      console.log(response.data);
-    } catch (e) {
-      console.error('Fail to login :', e);
-    }
+    dispatch(login(formData));
+    //const [email, password] = formData.values();
+
+    // try {
+    //   const response = await axios.post('/api/login', {
+    //     adresse_mail: email,
+    //     mot_de_passe: password,
+    //   });
+    //   console.log(response.data);
+    // } catch (e) {
+    //   console.error('Fail to login :', e);
+    // }
   };
 
   return (
@@ -30,7 +38,7 @@ function Login({ toggleModalLogin, isOpenModal }) {
       {/* Take the whole screen and give a shadow effect */}
       <div
         className={
-          isOpenLogin
+          isOpenLogin && !isLogged
             ? 'entire-shadow-screen is-active'
             : 'entire-shadow-screen'
         }
@@ -41,7 +49,11 @@ function Login({ toggleModalLogin, isOpenModal }) {
       />
 
       {/* Modal for login */}
-      <div className={isOpenLogin ? 'modal-login is-active' : 'modal-login'}>
+      <div
+        className={
+          isOpenLogin && !isLogged ? 'modal-login is-active' : 'modal-login'
+        }
+      >
         <FontAwesomeIcon
           icon={faSquareXmark}
           className="close-login"
