@@ -7,11 +7,8 @@ import './Login.scss';
 
 function Login({ toggleModalLogin, isOpenModal }) {
   const isOpenLogin = isOpenModal;
-  const { logged: isLogged, token } = useAppSelector((state) => state.user);
   const dispatch = useAppDispatch();
-
-  console.log('isLogged :', isLogged);
-  console.log('token ?', token);
+  const { logged: isLogged } = useAppSelector((state) => state.user);
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -20,17 +17,6 @@ function Login({ toggleModalLogin, isOpenModal }) {
     const formData = new FormData(form);
 
     dispatch(login(formData));
-    //const [email, password] = formData.values();
-
-    // try {
-    //   const response = await axios.post('/api/login', {
-    //     adresse_mail: email,
-    //     mot_de_passe: password,
-    //   });
-    //   console.log(response.data);
-    // } catch (e) {
-    //   console.error('Fail to login :', e);
-    // }
   };
 
   return (

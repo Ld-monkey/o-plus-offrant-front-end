@@ -8,10 +8,13 @@ import {
   faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
+import { useAppSelector } from '../../hooks/redux';
 
 function AppHeader({ toggleModalLogin }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+
+  const { logged: isLogged } = useAppSelector((state) => state.user);
 
   /**
    * Toggle the item list when the hamburger menu is clicked.
@@ -69,14 +72,21 @@ function AppHeader({ toggleModalLogin }) {
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
                 <Link to="produits">Categories</Link>
               </button>
-              <button
-                type="button"
-                className="header-btn-login"
-                onClick={toggleModalLogin}
-              >
-                <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
-                <span>Connectez-vous</span>
-              </button>
+              {!isLogged ? (
+                <button
+                  type="button"
+                  className="header-btn-login"
+                  onClick={toggleModalLogin}
+                >
+                  <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+                  <span>Connectez-vous</span>
+                </button>
+              ) : (
+                <div className="header-logged">
+                  <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+                  <p>Bonjour</p>
+                </div>
+              )}
               {/* Hamburger menu */}
               <div className="hamburger-menu">
                 <input

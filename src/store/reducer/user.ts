@@ -8,14 +8,14 @@ import axios from '../../api/axios';
 
 interface UserState {
   logged: boolean;
-  pseudo: string | null;
+  // pseudo: string | null;
   accessToken: string | null;
   refreshToken: string | null;
 }
 
 export const initialState: UserState = {
   logged: false,
-  pseudo: null,
+  // pseudo: null,
   accessToken: null,
   refreshToken: null,
 };
@@ -42,21 +42,21 @@ export const logout = createAction('user/logout');
 const userReducer = createReducer(initialState, (builder) => {
   builder
     .addCase(login.fulfilled, (state, action) => {
-      const { pseudo, accessToken } = action.payload;
+      const { accessToken } = action.payload;
 
       state.logged = true;
-      state.pseudo = pseudo;
+      // state.pseudo = pseudo;
       state.accessToken = accessToken;
     })
     .addCase(login.rejected, (state, action) => {
       state.logged = false;
-      state.pseudo = null;
+      // state.pseudo = null;
       state.accessToken = null;
     })
     .addCase(logout, (state, action) => {
       state.logged = false;
-      state.pseudo = null;
-      state.token = null;
+      // state.pseudo = null;
+      state.accessToken = null;
     });
 });
 
