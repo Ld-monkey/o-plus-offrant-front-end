@@ -2,6 +2,16 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import './SingleProduct.scss';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 
+interface SingleArticleProps {
+  id: number;
+  photo: string;
+  nom: string;
+  description: string;
+  prix_de_depart: string;
+  date_de_fin: string;
+  montant: string;
+}
+
 function SingleProduct() {
   return (
     <div id="wrapper">
