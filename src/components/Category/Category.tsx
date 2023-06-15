@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import './Category.scss';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 
 /**
  * Sort increase price.
@@ -58,6 +58,8 @@ interface ArticlesProps {
 function Category() {
   const [isChecked, setIsChecked] = useState(false);
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
+
+  const { idCategory } = useParams();
 
   return (
     <>
