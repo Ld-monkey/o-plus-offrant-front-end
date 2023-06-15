@@ -63,17 +63,22 @@ function Category() {
   const { idCategory } = useParams();
 
   useEffect(() => {
-    async function fetchArticlesByCategory() {
+    async function fetchArticles() {
+      const apiReq = idCategory
+        ? `https://didierlam-server.eddi.cloud/api/category/${idCategory}/articles`
+        : `https://didierlam-server.eddi.cloud/api/articles`;
       try {
-        const response = await axios.get(
-          `https://didierlam-server.eddi.cloud/api/category/${idCategory}/articles`
-        );
-        setArticles(response.data.filteredArticles);
+        const response = await axios.get(apiReq);
+        if (idCategory) {
+          setArticles(response.data.filteredArticles);
+        } else {
+          setArticles(response.data.allArticles);
+        }
       } catch (error) {
         console.error(error);
       }
     }
-    fetchArticlesByCategory();
+    fetchArticles();
   }, [idCategory]);
 
   return (
