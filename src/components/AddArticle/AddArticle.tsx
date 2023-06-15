@@ -21,13 +21,8 @@ function AddArticle() {
 
         <div className="article-category">
           <label htmlFor="categorie">Catégorie :</label>
-          <select
-            id="categorie"
-            className="default-option"
-            defaultValue="default-value"
-            required
-          >
-            <option value="default-value" disabled>
+          <select id="categorie" defaultValue="default-value" required>
+            <option className="default-option" value="default-value" disabled>
               -- Veuillez-sélectionner --
             </option>
             <option value="category-1">Catégorie 1</option>
