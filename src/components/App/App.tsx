@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
 import AppHeader from '../AppHeader/AppHeader';
-import Categories from '../Categories/Categories';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import './App.scss';
@@ -24,7 +23,6 @@ function App() {
   return (
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
-      <Categories />
       <Outlet />
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer />

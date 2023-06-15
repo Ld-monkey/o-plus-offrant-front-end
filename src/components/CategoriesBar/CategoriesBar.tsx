@@ -2,7 +2,7 @@ import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-import './Categories.scss';
+import './CategoriesBar.scss';
 
 interface Category {
   id: number;
