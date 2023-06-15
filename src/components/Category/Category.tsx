@@ -62,15 +62,15 @@ function Category() {
               />
               <span>Prix croissant</span>
             </label>
-            <label htmlFor="Prix décroissant" className="categoryName">
+            <label htmlFor="prix-decroissant" className="categoryName">
               <input type="checkbox" value="decrease" onClick={checkCategory} />
               <span>Prix décroissant</span>
             </label>
-            <label htmlFor="Temps restant croissant" className="categoryName">
+            <label htmlFor="temps-restant-croissant" className="categoryName">
               <input type="checkbox" onClick={checkCategory} />
               <span>Temps restant croissant</span>
             </label>
-            <label htmlFor="Temps restant croissant" className="categoryName">
+            <label htmlFor="temps-restant-decroissant" className="categoryName">
               <input type="checkbox" onClick={checkCategory} />
               <span>Temps restant décroissant</span>
             </label>

@@ -6,19 +6,23 @@ function AddArticle() {
       <h2>Vendre votre article</h2>
       <form method="post" className="add-article-form">
         <div className="article-name">
-          <label htmlFor="title">Titre :</label>
-          <input type="text" placeholder="Mug O'Clock" />
+          <label htmlFor="titre">Titre :</label>
+          <input type="text" id="titre" placeholder="Mug O'Clock" />
         </div>
 
         <div className="article-description">
           <label htmlFor="description">Description :</label>
-          <textarea rows={5} placeholder="Détail de l'article..." />
+          <textarea
+            rows={5}
+            id="description"
+            placeholder="Détail de l'article..."
+          />
         </div>
 
         <div className="article-category">
-          <label htmlFor="category">Catégorie :</label>
-          <select required>
-            <option className="default-option" value="" selected disabled>
+          <label htmlFor="categorie">Catégorie :</label>
+          <select id="categorie" defaultValue="default-value" required>
+            <option className="default-option" value="default-value" disabled>
               -- Veuillez-sélectionner --
             </option>
             <option value="category-1">Catégorie 1</option>
@@ -30,19 +34,30 @@ function AddArticle() {
         </div>
 
         <div className="article-price">
-          <label htmlFor="price">Prix de départ :</label>
-          <input type="text" placeholder="100 Tokens" />
+          <label htmlFor="prix-de-depart">Prix de départ :</label>
+          <input type="text" id="prix-de-depart" placeholder="100 Tokens" />
         </div>
 
         <div className="article-timer">
-          <label htmlFor="timer">Temps de vente :</label>
-          <div className="wrapper">
+          <label htmlFor="temps-de-vente">Temps de vente :</label>
+          <div className="wrapper" id="temps-de-vente">
             <label htmlFor="short-sale">
-              <input type="radio" name="sale-period" value="72 Hours" checked />
+              <input
+                type="radio"
+                name="sale-period"
+                id="short-sale"
+                value="72 Hours"
+                defaultChecked
+              />
               Vente sur 3 Jours
             </label>
             <label htmlFor="long-sale">
-              <input type="radio" name="sale-period" value="168 Hours" />
+              <input
+                type="radio"
+                id="long-sale"
+                name="sale-period"
+                value="168 Hours"
+              />
               Vente sur 7 Jours
             </label>
           </div>
@@ -50,7 +65,7 @@ function AddArticle() {
 
         <div className="article-photo">
           <label htmlFor="photo">Photo :</label>
-          <input type="file" accept="image/*" />
+          <input type="file" accept="image/*" id="photo" />
         </div>
 
         <div className="form-submit-btn">
