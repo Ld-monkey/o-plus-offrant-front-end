@@ -17,9 +17,9 @@ function Category() {
     async function getArticles() {
       try {
         const response = await axios.get(
-          'https://didierlam-server.eddi.cloud/api/products'
+          `https://didierlam-server.eddi.cloud/api/articles`
         );
-        setArticles(response.data.allProducts);
+        setArticles(response.data.allArticles);
       } catch (error) {
         console.log(error);
       }
@@ -27,28 +27,87 @@ function Category() {
     getArticles();
   }, []);
 
+  const [checkedValues, setCheckedValues] = useState([]);
+
+  function handleChangeCategory(event) {
+    const { value, checked } = event.target;
+
+    if (checked) {
+      setCheckedValues(value);
+    }
+  }
+  console.log(checkedValues);
+
   return (
     <>
       <div id="wrapper">
-        <form>
+        <form className="Sort_Choice">
+          <p className="Category_Choice">
+            <span>Catégories :</span>
+            <label htmlFor="">
+              <input
+                type="checkbox"
+                value="Sport_&_Loisirs"
+                onChange={handleChangeCategory}
+              />
+              <span>Sport & Loisirs</span>
+            </label>
+            <label htmlFor="">
+              <input
+                type="checkbox"
+                value="Maison_&_Jardin"
+                onChange={handleChangeCategory}
+              />
+              <span>Maison & Jardin</span>
+            </label>
+            <label htmlFor="">
+              <input
+                type="checkbox"
+                value="High_Tech"
+                onChange={handleChangeCategory}
+              />
+              <span>High Tech</span>
+            </label>
+            <label htmlFor="">
+              <input
+                type="checkbox"
+                value="Mode"
+                onChange={handleChangeCategory}
+              />
+              <span>Mode</span>
+            </label>
+            <label htmlFor="">
+              <input
+                type="checkbox"
+                value="Livres"
+                onChange={handleChangeCategory}
+              />
+              <span>Livres</span>
+            </label>
+          </p>
           <p className="Tri">
-            Trier par :
-            <label htmlFor="Prix croissant" className="categoryName">
-              <input type="checkbox" value="increase" />
-              <span>Prix croissant</span>
-            </label>
-            <label htmlFor="Prix décroissant" className="categoryName">
-              <input type="checkbox" value="decrease" />
-              <span>Prix décroissant</span>
-            </label>
-            <label htmlFor="Temps restant croissant" className="categoryName">
-              <input type="checkbox" />
-              <span>Temps restant croissant</span>
-            </label>
-            <label htmlFor="Temps restant croissant" className="categoryName">
-              <input type="checkbox" />
-              <span>Temps restant décroissant</span>
-            </label>
+            <div>
+              <span>Trier par prix :</span>
+              <label htmlFor="Croissant" className="categoryName">
+                <input type="radio" value="increase" name="TriPrice" />
+                <span>Croissant</span>
+              </label>
+              <label htmlFor="Décroissant" className="categoryName">
+                <input type="radio" value="decrease" name="TriPrice" />
+                <span>Décroissant</span>
+              </label>
+            </div>
+            <div>
+              <span>Trier par la durée :</span>
+              <label htmlFor="La plus courte" className="categoryName">
+                <input type="radio" name="TriTimer" checked />
+                <span>La plus courte</span>
+              </label>
+              <label htmlFor="La plus longue" className="categoryName">
+                <input type="radio" name="TriTimer" />
+                <span>La plus longue</span>
+              </label>
+            </div>
           </p>
         </form>
       </div>
@@ -58,7 +117,7 @@ function Category() {
             <h4 className="pictureName">{article.name}</h4>
             <img
               className="pictureItem"
-              src={article.photo}
+              src="https://didierlam-server.eddi.cloud/images/chaise.jpg"
               alt={article.name}
             />
             <p className="priceItem">
@@ -85,15 +144,13 @@ function Category() {
       </div>
 
       <div id="wrapper">
-        <div>
-          <div>
-            <button type="button" className="buttonPage">
-              Page précédente
-            </button>
-            <button type="button" className="buttonPage">
-              Page suivante
-            </button>
-          </div>
+        <div className="button_container">
+          <button type="button" className="buttonPage">
+            Page précédente
+          </button>
+          <button type="button" className="buttonPage">
+            Page suivante
+          </button>
         </div>
       </div>
     </>

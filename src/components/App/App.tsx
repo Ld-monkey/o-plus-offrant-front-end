@@ -26,7 +26,6 @@ function App() {
   return (
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
-      <Categories />
       <Outlet />
       {/* <Cards />
       <CarouselItem /> */}
