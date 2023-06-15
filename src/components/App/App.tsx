@@ -28,8 +28,6 @@ function App() {
       <AppHeader toggleModalLogin={checkOpenModal} />
       <Categories />
       <Outlet />
-      {/* <Cards />
-      <CarouselItem /> */}
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer />
     </div>

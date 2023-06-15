@@ -1,9 +1,29 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
+import { FormEvent, useState } from 'react';
+import axios from '../../api/axios';
 import './Login.scss';
 
 function Login({ toggleModalLogin, isOpenModal }) {
   const isOpenLogin = isOpenModal;
+
+  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+    const [email, password] = formData.values();
+
+    try {
+      const response = await axios.post('/api/login', {
+        adresse_mail: email,
+        mot_de_passe: password,
+      });
+      console.log(response.data);
+    } catch (e) {
+      console.error('Fail to login :', e);
+    }
+  };
 
   return (
     <>
@@ -27,17 +47,24 @@ function Login({ toggleModalLogin, isOpenModal }) {
           className="close-login"
           onClick={toggleModalLogin}
         />
-        <form>
-          <input type="email" placeholder="Email" id="email" />
-          <input type="password" placeholder="Mot de Passe" id="password" />
+        <form onSubmit={handleLogin}>
+          <input type="email" placeholder="Email" id="email" name="email" />
+          <input
+            type="password"
+            placeholder="Mot de Passe"
+            id="password"
+            name="password"
+          />
           <button type="submit" className="login">
             Se connecter
           </button>
+        </form>
+        <div>
           <p>Aucun compte ?</p>
           <button type="button" className="create-account">
             Créer un compte
           </button>
-        </form>
+        </div>
       </div>
     </>
   );
