@@ -46,8 +46,18 @@ function checkCategory() {
  */
 function handlePriceMore() {}
 
+interface ArticlesProps {
+  id: number;
+  name: string;
+  photo: string;
+  prix_de_depart: string;
+  date_de_fin: string;
+  montant: string;
+}
+
 function Category() {
   const [isChecked, setIsChecked] = useState(false);
+
   return (
     <>
       <div id="wrapper">
@@ -78,213 +88,6 @@ function Category() {
         </form>
       </div>
       <div className="containerCardCat">
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
-        <Link to="/produit/1" className="cardCat">
-          <img
-            className="pictureItem"
-            src="../../src/assets/DualSense-Edge-Main.webp"
-            alt=""
-          />
-          <p className="descriptItem">Descriptif de l&apos;objet</p>
-          <p className="priceItem">Prix initial : 30,00 €</p>
-
-          <div className="liveAuction">
-            <p className="timerAuction">Temps restant : 1:30:35</p>
-            <p className="liveAuction__proceNow">
-              Prix enchère actuelle : 50,00 €
-              <button
-                type="button"
-                className="liveAuction-button"
-                onClick={handlePriceMore}
-              >
-                Surenchérir !
-              </button>
-            </p>
-          </div>
-        </Link>
         <Link to="/produit/1" className="cardCat">
           <img
             className="pictureItem"
