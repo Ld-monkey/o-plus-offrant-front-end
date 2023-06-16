@@ -70,7 +70,7 @@ function AppHeader({ toggleModalLogin }) {
               </button>
               <button type="button" className="header-btn-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <Link to="produits">Categories</Link>
+                <Link to="produits">Toutes les ventes</Link>
               </button>
               {!isLogged ? (
                 <button
@@ -79,7 +79,7 @@ function AppHeader({ toggleModalLogin }) {
                   onClick={toggleModalLogin}
                 >
                   <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
-                  <span>Connectez-vous</span>
+                  <span>Connexion / Inscription</span>
                 </button>
               ) : (
                 <div className="header-logged">
