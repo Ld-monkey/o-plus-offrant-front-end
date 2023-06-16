@@ -67,73 +67,76 @@ function SingleProduct() {
     return () => clearInterval(countdownInterval);
   }, [targetedDate]);
 
-  return (
-    <div id="wrapper">
-      <section className="single-product">
-        <div className="single-product-media">
-          <img
-            src={`https://didierlam-server.eddi.cloud/${article?.photo}`}
-            alt={article?.nom}
-            className="photo"
-          />
-          <FontAwesomeIcon icon={faStar} className="fave-icon" />
-        </div>
-        <div className="single-product-details">
-          <h2 className="single-product-title">{article?.nom}</h2>
-          <p className="single-product-description">{article?.description}</p>
-          <div className="auction-infos">
-            <span className="auction-original-price">
-              Prix de départ: {article?.prix_de_depart} Tokens
-            </span>
-            <span className="auction-remaining-time">
-              Temps restant : {countdown}
-            </span>
+  if (typeof article !== 'undefined') {
+    return (
+      <div id="wrapper">
+        <section className="single-product">
+          <div className="single-product-media">
+            <img
+              src={`https://didierlam-server.eddi.cloud/${article.photo}`}
+              alt={article.nom}
+              className="photo"
+            />
+            <FontAwesomeIcon icon={faStar} className="fave-icon" />
           </div>
-          <div className="auction-amount">
-            <span className="auction-current-price">
-              Mise actuelle : {article?.montant} Tokens
-            </span>
-            <button className="participate-btn" type="button">
-              Enchérir
-            </button>
+          <div className="single-product-details">
+            <h2 className="single-product-title">{article.nom}</h2>
+            <p className="single-product-description">{article.description}</p>
+            <div className="auction-infos">
+              <span className="auction-original-price">
+                Prix de départ: {article.prix_de_depart} Tokens
+              </span>
+              <span className="auction-remaining-time">
+                Temps restant : {countdown}
+              </span>
+            </div>
+            <div className="auction-amount">
+              <span className="auction-current-price">
+                Mise actuelle : {article.montant} Tokens
+              </span>
+              <button className="participate-btn" type="button">
+                Enchérir
+              </button>
+            </div>
           </div>
-        </div>
-      </section>
+        </section>
 
-      <section className="auction-history">
-        <h2 className="auction-history-title">Historique des enchères</h2>
-        <table className="auction-history-table">
-          <thead>
-            <tr>
-              <td>Nom de l&apos;enchérisseur</td>
-              <td>Montant de l&apos;enchère</td>
-              <td>Date de l&apos;enchère</td>
-            </tr>
-          </thead>
-          <tbody>
-            {articleHistory.map((history) => {
-              const firstLetter = history.nom.charAt(0);
-              const formattedDate = dayjs(history.date).format(
-                'DD-MM-YYYY [at] HH:mm'
-              );
-              return (
-                <tr key="abc">
-                  {/* EN ATTENTE DE L'ID UNIQUE DES BACKS */}
-                  <td className="auction-history-auctioner">
-                    {history.prenom} {firstLetter}.
-                  </td>
-                  <td className="auction-history-price">
-                    {history.montant} Tokens
-                  </td>
-                  <td className="auction-history-date">{formattedDate}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </section>
-    </div>
-  );
+        <section className="auction-history">
+          <h2 className="auction-history-title">Historique des enchères</h2>
+          <table className="auction-history-table">
+            <thead>
+              <tr>
+                <td>Nom de l&apos;enchérisseur</td>
+                <td>Montant de l&apos;enchère</td>
+                <td>Date de l&apos;enchère</td>
+              </tr>
+            </thead>
+            <tbody>
+              {articleHistory.map((history) => {
+                const firstLetter = history.nom.charAt(0);
+                const formattedDate = dayjs(history.date).format(
+                  'DD-MM-YYYY [at] HH:mm'
+                );
+                return (
+                  <tr key="abc">
+                    {/* EN ATTENTE DE L'ID UNIQUE DES BACKS */}
+                    <td className="auction-history-auctioner">
+                      {history.prenom} {firstLetter}.
+                    </td>
+                    <td className="auction-history-price">
+                      {history.montant} Tokens
+                    </td>
+                    <td className="auction-history-date">{formattedDate}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </section>
+      </div>
+    );
+  }
+  return <p>Le produit que vous recherchez n&apos;existe pas.</p>;
 }
 
 export default SingleProduct;
