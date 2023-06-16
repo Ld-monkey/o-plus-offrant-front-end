@@ -1,4 +1,8 @@
-import { useEffect, useState } from 'react';
+import {
+  DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES,
+  useEffect,
+  useState,
+} from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -18,17 +22,17 @@ interface SingleArticleProps {
   photo: string;
   nom: string;
   description: string;
-  prix_de_depart: string;
+  prix_de_depart: number;
   date_de_fin: string;
-  montant: string;
+  montant: number;
 }
 
 interface SingleArticleHistory {
-  utilisateur_id: number;
+  id: number;
   nom: string;
   prenom: string;
   date: string;
-  montant: string;
+  montant: number;
 }
 
 dayjs.extend(duration);
@@ -60,12 +64,24 @@ function SingleProduct() {
       const now = dayjs();
       const auctionTargetDate = dayjs(targetedDate);
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
-      const formattedCountdown = `${auctionDuration.days()}d ${auctionDuration.hours()}h ${auctionDuration.minutes()}m ${auctionDuration.seconds()}s`;
+      const formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
       setCountdown(formattedCountdown);
     }
     const countdownInterval = setInterval(calculateCountdown, 1000);
     return () => clearInterval(countdownInterval);
   }, [targetedDate]);
+
+  // const [auctionValue, setAuctionValue] = useState<number>(article?.montant);
+
+  // function handleAuctionClick() {
+  //   if (typeof auctionValue !== 'undefined') {
+  //     setAuctionValue((prevValue) => prevValue * (1 + 5 / 100));
+  //   }
+  // }
+
+  // useEffect(() => {
+  //   console.log(auctionValue);
+  // }, [auctionValue]);
 
   if (typeof article !== 'undefined') {
     return (
@@ -94,7 +110,11 @@ function SingleProduct() {
               <span className="auction-current-price">
                 Mise actuelle : {article.montant} Tokens
               </span>
-              <button className="participate-btn" type="button">
+              <button
+                className="participate-btn"
+                type="button"
+                // onClick={handleAuctionClick}
+              >
                 Enchérir
               </button>
             </div>
@@ -118,8 +138,7 @@ function SingleProduct() {
                   'DD-MM-YYYY [at] HH:mm'
                 );
                 return (
-                  <tr key="abc">
-                    {/* EN ATTENTE DE L'ID UNIQUE DES BACKS */}
+                  <tr key={history.id}>
                     <td className="auction-history-auctioner">
                       {history.prenom} {firstLetter}.
                     </td>
