@@ -1,9 +1,10 @@
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import './SingleProduct.scss';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faStar } from '@fortawesome/free-regular-svg-icons';
+import dayjs from 'dayjs';
+import './SingleProduct.scss';
 
 interface SingleArticleProps {
   id: number;
@@ -88,6 +89,9 @@ function SingleProduct() {
           <tbody>
             {articleHistory.map((history) => {
               const firstLetter = history.nom.charAt(0);
+              const formattedDate = dayjs(history.date).format(
+                'DD-MM-YYYY [at] HH:mm'
+              );
               return (
                 <tr key={history.article_id}>
                   <td className="auction-history-auctioner">
@@ -96,7 +100,7 @@ function SingleProduct() {
                   <td className="auction-history-price">
                     {history.montant} Tokens
                   </td>
-                  <td className="auction-history-date">{history.date}</td>
+                  <td className="auction-history-date">{formattedDate}</td>
                 </tr>
               );
             })}
