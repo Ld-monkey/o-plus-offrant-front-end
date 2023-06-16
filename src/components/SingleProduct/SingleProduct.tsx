@@ -16,6 +16,7 @@ interface SingleArticleProps {
 }
 
 interface SingleArticleHistory {
+  article_id: number;
   nom: string;
   prenom: string;
   date: string;
@@ -85,41 +86,20 @@ function SingleProduct() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td className="auction-history-auctioner">Monsieur BLABLA 1 </td>
-              <td className="auction-history-price">635 Tokens</td>
-              <td className="auction-history-date">
-                Heure de l&apos;enchère : 01/01/2023 à 2h00mins30sec
-              </td>
-            </tr>
-            <tr>
-              <td className="auction-history-auctioner">Monsieur BLABLA 2 </td>
-              <td className="auction-history-price">605 Tokens</td>
-              <td className="auction-history-date">
-                Heure de l&apos;enchère : 01/01/2023 à 1h45mins30sec
-              </td>
-            </tr>
-            <tr>
-              <td className="auction-history-auctioner">Monsieur BLABLA 3 </td>
-              <td className="auction-history-price">577 Tokens</td>
-              <td className="auction-history-date">
-                Heure de l&apos;enchère : 01/01/2023 à 1h30mins30sec
-              </td>
-            </tr>
-            <tr>
-              <td className="auction-history-auctioner">Monsieur BLABLA 4 </td>
-              <td className="auction-history-price">550 Tokens</td>
-              <td className="auction-history-date">
-                Heure de l&apos;enchère : 01/01/2023 à 1h10mins30sec
-              </td>
-            </tr>
-            <tr>
-              <td className="auction-history-auctioner">Monsieur BLABLA 5 </td>
-              <td className="auction-history-price">525 Tokens</td>
-              <td className="auction-history-date">
-                Heure de l&apos;enchère : 01/01/2023 à 1h00mins30sec
-              </td>
-            </tr>
+            {articleHistory.map((history) => {
+              const firstLetter = history.nom.charAt(0);
+              return (
+                <tr key={history.article_id}>
+                  <td className="auction-history-auctioner">
+                    {history.prenom} {firstLetter}.
+                  </td>
+                  <td className="auction-history-price">
+                    {history.montant} Tokens
+                  </td>
+                  <td className="auction-history-date">{history.date}</td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </section>
