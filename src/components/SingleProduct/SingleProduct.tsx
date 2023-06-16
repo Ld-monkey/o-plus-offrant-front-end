@@ -81,6 +81,9 @@ function SingleProduct() {
       console.log(newValue);
     }
   }
+  // TODO : gestion de l'erreur ci-dessus + Envoie de la nouvelle valeur vers l'API.
+  // Est-ce que je renvoie le calcul vers le back ? la mise à jour ne se fait pas de suite (ui), uniquement au refresh
+  // le calcul se fait en front et donc le nouveau montant s'affiche au clic, et est envoyé au back pour qu'il nous renvoit le nouveau montant + la maj de l'historique des enchères.
 
   if (typeof article !== 'undefined') {
     return (
