@@ -3,7 +3,14 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
+
+/*
+Package to format datetime and creating countdown
+*/
 import dayjs from 'dayjs';
+import 'dayjs/locale/fr';
+import duration from 'dayjs/plugin/duration';
+
 import './SingleProduct.scss';
 
 interface SingleArticleProps {
@@ -17,20 +24,24 @@ interface SingleArticleProps {
 }
 
 interface SingleArticleHistory {
-  article_id: number;
+  utilisateur_id: number;
   nom: string;
   prenom: string;
   date: string;
   montant: string;
 }
 
+dayjs.extend(duration);
+
 function SingleProduct() {
   const [article, setArticle] = useState<SingleArticleProps>();
   const [articleHistory, setArticleHistory] = useState<SingleArticleHistory[]>(
     []
   );
+  const [countdown, setCountdown] = useState('');
 
   const { idArticle } = useParams();
+  const targetedDate = article?.date_de_fin;
 
   useEffect(() => {
     async function fetchArticlebyId() {
@@ -42,6 +53,19 @@ function SingleProduct() {
     }
     fetchArticlebyId();
   }, [idArticle]);
+
+  useEffect(() => {
+    function calculateCountdown() {
+      // const formattedDate = dayjs(targetedDate).format('DD-MM-YYYY [at] HH:mm');
+      const now = dayjs();
+      const auctionTargetDate = dayjs(targetedDate);
+      const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
+      const formattedCountdown = `${auctionDuration.days()}d ${auctionDuration.hours()}h ${auctionDuration.minutes()}m ${auctionDuration.seconds()}s`;
+      setCountdown(formattedCountdown);
+    }
+    const countdownInterval = setInterval(calculateCountdown, 1000);
+    return () => clearInterval(countdownInterval);
+  }, [targetedDate]);
 
   return (
     <div id="wrapper">
@@ -62,7 +86,7 @@ function SingleProduct() {
               Prix de départ: {article?.prix_de_depart} Tokens
             </span>
             <span className="auction-remaining-time">
-              Temps restant : {article?.date_de_fin}
+              Temps restant : {countdown}
             </span>
           </div>
           <div className="auction-amount">
@@ -93,7 +117,8 @@ function SingleProduct() {
                 'DD-MM-YYYY [at] HH:mm'
               );
               return (
-                <tr key={history.article_id}>
+                <tr key="abc">
+                  {/* EN ATTENTE DE L'ID UNIQUE DES BACKS */}
                   <td className="auction-history-auctioner">
                     {history.prenom} {firstLetter}.
                   </td>
