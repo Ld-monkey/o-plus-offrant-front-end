@@ -36,7 +36,6 @@
     text-align: center;
     background-color: #ffffff;
     max-width: 26rem;
-    height: 430px;
     padding: 3.375rem;
     border-radius: 5px;
   }
@@ -66,9 +65,15 @@
     cursor: pointer;
 
     &:hover {
-      -webkit-animation: action 500ms infinite alternate;
-      animation: action 500ms infinite alternate;
+      -webkit-animation: action 1s 1 alternate;
+      animation: action 1s 1 alternate;
     }
+  }
+
+  .checkbox-is-adult {
+    width: 20px;
+    height: 20px;
+    margin: 1.2rem 15px;
   }
 
   .login {
@@ -81,12 +86,20 @@
     background-color: v.$color-primary;
   }
 
+  .btn-registrer {
+    margin: 1.2rem auto;
+    background-color: #e1aa70;
+  }
+
   @-webkit-keyframes action {
     0% {
       transform: translateY(0);
     }
-    100% {
+    50% {
       transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
     }
   }
 
@@ -94,8 +107,11 @@
     0% {
       transform: translateY(0);
     }
-    100% {
+    50% {
       transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
     }
   }
 }

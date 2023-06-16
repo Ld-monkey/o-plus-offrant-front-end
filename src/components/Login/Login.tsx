@@ -1,6 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login } from '../../store/reducer/user';
 import './Login.scss';
@@ -12,17 +12,39 @@ function Login({
   toggleModalLogin: () => void;
   isOpenModal: boolean;
 }) {
+  const [isRegistrerView, setIsRegisterView] = useState(false);
+
   const isOpenLogin = isOpenModal;
+
   const dispatch = useAppDispatch();
   const { logged: isLogged } = useAppSelector((state) => state.user);
 
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
+  /**
+   *
+   * @param event
+   */
+  const handleLogin = (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     const form = event.currentTarget;
     const formData = new FormData(form);
 
     dispatch(login(formData));
+  };
+
+  /**
+   *
+   */
+  const handleCreateAccount = () => {
+    setIsRegisterView(!isRegistrerView);
+  };
+
+  /**
+   *
+   */
+  const handleRegister = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    console.log('Création de compte');
   };
 
   return (
@@ -51,24 +73,61 @@ function Login({
           className="close-login"
           onClick={toggleModalLogin}
         />
-        <form onSubmit={handleLogin}>
-          <input type="email" placeholder="Email" id="email" name="email" />
-          <input
-            type="password"
-            placeholder="Mot de Passe"
-            id="password"
-            name="password"
-          />
-          <button type="submit" className="login">
-            Se connecter
-          </button>
-        </form>
-        <div>
-          <p>Aucun compte ?</p>
-          <button type="button" className="create-account">
-            Créer un compte
-          </button>
-        </div>
+        {!isRegistrerView ? (
+          <form onSubmit={handleLogin}>
+            <input type="email" placeholder="Email" name="email" />
+            <input
+              type="password"
+              placeholder="Mot de Passe"
+              id="password"
+              name="password"
+            />
+            <button type="submit" className="login">
+              Se connecter
+            </button>
+          </form>
+        ) : (
+          <form onSubmit={handleRegister} autoComplete="none">
+            <input type="text" placeholder="Prénom" name="firstname" />
+            <input type="text" placeholder="Nom" name="lastname" />
+            <input type="email" placeholder="Email" name="email" />
+            <input type="password" placeholder="Password" name="password" />
+            <label>
+              <input
+                type="checkbox"
+                name="isAdult"
+                className="checkbox-is-adult"
+              />
+              Je certifie être majeur.
+            </label>
+            <button type="submit" className="btn-registrer">
+              Créer un compte
+            </button>
+          </form>
+        )}
+        {!isRegistrerView ? (
+          <div>
+            <p>Aucun compte ?</p>
+            <button
+              type="button"
+              className="create-account"
+              onClick={handleCreateAccount}
+            >
+              Créer un compte
+            </button>
+          </div>
+        ) : (
+          <div>
+            <p>Déjà un compte ?</p>
+            <button
+              type="button"
+              onClick={handleCreateAccount}
+              className="login"
+            >
+              Utiliser son compte
+            </button>
+          </div>
+        )}
       </div>
     </>
   );
