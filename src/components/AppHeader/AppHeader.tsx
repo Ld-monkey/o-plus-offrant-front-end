@@ -9,7 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 
-function AppHeader({ toggleModalLogin }) {
+function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
 
@@ -23,7 +23,7 @@ function AppHeader({ toggleModalLogin }) {
   /**
    * Updates searchbar content.
    */
-  function changeInputContent() {
+  function changeInputContent(event: React.ChangeEvent<HTMLInputElement>) {
     setContentSearchBar(event?.target.value);
   }
 
@@ -57,7 +57,7 @@ function AppHeader({ toggleModalLogin }) {
                 name="searchbar"
                 placeholder="Que cherchez-vous ?"
                 aria-label="Search article through site content"
-                onClick={changeInputContent}
+                onChange={changeInputContent}
               />
             </form>
             <div className="header-navbar-container">

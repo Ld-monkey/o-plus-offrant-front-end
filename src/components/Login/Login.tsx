@@ -4,7 +4,13 @@ import { FormEvent, useState } from 'react';
 import axios from '../../api/axios';
 import './Login.scss';
 
-function Login({ toggleModalLogin, isOpenModal }) {
+function Login({
+  toggleModalLogin,
+  isOpenModal,
+}: {
+  toggleModalLogin: () => void;
+  isOpenModal: boolean;
+}) {
   const isOpenLogin = isOpenModal;
 
   const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
