@@ -38,14 +38,15 @@ interface SingleArticleHistory {
 dayjs.extend(duration);
 
 function SingleProduct() {
-  const [article, setArticle] = useState<SingleArticleProps>();
+  const [article, setArticle] = useState<SingleArticleProps | undefined>(
+    undefined
+  );
   const [articleHistory, setArticleHistory] = useState<SingleArticleHistory[]>(
     []
   );
   const [countdown, setCountdown] = useState('');
 
   const { idArticle } = useParams();
-  const targetedDate = article?.date_de_fin;
 
   useEffect(() => {
     async function fetchArticlebyId() {
@@ -60,28 +61,26 @@ function SingleProduct() {
 
   useEffect(() => {
     function calculateCountdown() {
-      // const formattedDate = dayjs(targetedDate).format('DD-MM-YYYY [at] HH:mm');
       const now = dayjs();
-      const auctionTargetDate = dayjs(targetedDate);
+      const auctionTargetDate = dayjs(article?.date_de_fin);
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
       const formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
       setCountdown(formattedCountdown);
     }
     const countdownInterval = setInterval(calculateCountdown, 1000);
     return () => clearInterval(countdownInterval);
-  }, [targetedDate]);
+  }, [article?.date_de_fin]);
 
-  // const [auctionValue, setAuctionValue] = useState<number>(article?.montant);
-
-  // function handleAuctionClick() {
-  //   if (typeof auctionValue !== 'undefined') {
-  //     setAuctionValue((prevValue) => prevValue * (1 + 5 / 100));
-  //   }
-  // }
-
-  // useEffect(() => {
-  //   console.log(auctionValue);
-  // }, [auctionValue]);
+  function handleAuctionClick() {
+    if (typeof article !== 'undefined') {
+      const newValue = Math.round(article.montant * (1 + 5 / 100));
+      setArticle((prevArticle) => ({
+        ...prevArticle,
+        montant: newValue,
+      }));
+      console.log(newValue);
+    }
+  }
 
   if (typeof article !== 'undefined') {
     return (
@@ -113,7 +112,7 @@ function SingleProduct() {
               <button
                 className="participate-btn"
                 type="button"
-                // onClick={handleAuctionClick}
+                onClick={handleAuctionClick}
               >
                 Enchérir
               </button>
