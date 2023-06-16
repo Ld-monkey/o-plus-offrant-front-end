@@ -112,7 +112,11 @@ function Category() {
       </div>
       <div className="containerCardCat">
         {articles.map((article) => (
-          <Link key={article.id} to="/produit/1" className="cardCat">
+          <Link
+            key={article.id}
+            to={`/produit/${article.id}`}
+            className="cardCat"
+          >
             <img
               className="pictureItem"
               src={`https://didierlam-server.eddi.cloud/${article.photo}`}
