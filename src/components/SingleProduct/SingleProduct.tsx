@@ -15,8 +15,18 @@ interface SingleArticleProps {
   montant: string;
 }
 
+interface SingleArticleHistory {
+  nom: string;
+  prenom: string;
+  date: string;
+  montant: string;
+}
+
 function SingleProduct() {
   const [article, setArticle] = useState<SingleArticleProps>();
+  const [articleHistory, setArticleHistory] = useState<SingleArticleHistory[]>(
+    []
+  );
 
   const { idArticle } = useParams();
 
@@ -26,6 +36,7 @@ function SingleProduct() {
         `https://didierlam-server.eddi.cloud/api/article/${idArticle}`
       );
       setArticle(response.data.article);
+      setArticleHistory(response.data.histArticle);
     }
     fetchArticlebyId();
   }, [idArticle]);
@@ -64,8 +75,6 @@ function SingleProduct() {
       </section>
 
       <section className="auction-history">
-        {/* GRID ? */}
-
         <h2 className="auction-history-title">Historique des enchères</h2>
         <table className="auction-history-table">
           <thead>
