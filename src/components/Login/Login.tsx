@@ -5,7 +5,13 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login } from '../../store/reducer/user';
 import './Login.scss';
 
-function Login({ toggleModalLogin, isOpenModal }) {
+function Login({
+  toggleModalLogin,
+  isOpenModal,
+}: {
+  toggleModalLogin: () => void;
+  isOpenModal: boolean;
+}) {
   const isOpenLogin = isOpenModal;
   const dispatch = useAppDispatch();
   const { logged: isLogged } = useAppSelector((state) => state.user);

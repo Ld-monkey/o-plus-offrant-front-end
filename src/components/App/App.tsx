@@ -5,8 +5,13 @@ import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import './App.scss';
 
+export interface IsetIsOpenModal {
+  isOpenModal: boolean | undefined;
+  setIsOpenModal: () => void;
+}
+
 function App() {
-  const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
   const location = useLocation();
 
   const checkOpenModal = () => {
