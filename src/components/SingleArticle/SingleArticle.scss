@@ -168,4 +168,33 @@ h2 {
     padding: 3.375rem;
     border-radius: 5px;
   }
+
+  .auction-confirm-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      border: none;
+      width: 50%;
+      padding: 1rem;
+      justify-content: center;
+      border-radius: 5px;
+      color: v.$color-text;
+      cursor: pointer;
+    }
+
+    .modal-confirm-btn {
+      background-color: v.$color-primary;
+    }
+
+    .modal-cancel-btn {
+      color: black;
+    }
+  }
 }
