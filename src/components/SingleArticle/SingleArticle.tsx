@@ -83,76 +83,124 @@ function SingleArticle() {
 
   if (typeof article !== 'undefined') {
     return (
-      <div id="wrapper">
-        <section className="single-product">
-          <div className="single-product-media">
-            <img
-              src={`https://didierlam-server.eddi.cloud/${article.photo}`}
-              alt={article.nom}
-              className="photo"
-            />
-            <FontAwesomeIcon icon={faStar} className="fave-icon" />
-          </div>
-          <div className="single-product-details">
-            <h2 className="single-product-title">{article.nom}</h2>
-            <p className="single-product-description">{article.description}</p>
-            <div className="auction-infos">
-              <span className="auction-original-price">
-                Prix de départ: {article.prix_de_depart}€
-              </span>
-              <span className="auction-remaining-time">
-                Temps restant : {countdown}
-              </span>
+      <>
+        <div id="wrapper">
+          <section className="single-product">
+            <div className="single-product-media">
+              <img
+                src={`https://didierlam-server.eddi.cloud/${article.photo}`}
+                alt={article.nom}
+                className="photo"
+              />
+              <FontAwesomeIcon icon={faStar} className="fave-icon" />
             </div>
-            <div className="auction-amount">
-              <span className="auction-current-price">
-                Mise actuelle : {article.montant} Tokens
-              </span>
-              <button
-                className="participate-btn"
-                type="button"
-                onClick={() => {
-                  setOpenModal(true);
-                }}
-              >
-                Enchérir
-              </button>
+            <div className="single-product-details">
+              <h2 className="single-product-title">{article.nom}</h2>
+              <p className="single-product-description">
+                {article.description}
+              </p>
+              <div className="auction-infos">
+                <span className="auction-original-price">
+                  Prix de départ: {article.prix_de_depart}€
+                </span>
+                <span className="auction-remaining-time">
+                  Temps restant : {countdown}
+                </span>
+              </div>
+              <div className="auction-amount">
+                <span className="auction-current-price">
+                  Mise actuelle : {article.montant} Tokens
+                </span>
+                <button
+                  className="participate-btn"
+                  type="button"
+                  onClick={() => {
+                    setOpenModal(true);
+                  }}
+                >
+                  Enchérir
+                </button>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <section className="auction-history">
-          <h2 className="auction-history-title">Historique des enchères</h2>
-          <table className="auction-history-table">
-            <thead>
-              <tr>
-                <td>Nom de l&apos;enchérisseur</td>
-                <td>Montant de l&apos;enchère</td>
-                <td>Date de l&apos;enchère</td>
-              </tr>
-            </thead>
-            <tbody>
-              {articleHistory.map((history) => {
-                const firstLetter = history.nom.charAt(0);
-                const formattedDate = dayjs(history.date).format(
-                  'DD-MM-YYYY [à] HH:mm'
-                );
-                return (
-                  <tr key={history.id}>
-                    <td className="auction-history-auctioner">
-                      {history.prenom} {firstLetter}.
-                    </td>
-                    <td className="auction-history-price">
-                      {history.montant} Tokens
-                    </td>
-                    <td className="auction-history-date">{formattedDate}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </section>
-      </div>
+          <section className="auction-history">
+            <h2 className="auction-history-title">Historique des enchères</h2>
+            <table className="auction-history-table">
+              <thead>
+                <tr>
+                  <td>Nom de l&apos;enchérisseur</td>
+                  <td>Montant de l&apos;enchère</td>
+                  <td>Date de l&apos;enchère</td>
+                </tr>
+              </thead>
+              <tbody>
+                {articleHistory.map((history) => {
+                  const firstLetter = history.nom.charAt(0);
+                  const formattedDate = dayjs(history.date).format(
+                    'DD-MM-YYYY [à] HH:mm'
+                  );
+                  return (
+                    <tr key={history.id}>
+                      <td className="auction-history-auctioner">
+                        {history.prenom} {firstLetter}.
+                      </td>
+                      <td className="auction-history-price">
+                        {history.montant} Tokens
+                      </td>
+                      <td className="auction-history-date">{formattedDate}</td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </section>
+        </div>
+        {openModal && (
+          <>
+            <div
+              className={
+                openModal
+                  ? 'entire-shadow-screen is-active'
+                  : 'entire-shadow-screen'
+              }
+              onClick={() => {
+                setOpenModal(false);
+              }}
+              role="button"
+              aria-label="confirm-auction"
+              aria-hidden="true"
+            />
+            <div
+              className={
+                openModal ? 'modal-auction is-active' : 'modal-auction'
+              }
+            >
+              <form onSubmit={handleAuctionSubmit}>
+                <h2 className="auction-confirm-title">
+                  Êtes-vous sûr.e de vouloir enchérir{' '}
+                  {Math.round(article.montant * (1 + 5 / 100))}€ sur cet article
+                  ?
+                </h2>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="modal-cancel-btn"
+                    onClick={() => {
+                      setOpenModal(false);
+                    }}
+                  >
+                    Annuler
+                  </button>
+                  <button type="submit" className="modal-confirm-btn">
+                    Confirmer
+                  </button>
+                </div>
+              </form>
+            </div>
+          </>
+        )}
+      </>
     );
   }
   return <p>Le produit que vous recherchez n&apos;existe pas.</p>;

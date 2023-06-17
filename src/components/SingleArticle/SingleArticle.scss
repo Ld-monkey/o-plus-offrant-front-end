@@ -151,3 +151,21 @@ h2 {
     }
   }
 }
+
+.modal-auction {
+  &.is-active {
+    z-index: 2;
+    position: fixed;
+    top: 30%;
+    left: 0;
+    transform: translate(calc(50vw - 50%), -30%);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #ffffff;
+    max-width: 28rem;
+    height: 300px;
+    padding: 3.375rem;
+    border-radius: 5px;
+  }
+}
