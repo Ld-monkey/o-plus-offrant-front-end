@@ -81,7 +81,29 @@ function SingleArticle() {
     }
   }
 
-  if (typeof article !== 'undefined') {
+  // useEffect(() => {
+  //   async function updateMontant(newValue: number) {
+  //     try {
+  //       await axios.post(
+  //         `https://didierlam-server.eddi.cloud/api/auction`,
+  //         {
+  //           prix: newValue,
+  //           articleId: idArticle,
+  //           acheteurId: ???
+  //         }
+  //       );
+  //       setOpenModal(false);
+  //     } catch (error) {
+  //       console.error('Error updating montant:', error);
+  //     }
+  //   }
+  //   if (article) {
+  //     const newValue = Math.round(article.montant * (1 + 5 / 100));
+  //     updateMontant(newValue);
+  //   }
+  // }, [article, idArticle]);
+
+  if (article) {
     return (
       <>
         <div id="wrapper">
@@ -109,7 +131,7 @@ function SingleArticle() {
               </div>
               <div className="auction-amount">
                 <span className="auction-current-price">
-                  Mise actuelle : {article.montant} Tokens
+                  Mise actuelle : {article.montant}€
                 </span>
                 <button
                   className="participate-btn"
