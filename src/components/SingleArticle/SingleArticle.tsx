@@ -1,8 +1,4 @@
-import {
-  DO_NOT_USE_OR_YOU_WILL_BE_FIRED_EXPERIMENTAL_REACT_NODES,
-  useEffect,
-  useState,
-} from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -15,7 +11,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import duration from 'dayjs/plugin/duration';
 
-import './SingleProduct.scss';
+import './SingleArticle.scss';
 
 interface SingleArticleProps {
   id: number;
@@ -37,7 +33,7 @@ interface SingleArticleHistory {
 
 dayjs.extend(duration);
 
-function SingleProduct() {
+function SingleArticle() {
   const [article, setArticle] = useState<SingleArticleProps | undefined>(
     undefined
   );
@@ -45,6 +41,7 @@ function SingleProduct() {
     []
   );
   const [countdown, setCountdown] = useState('');
+  const [openModal, setOpenModal] = useState(false);
 
   const { idArticle } = useParams();
 
@@ -71,19 +68,18 @@ function SingleProduct() {
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 
-  function handleAuctionClick() {
+  function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
     if (typeof article !== 'undefined') {
       const newValue = Math.round(article.montant * (1 + 5 / 100));
       setArticle((prevArticle) => ({
         ...prevArticle,
         montant: newValue,
       }));
+      setOpenModal(false);
       console.log(newValue);
     }
   }
-  // TODO : gestion de l'erreur ci-dessus + Envoie de la nouvelle valeur vers l'API.
-  // Est-ce que je renvoie le calcul vers le back ? la mise à jour ne se fait pas de suite (ui), uniquement au refresh
-  // le calcul se fait en front et donc le nouveau montant s'affiche au clic, et est envoyé au back pour qu'il nous renvoit le nouveau montant + la maj de l'historique des enchères.
 
   if (typeof article !== 'undefined') {
     return (
@@ -102,7 +98,7 @@ function SingleProduct() {
             <p className="single-product-description">{article.description}</p>
             <div className="auction-infos">
               <span className="auction-original-price">
-                Prix de départ: {article.prix_de_depart} Tokens
+                Prix de départ: {article.prix_de_depart}€
               </span>
               <span className="auction-remaining-time">
                 Temps restant : {countdown}
@@ -115,7 +111,9 @@ function SingleProduct() {
               <button
                 className="participate-btn"
                 type="button"
-                onClick={handleAuctionClick}
+                onClick={() => {
+                  setOpenModal(true);
+                }}
               >
                 Enchérir
               </button>
@@ -137,7 +135,7 @@ function SingleProduct() {
               {articleHistory.map((history) => {
                 const firstLetter = history.nom.charAt(0);
                 const formattedDate = dayjs(history.date).format(
-                  'DD-MM-YYYY [at] HH:mm'
+                  'DD-MM-YYYY [à] HH:mm'
                 );
                 return (
                   <tr key={history.id}>
@@ -160,4 +158,4 @@ function SingleProduct() {
   return <p>Le produit que vous recherchez n&apos;existe pas.</p>;
 }
 
-export default SingleProduct;
+export default SingleArticle;

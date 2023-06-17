@@ -1,7 +1,8 @@
-@use "../../styles/variables" as v;
+@use '../../styles/variables' as v;
 
 h2 {
   font-size: 2rem;
+  text-align: center;
 
   @media screen and (max-width: v.$layout-breakpoint-desktop) {
     font-size: v.$tablet-font-size-title;
@@ -29,9 +30,9 @@ h2 {
     width: 50%;
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
       width: 100%;
-      margin: 0
+      margin: 0;
     }
-    
+
     .photo {
       width: 100%;
     }
@@ -47,7 +48,7 @@ h2 {
   &-details {
     width: 50%;
     margin-left: 1rem;
-    text-align: left;
+    text-align: center;
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
       width: 100%;
       margin: 0;
@@ -65,13 +66,13 @@ h2 {
         }
         @media screen and (max-width: v.$layout-breakpoint-tablet) {
           font-size: 0.65rem;
-    }
-
+        }
       }
     }
   }
 
-  &-title, &-description {
+  &-title,
+  &-description {
     margin-bottom: 1rem;
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
       margin-top: 1rem;
@@ -87,12 +88,10 @@ h2 {
     @media screen and (max-width: v.$layout-breakpoint-desktop) {
       font-size: v.$tablet-font-size-major;
       border: 1.5px dotted v.$color-secondary;
-
     }
     @media screen and (max-width: v.$layout-breakpoint-tablet) {
       font-size: v.$mobile-font-size-major;
       border: 0.75px dotted v.$color-secondary;
-
     }
   }
 
@@ -100,18 +99,16 @@ h2 {
     margin-top: 1rem;
     text-align: center;
 
-
     .auction-current-price {
       margin-right: 1rem;
       font-size: 1.5rem;
       color: v.$color-primary;
       @media screen and (max-width: v.$layout-breakpoint-desktop) {
-      font-size: v.$tablet-font-size-major;
+        font-size: v.$tablet-font-size-major;
       }
       @media screen and (max-width: v.$layout-breakpoint-tablet) {
         font-size: v.$mobile-font-size-major;
       }
-
     }
 
     .participate-btn {
