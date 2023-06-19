@@ -4,6 +4,7 @@ import { FormEvent, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login } from '../../store/reducer/user';
 import './Login.scss';
+import axios from '../../api/axios';
 
 function Login({
   toggleModalLogin,
@@ -42,9 +43,24 @@ function Login({
   /**
    *
    */
-  const handleRegister = (event: FormEvent<HTMLFormElement>) => {
+  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log('Création de compte');
+
+    const form = event.currentTarget;
+    const formData = new FormData(form);
+
+    const [firstname, lastname, email, pwd] = formData.values();
+
+    try {
+      const response = await axios.post('/api/register', {
+        prenom: firstname,
+        nom: lastname,
+        adresse_mail: email,
+        mot_de_passe: pwd,
+      });
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -88,10 +104,15 @@ function Login({
           </form>
         ) : (
           <form onSubmit={handleRegister} autoComplete="none">
-            <input type="text" placeholder="Prénom" name="firstname" />
-            <input type="text" placeholder="Nom" name="lastname" />
-            <input type="email" placeholder="Email" name="email" />
-            <input type="password" placeholder="Password" name="password" />
+            <input type="text" placeholder="Prénom" name="firstname" required />
+            <input type="text" placeholder="Nom" name="lastname" required />
+            <input type="email" placeholder="Email" name="email" required />
+            <input
+              type="password"
+              placeholder="Password"
+              name="password"
+              required
+            />
             <label>
               <input
                 type="checkbox"
