@@ -49,7 +49,13 @@ function SingleArticle() {
         `https://didierlam-server.eddi.cloud/api/article/${idArticle}`
       );
       setArticle(response.data.article);
-      setArticleHistory(response.data.histArticle);
+      const articleHistories = response.data.histArticle;
+      if (articleHistories.length > 10) {
+        const latestEntries = articleHistories.slice(-10);
+        setArticleHistory(latestEntries);
+      } else {
+        setArticleHistory(response.data.histArticle);
+      }
     }
     fetchArticlebyId();
   }, [idArticle]);
@@ -70,11 +76,13 @@ function SingleArticle() {
     event.preventDefault();
     setOpenModal(false);
     try {
-      await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
-        prix: Math.round(article.montant * (1 + 5 / 100)),
-        articleId: idArticle,
-        acheteurId: 2,
-      });
+      if (article) {
+        await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
+          prix: Math.round(article.montant * (1 + 5 / 100)),
+          articleId: idArticle,
+          acheteurId: 2,
+        });
+      }
     } catch (error) {
       console.error('Error updating montant:', error);
     }
