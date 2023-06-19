@@ -192,7 +192,7 @@ function SingleArticle() {
                 openModal ? 'modal-auction is-active' : 'modal-auction'
               }
             >
-              <form onSubmit={handleAuctionSubmit}>
+              <form method="post" onSubmit={handleAuctionSubmit}>
                 <h2 className="auction-confirm-title">
                   Êtes-vous sûr.e de vouloir enchérir{' '}
                   {Math.round(article.montant * (1 + 5 / 100))}€ sur cet article
