@@ -1,13 +1,22 @@
+import { useState } from 'react';
 import './AddArticle.scss';
+import CategoriesProps from '../../@types/interfaces';
 
 function AddArticle() {
+  const [categories, setCategories] = useState<CategoriesProps[]>([]);
+
   return (
     <div id="wrapper">
       <h2>Vendre votre article</h2>
       <form method="post" className="add-article-form">
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
-          <input type="text" id="titre" placeholder="Mug O'Clock" />
+          <input
+            type="text"
+            // name="titre"
+            id="titre"
+            placeholder="Mug O'Clock"
+          />
         </div>
 
         <div className="article-description">
