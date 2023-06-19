@@ -27,7 +27,12 @@ function AddArticle() {
       <form method="post" className="add-article-form">
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
-          <input type="text" name="titre" placeholder="Mug O'Clock" />
+          <input
+            type="text"
+            name="titre"
+            id="titre"
+            placeholder="Mug O'Clock"
+          />
         </div>
 
         <div className="article-description">
@@ -35,6 +40,7 @@ function AddArticle() {
           <textarea
             rows={5}
             name="description"
+            id="description"
             placeholder="Détail de l'article..."
           />
         </div>
@@ -60,7 +66,12 @@ function AddArticle() {
 
         <div className="article-price">
           <label htmlFor="prix-de-depart">Prix de départ (€):</label>
-          <input type="number" name="prix-de-depart" placeholder="100" />
+          <input
+            type="number"
+            name="prix-de-depart"
+            id="prix-de-depart"
+            placeholder="100"
+          />
         </div>
 
         <div className="article-timer">
@@ -69,14 +80,20 @@ function AddArticle() {
             <label htmlFor="short-sale">
               <input
                 type="radio"
-                name="short-sale"
+                name="temps-de-vente"
+                id="short-sale"
                 value="three-days"
                 defaultChecked
               />
               Vente sur 3 Jours
             </label>
             <label htmlFor="long-sale">
-              <input type="radio" name="long-sale" value="seven-days" />
+              <input
+                type="radio"
+                name="temps-de-vente"
+                id="long-sale"
+                value="seven-days"
+              />
               Vente sur 7 Jours
             </label>
           </div>
@@ -84,7 +101,7 @@ function AddArticle() {
 
         <div className="article-photo">
           <label htmlFor="photo">Photo :</label>
-          <input type="file" accept="image/*" id="photo" />
+          <input type="file" accept="image/*" id="photo" name="photo" />
         </div>
 
         <div className="form-submit-btn">
