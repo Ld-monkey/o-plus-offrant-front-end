@@ -1,7 +1,7 @@
-import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
-import axios from "axios";
-import "./Category.scss";
+import { useEffect, useState } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import axios from 'axios';
+import './Category.scss';
 
 /**
  * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
@@ -25,12 +25,15 @@ interface CategoriesProps {
   id: number;
   nom: string;
 }
+type CategoryChecked = string;
 
 function Category() {
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
-  const [checked, setChecked] = useState(false);
-  const [filteredArticles, setFilteredArticles] = useState<ArticlesProps[]>([]);
+  const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
+    []
+  );
+  // const [filteredArticles, setFilteredArticles] = useState<ArticlesProps[]>([]);
 
   const { idCategory } = useParams();
 
@@ -48,41 +51,34 @@ function Category() {
         }
         setCategories(response.data.allCategories);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }
     fetchArticles();
   }, [idCategory]);
 
-  function handleChangeCategoryChecked(
+  const filteredArticles = articles.filter((article) =>
+    categoriesChecked.length > 0
+      ? categoriesChecked.some((categoryChecked) =>
+          article.categorie_nom.includes(categoryChecked)
+        )
+      : articles
+  );
+
+  const handleChangeCategoryChecked = (
     event: React.ChangeEvent<HTMLInputElement>
-  ) {
-    const { value } = event.target;
+  ) => {
+    const { checked, value } = event.target;
 
-    const articlesFilteredByCategory = articles.filter(
-      (article) => article.categorie_id === Number(value)
-    );
-    setFilteredArticles(articlesFilteredByCategory);
-    setChecked(event.target.checked);
-  }
-
-  // articlesFiltered renvoie un tableau
-  // on veut filtrer les articles en fonction de la catégorie sélectionnée
-  // ou se trouve la categorie selectionnée ? dans value.
-
-  //   if (checked) {
-  //     setCheckedValues(value);
-
-  //     function handleChangePriceSort() {
-  //       articles.sort((a, b) => a.montant - b.montant); //Tri Croissant
-  //       articles.sort((a, b) => b.montant - a.montant); //Tri Décroissant
-  //     }
-
-  //     function handleChangeTimerSort() {
-  //       articles.sort((a, b) => a.date_de_fin - b.date_de_fin); //Temps Restant Croissant
-  //       articles.sort((a, b) => b.date_de_fin - a.date_de_fin); //Temps Restant Décroissant
-  //     }
-  //   }
+    if (checked) {
+      setCategoriesChecked([...categoriesChecked, value]);
+    } else {
+      setCategoriesChecked(
+        categoriesChecked.filter((categorie) => categorie !== value)
+      );
+    }
+  };
 
   return (
     <>
@@ -93,8 +89,7 @@ function Category() {
               <label htmlFor="">
                 <input
                   type="checkbox"
-                  value={categorie.id}
-                  // checked={categoryChecked.includes}
+                  value={categorie.nom}
                   onChange={handleChangeCategoryChecked}
                 />
                 <span>{categorie.nom}</span>
@@ -136,7 +131,7 @@ function Category() {
           </div>
         </form>
       </div>
-      {checked ? (
+      {categoriesChecked ? (
         <div className="containerCardCat">
           {filteredArticles.map((filteredArticle) => (
             <Link key={filteredArticle.id} to="/produit/1" className="cardCat">
@@ -170,7 +165,7 @@ function Category() {
         </div>
       ) : (
         <div className="containerCardCat">
-          {articles.map((article) => (
+          {filteredArticles.map((article) => (
             <Link key={article.id} to="/produit/1" className="cardCat">
               <img
                 className="pictureItem"
@@ -216,3 +211,14 @@ function Category() {
 }
 
 export default Category;
+
+//     function handleChangePriceSort() {
+//       articles.sort((a, b) => a.montant - b.montant); //Tri Croissant
+//       articles.sort((a, b) => b.montant - a.montant); //Tri Décroissant
+//     }
+
+//     function handleChangeTimerSort() {
+//       articles.sort((a, b) => a.date_de_fin - b.date_de_fin); //Temps Restant Croissant
+//       articles.sort((a, b) => b.date_de_fin - a.date_de_fin); //Temps Restant Décroissant
+//     }
+//   }
