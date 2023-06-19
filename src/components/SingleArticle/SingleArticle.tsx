@@ -34,9 +34,7 @@ interface SingleArticleHistory {
 dayjs.extend(duration);
 
 function SingleArticle() {
-  const [article, setArticle] = useState<SingleArticleProps | undefined>(
-    undefined
-  );
+  const [article, setArticle] = useState<SingleArticleProps>();
   const [articleHistory, setArticleHistory] = useState<SingleArticleHistory[]>(
     []
   );
@@ -68,40 +66,19 @@ function SingleArticle() {
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 
-  function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
+  async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    if (typeof article !== 'undefined') {
-      const newValue = Math.round(article.montant * (1 + 5 / 100));
-      setArticle((prevArticle) => ({
-        ...prevArticle,
-        montant: newValue,
-      }));
-      setOpenModal(false);
-      console.log(newValue);
+    setOpenModal(false);
+    try {
+      await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
+        prix: Math.round(article.montant * (1 + 5 / 100)),
+        articleId: idArticle,
+        acheteurId: 2,
+      });
+    } catch (error) {
+      console.error('Error updating montant:', error);
     }
   }
-
-  // useEffect(() => {
-  //   async function updateMontant(newValue: number) {
-  //     try {
-  //       await axios.post(
-  //         `https://didierlam-server.eddi.cloud/api/auction`,
-  //         {
-  //           prix: newValue,
-  //           articleId: idArticle,
-  //           acheteurId: ???
-  //         }
-  //       );
-  //       setOpenModal(false);
-  //     } catch (error) {
-  //       console.error('Error updating montant:', error);
-  //     }
-  //   }
-  //   if (article) {
-  //     const newValue = Math.round(article.montant * (1 + 5 / 100));
-  //     updateMontant(newValue);
-  //   }
-  // }, [article, idArticle]);
 
   if (article) {
     return (
