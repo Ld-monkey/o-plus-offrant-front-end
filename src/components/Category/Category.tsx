@@ -91,6 +91,7 @@ function Category() {
                   type="checkbox"
                   value={categorie.nom}
                   onChange={handleChangeCategoryChecked}
+                  checked={Number(idCategory) === categorie.id}
                 />
                 <span>{categorie.nom}</span>
               </label>
