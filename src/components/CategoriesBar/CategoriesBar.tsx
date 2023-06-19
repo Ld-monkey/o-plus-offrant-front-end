@@ -32,11 +32,16 @@ function CategoriesBar() {
         {categories.map((category) => (
           <NavLink
             key={category.id}
-            to={`/category/${category.id}/produits`}
+            to="/produits"
             className="categories-link"
+            state={{ idCategory: `${category.nom}` }}
+            // idCategory=nomdevariable  category.id=value
           >
             {category.nom}
           </NavLink>
+          //   <NavLink key={category.id} to="/produits" className="categories-link">
+          //   {category.nom}
+          // </NavLink>
         ))}
       </nav>
     </div>

@@ -1,12 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useParams, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Category.scss';
 
-/**
- * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
- * modale/pop up : Confirmez vous votre enchère à Montant+5% ? OUI / ANNULER
- */
 function handlePriceMore() {}
 
 interface ArticlesProps {
@@ -17,8 +13,8 @@ interface ArticlesProps {
   date_de_fin: string;
   montant: string;
   categorie_id: number;
-  categorie: string; // category/../articles
-  categorie_nom: string; // api/allArticles
+  categorie: string;
+  categorie_nom: string;
 }
 
 interface CategoriesProps {
@@ -33,30 +29,38 @@ function Category() {
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
-  // const [filteredArticles, setFilteredArticles] = useState<ArticlesProps[]>([]);
+  // const { idCategory } = useParams();
+  // console.log('idCategory', idCategory);
 
-  const { idCategory } = useParams();
+  const location = useLocation();
+  let categorieee = '';
+  if (location.state) {
+    // setCategoriesChecked(location.state);
+    categorieee = location.state.idCategory;
+  }
 
   useEffect(() => {
     async function fetchArticles() {
-      const apiReq = idCategory
-        ? `https://didierlam-server.eddi.cloud/api/category/${idCategory}/articles`
-        : `https://didierlam-server.eddi.cloud/api/articles`;
+      const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
       try {
         const response = await axios.get(apiReq);
-        if (idCategory) {
-          setArticles(response.data.filteredArticles);
-        } else {
-          setArticles(response.data.allArticles);
-        }
+        // if (idCategory) {
+        //   setArticles(response.data.filteredArticles);
+        // } else {
+        setArticles(response.data.allArticles);
+        // }
         setCategories(response.data.allCategories);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
       }
     }
+    if (categorieee !== '') {
+      setCategoriesChecked([categorieee]);
+    }
+
     fetchArticles();
-  }, [idCategory]);
+  }, [categorieee]);
 
   const filteredArticles = articles.filter((article) =>
     categoriesChecked.length > 0
@@ -91,7 +95,7 @@ function Category() {
                   type="checkbox"
                   value={categorie.nom}
                   onChange={handleChangeCategoryChecked}
-                  checked={Number(idCategory) === categorie.id}
+                  checked={categoriesChecked.includes(categorie.nom)}
                 />
                 <span>{categorie.nom}</span>
               </label>
