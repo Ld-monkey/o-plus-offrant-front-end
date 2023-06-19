@@ -27,26 +27,26 @@ function AddArticle() {
       <form method="post" className="add-article-form">
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
-          <input
-            type="text"
-            // name="titre"
-            id="titre"
-            placeholder="Mug O'Clock"
-          />
+          <input type="text" name="titre" placeholder="Mug O'Clock" />
         </div>
 
         <div className="article-description">
           <label htmlFor="description">Description :</label>
           <textarea
             rows={5}
-            id="description"
+            name="description"
             placeholder="Détail de l'article..."
           />
         </div>
 
         <div className="article-category">
           <label htmlFor="categorie">Catégorie :</label>
-          <select id="categorie" defaultValue="default-value" required>
+          <select
+            id="categorie"
+            defaultValue="default-value"
+            name="categorie"
+            required
+          >
             <option className="default-option" value="default-value" disabled>
               -- Veuillez-sélectionner --
             </option>
@@ -59,30 +59,24 @@ function AddArticle() {
         </div>
 
         <div className="article-price">
-          <label htmlFor="prix-de-depart">Prix de départ :</label>
-          <input type="text" id="prix-de-depart" placeholder="100 Tokens" />
+          <label htmlFor="prix-de-depart">Prix de départ (€):</label>
+          <input type="number" name="prix-de-depart" placeholder="100" />
         </div>
 
         <div className="article-timer">
           <label htmlFor="temps-de-vente">Temps de vente :</label>
-          <div className="wrapper" id="temps-de-vente">
+          <div className="wrapper">
             <label htmlFor="short-sale">
               <input
                 type="radio"
-                name="sale-period"
-                id="short-sale"
-                value="72 Hours"
+                name="short-sale"
+                value="three-days"
                 defaultChecked
               />
               Vente sur 3 Jours
             </label>
             <label htmlFor="long-sale">
-              <input
-                type="radio"
-                id="long-sale"
-                name="sale-period"
-                value="168 Hours"
-              />
+              <input type="radio" name="long-sale" value="seven-days" />
               Vente sur 7 Jours
             </label>
           </div>
