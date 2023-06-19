@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { FormEvent, useEffect, useState } from 'react';
 import axios from 'axios';
 
 import CategoriesProps from '../../@types/interfaces';
@@ -21,6 +21,44 @@ function AddArticle() {
     fetchCategories();
   }, []);
 
+  // const [image, setImage] = useState('');
+
+  // function handleImage(event: React.ChangeEvent<HTMLInputElement>) {
+  //   setImage(event.target.files[0]);
+  // }
+
+  // function handleChange(
+  //   event: React.ChangeEvent<
+  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  //   >
+  // ) {
+  //   const { name, value } = event.target;
+  //   setFormData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // }
+
+  const [data, setData] = useState({
+    titre: '',
+    description: '',
+    categorie: 'default-value',
+    prix_de_depart: 0,
+    temps_de_vente: '',
+    photo: '',
+  });
+  function handleChange(
+    event:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLSelectElement>
+  ) {
+    const newData = { ...data };
+    newData[event.target.name] = event.target.value;
+    setData(newData);
+    console.log(newData);
+  }
+
   return (
     <div id="wrapper">
       <h2>Vendre votre article</h2>
@@ -31,6 +69,8 @@ function AddArticle() {
             type="text"
             name="titre"
             id="titre"
+            onChange={handleChange}
+            value={data.titre}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -41,6 +81,8 @@ function AddArticle() {
             rows={5}
             name="description"
             id="description"
+            onChange={handleChange}
+            value={data.description}
             placeholder="Détail de l'article..."
           />
         </div>
@@ -51,13 +93,14 @@ function AddArticle() {
             id="categorie"
             defaultValue="default-value"
             name="categorie"
+            onChange={handleChange}
             required
           >
             <option className="default-option" value="default-value" disabled>
               -- Veuillez-sélectionner --
             </option>
             {categories.map((categorie) => (
-              <option key={categorie.id} value={`categorie-${categorie.nom}`}>
+              <option key={categorie.id} value={categorie.nom}>
                 {categorie.nom}
               </option>
             ))}
@@ -68,40 +111,34 @@ function AddArticle() {
           <label htmlFor="prix-de-depart">Prix de départ (€):</label>
           <input
             type="number"
-            name="prix-de-depart"
+            name="prix_de_depart"
             id="prix-de-depart"
+            onChange={handleChange}
+            value={data.prix_de_depart}
             placeholder="100"
           />
         </div>
 
         <div className="article-timer">
           <label htmlFor="temps-de-vente">Temps de vente :</label>
-          <div className="wrapper">
-            <label htmlFor="short-sale">
-              <input
-                type="radio"
-                name="temps-de-vente"
-                id="short-sale"
-                value="three-days"
-                defaultChecked
-              />
-              Vente sur 3 Jours
-            </label>
-            <label htmlFor="long-sale">
-              <input
-                type="radio"
-                name="temps-de-vente"
-                id="long-sale"
-                value="seven-days"
-              />
-              Vente sur 7 Jours
-            </label>
-          </div>
+          <input
+            type="date"
+            name="temps_de_vente"
+            id="temps-de-vente"
+            onChange={handleChange}
+            value={data.temps_de_vente}
+          />
         </div>
 
         <div className="article-photo">
           <label htmlFor="photo">Photo :</label>
-          <input type="file" accept="image/*" id="photo" name="photo" />
+          <input
+            type="file"
+            accept="image/*"
+            id="photo"
+            name="photo"
+            // onChange={handleImage}
+          />
         </div>
 
         <div className="form-submit-btn">
