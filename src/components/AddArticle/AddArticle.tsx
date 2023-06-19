@@ -1,9 +1,25 @@
-import { useState } from 'react';
-import './AddArticle.scss';
+import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 import CategoriesProps from '../../@types/interfaces';
+import './AddArticle.scss';
 
 function AddArticle() {
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get(
+          'https://didierlam-server.eddi.cloud/api/categories'
+        );
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCategories();
+  }, []);
 
   return (
     <div id="wrapper">
@@ -34,11 +50,11 @@ function AddArticle() {
             <option className="default-option" value="default-value" disabled>
               -- Veuillez-sélectionner --
             </option>
-            <option value="category-1">Catégorie 1</option>
-            <option value="category-2">Catégorie 2</option>
-            <option value="category-3">Catégorie 3</option>
-            <option value="category-4">Catégorie 4</option>
-            <option value="category-N">Catégorie N</option>
+            {categories.map((categorie) => (
+              <option key={categorie.id} value={`categorie-${categorie.nom}`}>
+                {categorie.nom}
+              </option>
+            ))}
           </select>
         </div>
 
