@@ -34,7 +34,9 @@ interface SingleArticleHistory {
 dayjs.extend(duration);
 
 function SingleArticle() {
-  const [article, setArticle] = useState<SingleArticleProps>();
+  const [article, setArticle] = useState<SingleArticleProps | undefined>(
+    undefined
+  );
   const [articleHistory, setArticleHistory] = useState<SingleArticleHistory[]>(
     []
   );
@@ -60,6 +62,9 @@ function SingleArticle() {
     fetchArticlebyId();
   }, [idArticle]);
 
+  /*
+  Timer
+  */
   useEffect(() => {
     function calculateCountdown() {
       const now = dayjs();
@@ -72,20 +77,24 @@ function SingleArticle() {
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 
+  /*
+  Send updated data to the API
+  */
   async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    setOpenModal(false);
-    try {
-      if (article) {
+    // TODO: si le client est connecté, on ajoute son id dans le json qu'on envoie au back, sinon l'inviter à se connecter / lui ouvrir la modale de connexion
+    if (article) {
+      try {
         await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
           acheteurId: 2,
         });
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error('Error updating montant:', error);
     }
+    setOpenModal(false);
   }
 
   if (article) {
