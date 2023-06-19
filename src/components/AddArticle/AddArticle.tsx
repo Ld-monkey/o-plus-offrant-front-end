@@ -27,18 +27,6 @@ function AddArticle() {
   //   setImage(event.target.files[0]);
   // }
 
-  // function handleChange(
-  //   event: React.ChangeEvent<
-  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  //   >
-  // ) {
-  //   const { name, value } = event.target;
-  //   setFormData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // }
-
   const [data, setData] = useState({
     titre: '',
     description: '',
@@ -47,11 +35,11 @@ function AddArticle() {
     temps_de_vente: '',
     photo: '',
   });
+
   function handleChange(
-    event:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLSelectElement>
+    event: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
   ) {
     const newData = { ...data };
     newData[event.target.name] = event.target.value;
@@ -59,10 +47,30 @@ function AddArticle() {
     console.log(newData);
   }
 
+  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const response = await axios.post(
+        'https://didierlam-server.eddi.cloud/api/article/creation/add',
+        {
+          nom: data.titre,
+          photo: data.photo,
+          description: data.description,
+          prix_de_depart: data.prix_de_depart,
+          date_de_fin: data.temps_de_vente,
+          date_et_heure: '2023-06-19',
+          utilisateur_vente_id: 3,
+        }
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   return (
     <div id="wrapper">
       <h2>Vendre votre article</h2>
-      <form method="post" className="add-article-form">
+      <form method="post" className="add-article-form" onSubmit={handleSubmit}>
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
           <input
