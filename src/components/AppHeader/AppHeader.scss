@@ -92,6 +92,42 @@
     }
   }
 
+  &-btn-online {
+    display: none;
+
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+      padding: 10px 20px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 10px;
+      border: none;
+      outline: none;
+      background-color: #fff;
+      border: 3px solid #fff;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #fcf6f0;
+      }
+    }
+
+    span {
+      font-size: 0.9rem;
+    }
+  }
+
+  .logo-user-profil {
+    width: 40px;
+    height: 40px;
+    display: inline-block;
+
+    .avatar {
+      border-radius: 50%;
+      border: 2px solid v.$color-primary;
+    }
+  }
+
   // Hamburger Menu.
   .hamburger-menu {
     display: inline-block;
