@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import './styles/index.scss';
 import App from './components/App/App';
@@ -8,7 +9,6 @@ import Category from './components/Category/Category';
 import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
 import SingleProduct from './components/SingleProduct/SingleProduct';
-import { Provider } from 'react-redux';
 import store from './store/store';
 
 const router = createBrowserRouter([
