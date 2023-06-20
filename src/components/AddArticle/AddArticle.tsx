@@ -21,94 +21,70 @@ function AddArticle() {
     fetchCategories();
   }, []);
 
-  const [inputsData, setInputsData] = useState({
-    titre: '',
-    description: '',
-    categorie: '',
-    prix_de_depart: '0',
-    temps_de_vente: '',
-    photo: null,
-  });
+  // const [inputsData, setInputsData] = useState({
+  //   titre: '',
+  //   description: '',
+  //   categorie: '',
+  //   prix_de_depart: '0',
+  //   temps_de_vente: '',
+  //   photo: null,
+  // });
 
-  function handleChange(
-    event: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
-  ) {
-    const newData = { ...inputsData };
-    newData[event.target.name] = event.target.value;
-    setInputsData(newData);
-    console.log(newData);
-  }
-
-  // const handleChange = (
+  // function handleChange(
   //   event: React.ChangeEvent<
   //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
   //   >
-  // ) => {
-  //   const { name, value } = event.target;
-  //   setInputsData((prevData) => ({
-  //     ...prevData,
-  //     [name]: value,
-  //   }));
-  // };
+  // ) {
+  //   const newData = { ...inputsData };
+  //   newData[event.target.name] = event.target.value;
+  //   setInputsData(newData);
+  //   console.log(newData);
+  // }
 
-  const [image, setImage] = useState(null);
+  // const [image, setImage] = useState(null);
 
-  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-    console.log(event.target.files);
-    setImage(event.target.files[0]);
-  }
+  // function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+  //   console.log(event.target.files);
+  //   setImage(event.target.files[0]);
+  // }
 
-  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = event.target.files && event.target.files[0];
-  //   setInputsData((prevData) => ({
-  //     ...prevData,
-  //     photo: file,
-  //   }));
-  // };
-
-  //   if (image) {
-  //     const reader = new FileReader();
-  //     reader.onload = (evt) => {
-  //       if (evt.target && evt.target.result) {
-  //         const fileContent = evt.target.result as string;
-  //         setImage(fileContent);
+  // async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault();
+  //   try {
+  //     const response = await axios.post(
+  //       'https://didierlam-server.eddi.cloud/article/creation/add',
+  //       {
+  //         nom: inputsData.titre,
+  //         description: inputsData.description,
+  //         categorie_id: inputsData.categorie,
+  //         prix_de_depart: inputsData.prix_de_depart,
+  //         date_de_fin: inputsData.temps_de_vente,
+  //         photo: inputsData.photo,
+  //         date_et_heure: new Date().toJSON().slice(0, 10),
+  //         utilisateur_vente_id: 3,
   //       }
-  //     };
+  //     );
+  //     console.log(response);
+  //   } catch (error) {
+  //     console.error(error);
   //   }
-
-  // if (imageFile) {
-  //   const reader = new FileReader();
-  //   reader.onload = (evt) => {
-  //     const fileContent = evt.target?.result as string;
-  //     console.log(fileContent);
-  //   };
-  //   reader.readAsText(imageFile);
-  // }
   // }
 
-  async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+  const [image, setImage] = useState<string | Blob>('');
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    try {
-      const response = await axios.post(
-        'https://didierlam-server.eddi.cloud/article/creation/add',
-        {
-          nom: inputsData.titre,
-          description: inputsData.description,
-          categorie_id: inputsData.categorie,
-          prix_de_depart: inputsData.prix_de_depart,
-          date_de_fin: inputsData.temps_de_vente,
-          photo: inputsData.photo,
-          date_et_heure: new Date().toJSON().slice(0, 10),
-          utilisateur_vente_id: 3,
-        }
-      );
-      console.log(response);
-    } catch (error) {
-      console.error(error);
-    }
-  }
+    const formData = new FormData();
+    formData.append('photo', image);
+
+    const result = await axios.post(
+      'https://didierlam-server.eddi.cloud/api/images',
+      formData,
+      {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      }
+    );
+  };
 
   return (
     <div id="wrapper">
@@ -120,8 +96,8 @@ function AddArticle() {
             type="text"
             name="titre"
             id="titre"
-            onChange={handleChange}
-            value={inputsData.titre}
+            // onChange={(e) => setTitre(e.target.value)}
+            // value={inputsData.titre}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -132,8 +108,8 @@ function AddArticle() {
             rows={5}
             name="description"
             id="description"
-            onChange={handleChange}
-            value={inputsData.description}
+            // onChange={(e) => setDescription(e.target.value)}
+            // value={inputsData.description}
             placeholder="Détail de l'article..."
           />
         </div>
@@ -144,7 +120,7 @@ function AddArticle() {
             id="categorie"
             defaultValue="default-value"
             name="categorie"
-            onChange={handleChange}
+            // onChange={(e) => setCategorieId(e.target.value)}
             required
           >
             <option className="default-option" value="default-value" disabled>
@@ -165,8 +141,8 @@ function AddArticle() {
             min="1"
             name="prix_de_depart"
             id="prix-de-depart"
-            onChange={handleChange}
-            value={inputsData.prix_de_depart}
+            // onChange={(e) => setPrixDeDepart(e.target.value)}
+            // value={inputsData.prix_de_depart}
             placeholder="100"
           />
         </div>
@@ -177,8 +153,8 @@ function AddArticle() {
             type="date"
             name="temps_de_vente"
             id="temps-de-vente"
-            onChange={handleChange}
-            value={inputsData.temps_de_vente}
+            // onChange={(e) => setTempsDeVente(e.target.value)}
+            // value={inputsData.temps_de_vente}
           />
         </div>
 
@@ -189,7 +165,7 @@ function AddArticle() {
             accept="image/*"
             id="photo"
             name="photo"
-            onChange={handleImageChange}
+            onChange={(e) => setImage(e.target.files[0])}
           />
         </div>
 
