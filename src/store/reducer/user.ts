@@ -10,9 +10,9 @@ import axios from '../../api/axios';
 interface UserState {
   registred: boolean;
   logged: boolean;
-  logo_profile: string | null;
+  logo_profile: string | undefined;
   id: number | null;
-  prenom: string | null;
+  prenom: string | undefined;
   nom: string | null;
   accessToken: string | null;
   refreshToken: string | null;
@@ -21,9 +21,9 @@ interface UserState {
 export const initialState: UserState = {
   registred: false,
   logged: false,
-  logo_profile: null,
+  logo_profile: undefined,
   id: null,
-  prenom: null,
+  prenom: undefined,
   nom: null,
   accessToken: null,
   refreshToken: null,
@@ -42,7 +42,8 @@ export const login = createAsyncThunk(
         const accessToken = response?.data.accessToken;
         const refreshToken = response?.data?.refreshToken;
 
-        const { id, prenom, nom } = jwt_decode(accessToken);
+        const { id, prenom, nom }: { id: string; prenom: string; nom: string } =
+          jwt_decode(accessToken);
 
         return [linkProfile, accessToken, refreshToken, id, prenom, nom];
       })
@@ -105,8 +106,9 @@ const userReducer = createReducer(initialState, (builder) => {
     })
     .addCase(logout, (state) => {
       state.logged = false;
+      state.logo_profile = undefined;
       state.id = null;
-      state.prenom = null;
+      state.prenom = undefined;
       state.nom = null;
       state.accessToken = null;
     });

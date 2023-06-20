@@ -25,7 +25,10 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
    * @param name {string} - User name (pseudo).
    * @returns Return the split or unsplit name.
    */
-  function splitUsername(name: string): string {
+  function splitUsername(name: string | undefined): string {
+    if (!name) {
+      return '';
+    }
     const characterLimit = 10;
     if (name.length > characterLimit) {
       return ''.concat(name.slice(0, characterLimit), '...');

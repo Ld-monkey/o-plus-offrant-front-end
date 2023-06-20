@@ -54,7 +54,7 @@ function Login({
    * Handle errors returned by an axios request and change the error message.
    * @param err - error
    */
-  const httpErrorHandler = (err) => {
+  const httpErrorHandler = (err: number) => {
     if (!err) {
       setErrMsg('Aucune réponse du serveur');
     } else if (err === 400) {
