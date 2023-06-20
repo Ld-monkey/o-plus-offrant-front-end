@@ -1,100 +1,69 @@
 import Carousel from 'react-multi-carousel';
-import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
-import bike from '../../assets/images/bike.jpg';
-import banana from '../../assets/images/banane.jpg';
+
+import { Link } from 'react-router-dom';
+import { IRandomItems } from '../../@types/articles';
+
+import Card from '../Cards/Card';
 import '../Cards/Cards.scss';
 
-function CarouselItem() {
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 6,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 960 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 960, min: 577 },
-      items: 3,
-    },
-    mobile: {
-      breakpoint: { max: 576, min: 0 },
-      items: 2,
-    },
-  };
+const API = import.meta.env.VITE_AXIOS_SERVER;
+
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 6,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 960 },
+    items: 4,
+  },
+  tablet: {
+    breakpoint: { max: 960, min: 577 },
+    items: 3,
+  },
+  mobile: {
+    breakpoint: { max: 576, min: 0 },
+    items: 2,
+  },
+};
+
+function CarouselItem({ articles }: { articles: IRandomItems[] }) {
+  const mostRecentItems = articles.slice(0, 5);
+  const olderItems = articles.slice(6, 12);
   return (
     <div id="wrapper">
-      <h3>Ventes courtes</h3>
+      <h2>Ventes courtes</h2>
       <Carousel responsive={responsive}>
-        <div>
-          <div
-            className="cards-container first-card"
-            style={{ backgroundColor: '#FDF5EA' }}
-          >
-            <Link to="produit/1" className="card">
-              <div className="card-img">
-                <img src={bike} alt="bike" />
-              </div>
-              <div className="card-legend">
-                <p>Vélo (en carbone)</p>
-                <div className="card-legend__data">
-                  <span className="card-legend__tokens">100 Tokens</span>
-                  <span className="card-legend__times">00:01:20</span>
-                </div>
-              </div>
-            </Link>
+        {mostRecentItems.map((item) => (
+          <div key={item.id} style={{ height: '100%' }}>
+            <Card
+              id={item.id}
+              description=""
+              image={`${API}${item.photo}`}
+              title={item.nom}
+              price={item.montant}
+              endTime={item.date_de_fin}
+            />
           </div>
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
+        ))}
       </Carousel>
 
-      <h3>Ventes longues</h3>
-      <Carousel responsive={responsive} centerMode={true}>
-        <div>
-          <div
-            className="cards-container first-card"
-            style={{ backgroundColor: '#FDF5EA' }}
-          >
-            <Link to="produit/1" className="card">
-              <div className="card-img">
-                <img src={bike} alt="bike" />
-              </div>
-              <div className="card-legend">
-                <p>Vélo (en carbone)</p>
-                <div className="card-legend__data">
-                  <span className="card-legend__tokens">100 Tokens</span>
-                  <span className="card-legend__times">00:01:20</span>
-                </div>
-              </div>
-            </Link>
+      <h2>Ventes longues</h2>
+      <Carousel responsive={responsive}>
+        {olderItems.map((item) => (
+          <div key={item.id} style={{ height: '100%' }}>
+            <Card
+              id={item.id}
+              description=""
+              image={`${API}${item.photo}`}
+              title={item.nom}
+              price={item.montant}
+              endTime={item.date_de_fin}
+            />
           </div>
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
+        ))}
       </Carousel>
     </div>
   );

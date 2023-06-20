@@ -13,7 +13,7 @@ function Home() {
     <>
       <CategoriesBar />
       <Cards articles={allArticles} />
-      <CarouselItem />
+      <CarouselItem articles={allArticles} />
     </>
   );
 }

@@ -1,22 +1,9 @@
-import { Link } from 'react-router-dom';
-import './Cards.scss';
+import { useEffect, useState } from 'react';
+import { IRandomItems } from '../../@types/articles';
 import Card from './Card';
+import './Cards.scss';
 
 const API = import.meta.env.VITE_AXIOS_SERVER;
-
-interface IRandomItems {
-  date_de_fin: string;
-  montant: number;
-  photo: string | undefined;
-  id: number;
-  titre: string | undefined;
-  nom: string | undefined;
-  image: string | undefined;
-  alt: string | undefined;
-  description: string | undefined;
-  prix: number;
-  dateFin: string;
-}
 
 function Cards({ articles }: { articles: IRandomItems[] }) {
   /**
@@ -29,7 +16,7 @@ function Cards({ articles }: { articles: IRandomItems[] }) {
     const indexArticles: number[] = [];
 
     while (indexArticles.length !== 2) {
-      const index = Math.floor(Math.random() * totalArticles) + 1;
+      const index = Math.floor(Math.random() * totalArticles);
       if (indexArticles.length === 0) {
         indexArticles.push(index);
       } else if (indexArticles[0] !== index) {
@@ -42,7 +29,7 @@ function Cards({ articles }: { articles: IRandomItems[] }) {
 
   const [firstItem, secondItem] = getRandomItems(articles.length);
 
-  const lastTwoItems = [
+  const items = [
     {
       id: articles[firstItem].id,
       titre: articles[firstItem].nom,
@@ -69,24 +56,28 @@ function Cards({ articles }: { articles: IRandomItems[] }) {
         <h2>Enchères</h2>
         <div className="cards-root">
           <div className="first-card">
-            <Card
-              id={lastTwoItems[0].id}
-              image={lastTwoItems[0].image}
-              description={lastTwoItems[0].description}
-              title={lastTwoItems[0].titre}
-              price={lastTwoItems[0].prix}
-              endTime={lastTwoItems[0].dateFin}
-            />
+            {items.length && (
+              <Card
+                id={items[0].id}
+                image={items[0].image}
+                description={items[0].description}
+                title={items[0].titre}
+                price={items[0].prix}
+                endTime={items[0].dateFin}
+              />
+            )}
           </div>
           <div className="cards-container second-card">
-            <Card
-              id={lastTwoItems[1].id}
-              image={lastTwoItems[1].image}
-              description={lastTwoItems[1].description}
-              title={lastTwoItems[1].titre}
-              price={lastTwoItems[1].prix}
-              endTime={lastTwoItems[1].dateFin}
-            />
+            {items.length && (
+              <Card
+                id={items[1].id}
+                image={items[1].image}
+                description={items[1].description}
+                title={items[1].titre}
+                price={items[1].prix}
+                endTime={items[1].dateFin}
+              />
+            )}
           </div>
         </div>
       </div>
