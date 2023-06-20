@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Category.scss';
 
@@ -29,38 +29,30 @@ function Category() {
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
-  // const { idCategory } = useParams();
-  // console.log('idCategory', idCategory);
-
   const location = useLocation();
-  let categorieee = '';
-  if (location.state) {
-    // setCategoriesChecked(location.state);
-    categorieee = location.state.idCategory;
-  }
+
+  const categoryClicked = location.state ? location.state.nameCategory : '';
 
   useEffect(() => {
     async function fetchArticles() {
       const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
       try {
         const response = await axios.get(apiReq);
-        // if (idCategory) {
-        //   setArticles(response.data.filteredArticles);
-        // } else {
+
         setArticles(response.data.allArticles);
-        // }
+
         setCategories(response.data.allCategories);
       } catch (error) {
         // eslint-disable-next-line no-console
         console.error(error);
       }
     }
-    if (categorieee !== '') {
-      setCategoriesChecked([categorieee]);
+    if (categoryClicked !== '') {
+      setCategoriesChecked([categoryClicked]);
     }
 
     fetchArticles();
-  }, [categorieee]);
+  }, [categoryClicked]);
 
   const filteredArticles = articles.filter((article) =>
     categoriesChecked.length > 0

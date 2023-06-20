@@ -20,6 +20,7 @@ function CategoriesBar() {
         );
         setCategories(response.data);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }
@@ -34,14 +35,10 @@ function CategoriesBar() {
             key={category.id}
             to="/produits"
             className="categories-link"
-            state={{ idCategory: `${category.nom}` }}
-            // idCategory=nomdevariable  category.id=value
+            state={{ nameCategory: `${category.nom}` }}
           >
             {category.nom}
           </NavLink>
-          //   <NavLink key={category.id} to="/produits" className="categories-link">
-          //   {category.nom}
-          // </NavLink>
         ))}
       </nav>
     </div>
