@@ -1,10 +1,9 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faSquareXmark } from '@fortawesome/free-solid-svg-icons';
 import { FormEvent, useEffect, useState } from 'react';
-import { AxiosError } from 'axios';
+import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
-import { login } from '../../store/reducer/user';
-import axios from '../../api/axios';
+import { login, registrer } from '../../store/reducer/user';
 import './Login.scss';
 
 function Login({
@@ -31,7 +30,8 @@ function Login({
 
   /**
    * By default, the login is displayed first (not registration).
-   * Sensitives informations (email, password ...) are reset each time the view is changed.
+   * Sensitives informations (email, password ...) are reset each
+   * time the view is changed.
    */
   useEffect(() => {
     const resetInputValues = () => {
@@ -51,39 +51,38 @@ function Login({
   }, [isOpenLogin, isRegistrerView]);
 
   /**
-   *
-   * @param event
+   * Handle errors returned by an axios request and change the error message.
+   * @param err - error
    */
-  const handleLogin = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    try {
-      const response = await axios.post('/api/login', {
-        adresse_mail: email,
-        mot_de_passe: pwd,
-      });
-
-      const token = response?.data.accessToken;
-      const refresh = response?.data?.refreshToken;
-      dispatch(login(token, refresh));
-    } catch (error) {
-      if (!error?.response) {
-        setErrMsg('Aucune réponse du serveur');
-      } else if (error.response?.status === 400) {
-        setErrMsg("Manque le mot de passe ou de l'adresse mail");
-      } else if (error.response?.status === 401) {
-        setErrMsg(
-          "La combinaison de l'adresse mail et du mot de passe est incorrecte."
-        );
-      } else {
-        setErrMsg('Login Failed');
-      }
+  const httpErrorHandler = (err) => {
+    if (!err) {
+      setErrMsg('Aucune réponse du serveur');
+    } else if (err === 400) {
+      setErrMsg("Manque le mot de passe ou de l'adresse mail");
+    } else if (err === 401) {
+      setErrMsg(
+        "La combinaison de l'adresse mail et du mot de passe est incorrecte."
+      );
+    } else {
+      setErrMsg('Impossible de se logguer');
     }
   };
 
   /**
-   *
+   * Login a user with email and password when submitting a form.
+   * @param event - A form event.
    */
-  const handleRegister = async (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+
+    dispatch(login({ email, pwd })).then(unwrapResult).catch(httpErrorHandler);
+  };
+
+  /**
+   * Registers a user when submitting a form.
+   * @param event - A form event.
+   */
+  const handleSubmitRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
     if (!isLegalAge) {
@@ -91,23 +90,24 @@ function Login({
       return;
     }
 
-    axios
-      .post('/api/register', {
-        prenom: firstname,
-        nom: lastname,
-        adresse_mail: email,
-        mot_de_passe: pwd,
+    dispatch(registrer({ firstname, lastname, email, pwd }))
+      .then(unwrapResult)
+      .then((response) => {
+        if (response === 200) {
+          // Close registrer.
+          toggleModalLogin();
+
+          // Display a cool message to inform the user
+          // that the account has been created.
+        }
       })
-      .then(() => {
-        handleLogin(event);
-      })
-      .catch((error) => console.error(error));
+      .catch(httpErrorHandler);
   };
 
   /**
-   *
+   * Change the view from user login to user creation.
    */
-  const handleCreateAccount = () => {
+  const ChangeRegistrationView = () => {
     setIsRegisterView(!isRegistrerView);
   };
 
@@ -138,7 +138,7 @@ function Login({
           onClick={toggleModalLogin}
         />
         {!isRegistrerView ? (
-          <form onSubmit={handleLogin}>
+          <form onSubmit={handleSubmitLogin}>
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
@@ -162,7 +162,7 @@ function Login({
             </button>
           </form>
         ) : (
-          <form onSubmit={handleRegister} autoComplete="off">
+          <form onSubmit={handleSubmitRegister} autoComplete="off">
             <input
               value={firstname}
               onChange={(e) => setFirstName(e.target.value)}
@@ -220,7 +220,7 @@ function Login({
             <button
               type="button"
               className="create-account"
-              onClick={handleCreateAccount}
+              onClick={ChangeRegistrationView}
             >
               Créer un compte
             </button>
@@ -230,7 +230,7 @@ function Login({
             <p>Déjà un compte ?</p>
             <button
               type="button"
-              onClick={handleCreateAccount}
+              onClick={ChangeRegistrationView}
               className="login"
             >
               Utiliser son compte
