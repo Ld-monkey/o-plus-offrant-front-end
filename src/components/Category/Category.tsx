@@ -131,7 +131,11 @@ function Category() {
       {categoriesChecked ? (
         <div className="containerCardCat">
           {filteredArticles.map((filteredArticle) => (
-            <Link key={filteredArticle.id} to="/produit/1" className="cardCat">
+            <Link
+              key={filteredArticle.id}
+              to={`/produit/${filteredArticle.id}`}
+              className="cardCat"
+            >
               <img
                 className="pictureItem"
                 src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
