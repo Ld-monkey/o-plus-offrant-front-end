@@ -7,14 +7,14 @@ async function getRandomIdApiCat() {
     const randomCuteCat = await axios.get(`https://cataas.com/cat?json=true`);
     return randomCuteCat?.data._id;
   } catch (err) {
-    return null;
+    return undefined;
   }
 }
 
 async function getLinkImageProfile() {
   const idRandomCat = await getRandomIdApiCat();
   if (!idRandomCat) {
-    return null;
+    return undefined;
   }
   return `${API_CAT}/cat/${idRandomCat}?width=50&height=50`;
 }
