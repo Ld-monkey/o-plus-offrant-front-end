@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 /*
@@ -76,7 +76,13 @@ function SingleArticle() {
       const now = dayjs();
       const auctionTargetDate = dayjs(article?.date_de_fin);
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
-      const formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
+      let formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
+      if (auctionDuration.days() === 1) {
+        formattedCountdown = `${auctionDuration.days()} jour ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
+      }
+      if (auctionDuration.days() === 0) {
+        formattedCountdown = `${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
+      }
       setCountdown(formattedCountdown);
     }
     const countdownInterval = setInterval(calculateCountdown, 1000);
@@ -241,7 +247,13 @@ function SingleArticle() {
       </>
     );
   }
-  return <p>Le produit que vous recherchez n&apos;existe pas.</p>;
+  return (
+    <div id="wrapper">
+      <p className="not-found">
+        Le produit que vous recherchez n&apos;existe pas.
+      </p>
+    </div>
+  );
 }
 
 export default SingleArticle;
