@@ -1,4 +1,4 @@
-import { FormEvent, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import CategoriesProps from '../../@types/interfaces';
@@ -21,19 +21,13 @@ function AddArticle() {
     fetchCategories();
   }, []);
 
-  // const [image, setImage] = useState('');
-
-  // function handleImage(event: React.ChangeEvent<HTMLInputElement>) {
-  //   setImage(event.target.files[0]);
-  // }
-
-  const [data, setData] = useState({
+  const [inputsData, setInputsData] = useState({
     titre: '',
     description: '',
-    categorie: 'default-value',
-    prix_de_depart: 0,
+    categorie: '',
+    prix_de_depart: '0',
     temps_de_vente: '',
-    photo: '',
+    photo: null,
   });
 
   function handleChange(
@@ -41,27 +35,76 @@ function AddArticle() {
       HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
     >
   ) {
-    const newData = { ...data };
+    const newData = { ...inputsData };
     newData[event.target.name] = event.target.value;
-    setData(newData);
+    setInputsData(newData);
     console.log(newData);
   }
+
+  // const handleChange = (
+  //   event: React.ChangeEvent<
+  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+  //   >
+  // ) => {
+  //   const { name, value } = event.target;
+  //   setInputsData((prevData) => ({
+  //     ...prevData,
+  //     [name]: value,
+  //   }));
+  // };
+
+  const [image, setImage] = useState(null);
+
+  function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
+    console.log(event.target.files);
+    setImage(event.target.files[0]);
+  }
+
+  // const handleImageChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = event.target.files && event.target.files[0];
+  //   setInputsData((prevData) => ({
+  //     ...prevData,
+  //     photo: file,
+  //   }));
+  // };
+
+  //   if (image) {
+  //     const reader = new FileReader();
+  //     reader.onload = (evt) => {
+  //       if (evt.target && evt.target.result) {
+  //         const fileContent = evt.target.result as string;
+  //         setImage(fileContent);
+  //       }
+  //     };
+  //   }
+
+  // if (imageFile) {
+  //   const reader = new FileReader();
+  //   reader.onload = (evt) => {
+  //     const fileContent = evt.target?.result as string;
+  //     console.log(fileContent);
+  //   };
+  //   reader.readAsText(imageFile);
+  // }
+  // }
 
   async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const response = await axios.post(
-        'https://didierlam-server.eddi.cloud/api/article/creation/add',
+        'https://didierlam-server.eddi.cloud/article/creation/add',
         {
-          nom: data.titre,
-          photo: data.photo,
-          description: data.description,
-          prix_de_depart: data.prix_de_depart,
-          date_de_fin: data.temps_de_vente,
-          date_et_heure: '2023-06-19',
+          nom: inputsData.titre,
+          description: inputsData.description,
+          categorie_id: inputsData.categorie,
+          prix_de_depart: inputsData.prix_de_depart,
+          date_de_fin: inputsData.temps_de_vente,
+          photo: inputsData.photo,
+          date_et_heure: new Date().toJSON().slice(0, 10),
           utilisateur_vente_id: 3,
         }
       );
+      console.log(response);
     } catch (error) {
       console.error(error);
     }
@@ -78,7 +121,7 @@ function AddArticle() {
             name="titre"
             id="titre"
             onChange={handleChange}
-            value={data.titre}
+            value={inputsData.titre}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -90,7 +133,7 @@ function AddArticle() {
             name="description"
             id="description"
             onChange={handleChange}
-            value={data.description}
+            value={inputsData.description}
             placeholder="Détail de l'article..."
           />
         </div>
@@ -108,7 +151,7 @@ function AddArticle() {
               -- Veuillez-sélectionner --
             </option>
             {categories.map((categorie) => (
-              <option key={categorie.id} value={categorie.nom}>
+              <option key={categorie.id} value={categorie.id}>
                 {categorie.nom}
               </option>
             ))}
@@ -119,10 +162,11 @@ function AddArticle() {
           <label htmlFor="prix-de-depart">Prix de départ (€):</label>
           <input
             type="number"
+            min="1"
             name="prix_de_depart"
             id="prix-de-depart"
             onChange={handleChange}
-            value={data.prix_de_depart}
+            value={inputsData.prix_de_depart}
             placeholder="100"
           />
         </div>
@@ -134,7 +178,7 @@ function AddArticle() {
             name="temps_de_vente"
             id="temps-de-vente"
             onChange={handleChange}
-            value={data.temps_de_vente}
+            value={inputsData.temps_de_vente}
           />
         </div>
 
@@ -145,7 +189,7 @@ function AddArticle() {
             accept="image/*"
             id="photo"
             name="photo"
-            // onChange={handleImage}
+            onChange={handleImageChange}
           />
         </div>
 
