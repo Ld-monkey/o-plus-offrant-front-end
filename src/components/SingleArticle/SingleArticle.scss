@@ -152,6 +152,12 @@ h2 {
   }
 }
 
+.auction-no-history {
+  font-size: 1.2rem;
+  text-align: center;
+  color: v.$color-secondary;
+}
+
 .modal-auction {
   &.is-active {
     z-index: 2;

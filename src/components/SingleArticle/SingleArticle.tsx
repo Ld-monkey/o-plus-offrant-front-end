@@ -138,34 +138,42 @@ function SingleArticle() {
 
           <section className="auction-history">
             <h2 className="auction-history-title">Historique des enchères</h2>
-            <table className="auction-history-table">
-              <thead>
-                <tr>
-                  <td>Nom de l&apos;enchérisseur</td>
-                  <td>Montant de l&apos;enchère</td>
-                  <td>Date de l&apos;enchère</td>
-                </tr>
-              </thead>
-              <tbody>
-                {articleHistory.map((history) => {
-                  const firstLetter = history.nom.charAt(0);
-                  const formattedDate = dayjs(history.date).format(
-                    'DD-MM-YYYY [à] HH:mm'
-                  );
-                  return (
-                    <tr key={history.id}>
-                      <td className="auction-history-auctioner">
-                        {history.prenom} {firstLetter}.
-                      </td>
-                      <td className="auction-history-price">
-                        {history.montant} Tokens
-                      </td>
-                      <td className="auction-history-date">{formattedDate}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {articleHistory.length ? (
+              <table className="auction-history-table">
+                <thead>
+                  <tr>
+                    <td>Nom de l&apos;enchérisseur</td>
+                    <td>Montant de l&apos;enchère</td>
+                    <td>Date de l&apos;enchère</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {articleHistory.map((history) => {
+                    const firstLetter = history.nom.charAt(0);
+                    const formattedDate = dayjs(history.date).format(
+                      'DD-MM-YYYY [à] HH:mm'
+                    );
+                    return (
+                      <tr key={history.id}>
+                        <td className="auction-history-auctioner">
+                          {history.prenom} {firstLetter}.
+                        </td>
+                        <td className="auction-history-price">
+                          {history.montant} Tokens
+                        </td>
+                        <td className="auction-history-date">
+                          {formattedDate}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p className="auction-no-history">
+                L&apos;article n&apos;a pas encore d&apos;enchérisseur 😞
+              </p>
+            )}
           </section>
         </div>
         {openModal && (
