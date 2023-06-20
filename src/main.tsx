@@ -1,13 +1,15 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
+import { Provider } from 'react-redux';
 
 import './styles/index.scss';
 import App from './components/App/App';
 import Category from './components/Category/Category';
 import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
-import SingleProduct from './components/SingleProduct/SingleProduct';
+import store from './store/store';
+import SingleArticle from './components/SingleArticle/SingleArticle';
 
 const router = createBrowserRouter([
   {
@@ -28,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'produit/:idArticle',
-        element: <SingleProduct />,
+        element: <SingleArticle />,
       },
       {
         path: 'produit/creation',
@@ -40,6 +42,8 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
   </React.StrictMode>
 );
