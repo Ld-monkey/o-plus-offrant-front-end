@@ -1,5 +1,8 @@
 import Carousel from 'react-multi-carousel';
+import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
+import bike from '../../assets/images/bike.jpg';
+import banana from '../../assets/images/banane.jpg';
 import '../Cards/Cards.scss';
 
 function CarouselItem() {
@@ -31,9 +34,9 @@ function CarouselItem() {
             className="cards-container first-card"
             style={{ backgroundColor: '#FDF5EA' }}
           >
-            <a href="#article1" className="card">
+            <Link to="produit/1" className="card">
               <div className="card-img">
-                <img src="../../src/assets/images/bike.jpg" alt="bike" />
+                <img src={bike} alt="bike" />
               </div>
               <div className="card-legend">
                 <p>Vélo (en carbone)</p>
@@ -42,36 +45,55 @@ function CarouselItem() {
                   <span className="card-legend__times">00:01:20</span>
                 </div>
               </div>
-            </a>
+            </Link>
           </div>
         </div>
         <div>
-          <img src="../../src/assets/images/banane.jpg" alt="banana" />
+          <img src={banana} alt="banana" />
         </div>
         <div>
-          <img src="../../src/assets/images/bike.jpg" alt="banana" />
+          <img src={bike} alt="bike" />
         </div>
         <div>
-          <img src="../../src/assets/images/banane.jpg" alt="banana" />
+          <img src={banana} alt="banana" />
         </div>
         <div>
-          <img src="../../src/assets/images/bike.jpg" alt="banana" />
+          <img src={bike} alt="bike" />
         </div>
       </Carousel>
 
       <h3>Ventes longues</h3>
       <Carousel responsive={responsive} centerMode={true}>
         <div>
-          <img src="../../src/assets/images/banane.jpg" alt="banana" />
+          <div
+            className="cards-container first-card"
+            style={{ backgroundColor: '#FDF5EA' }}
+          >
+            <Link to="produit/1" className="card">
+              <div className="card-img">
+                <img src={bike} alt="bike" />
+              </div>
+              <div className="card-legend">
+                <p>Vélo (en carbone)</p>
+                <div className="card-legend__data">
+                  <span className="card-legend__tokens">100 Tokens</span>
+                  <span className="card-legend__times">00:01:20</span>
+                </div>
+              </div>
+            </Link>
+          </div>
         </div>
         <div>
-          <img src="../../src/assets/images/bike.jpg" alt="banana" />
+          <img src={banana} alt="banana" />
         </div>
         <div>
-          <img src="../../src/assets/images/banane.jpg" alt="banana" />
+          <img src={bike} alt="bike" />
         </div>
         <div>
-          <img src="../../src/assets/images/bike.jpg" alt="banana" />
+          <img src={banana} alt="banana" />
+        </div>
+        <div>
+          <img src={bike} alt="bike" />
         </div>
       </Carousel>
     </div>

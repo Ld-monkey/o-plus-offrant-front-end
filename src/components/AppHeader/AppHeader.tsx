@@ -1,5 +1,6 @@
 import { useState, FormEvent } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { Link } from 'react-router-dom';
 import {
   faMagnifyingGlass,
   faSackDollar,
@@ -7,10 +8,30 @@ import {
   faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
+import { useAppSelector } from '../../hooks/redux';
 
-function AppHeader({ toggleModalLogin }) {
+function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+
+  const {
+    logged: isLogged,
+    prenom: username,
+    logo_profile: avatar,
+  } = useAppSelector((state) => state.user);
+
+  /**
+   * Split name when to long.
+   * @param name {string} - User name (pseudo).
+   * @returns Return the split or unsplit name.
+   */
+  function splitUsername(name: string): string {
+    const characterLimit = 10;
+    if (name.length > characterLimit) {
+      return ''.concat(name.slice(0, characterLimit), '...');
+    }
+    return name;
+  }
 
   /**
    * Toggle the item list when the hamburger menu is clicked.
@@ -22,7 +43,7 @@ function AppHeader({ toggleModalLogin }) {
   /**
    * Updates searchbar content.
    */
-  function changeInputContent() {
+  function changeInputContent(event: React.ChangeEvent<HTMLInputElement>) {
     setContentSearchBar(event?.target.value);
   }
 
@@ -39,7 +60,9 @@ function AppHeader({ toggleModalLogin }) {
       <header className="header">
         <div id="wrapper">
           <nav className="header-navbar">
-            <h1 className="header-logo">O+ Offrant</h1>
+            <Link to="/">
+              <h1 className="header-logo">O+ Offrant</h1>
+            </Link>
             {/* inside navbar */}
             <form
               className="searchbar inside-navbar"
@@ -54,26 +77,39 @@ function AppHeader({ toggleModalLogin }) {
                 name="searchbar"
                 placeholder="Que cherchez-vous ?"
                 aria-label="Search article through site content"
-                onClick={changeInputContent}
+                onChange={changeInputContent}
               />
             </form>
             <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <a href="#vendre">Vendre</a>
+                <Link to="produit/creation">Vendre</Link>
               </button>
               <button type="button" className="header-btn-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <a href="#categories">Categories</a>
+                <Link to="produits">Toutes les ventes</Link>
               </button>
-              <button
-                type="button"
-                className="header-btn-login"
-                onClick={toggleModalLogin}
-              >
-                <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
-                <span>Connectez-vous</span>
-              </button>
+              {!isLogged ? (
+                <button
+                  type="button"
+                  className="header-btn-login"
+                  onClick={toggleModalLogin}
+                >
+                  <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+                  <span>Connexion / Inscription</span>
+                </button>
+              ) : (
+                <button
+                  type="button"
+                  className="header-btn-online"
+                  onClick={toggleModalLogin}
+                >
+                  <div className="logo-user-profil">
+                    <img src={avatar} alt="avatar" className="avatar" />
+                  </div>
+                  <span>Bonjour {splitUsername(username)}</span>
+                </button>
+              )}
               {/* Hamburger menu */}
               <div className="hamburger-menu">
                 <input

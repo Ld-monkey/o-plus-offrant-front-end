@@ -11,10 +11,30 @@ Il permet de déposer un article de son choix et ou d'enchérir avec des tokens 
 
 ## 📦 Installation
 
+### Dépendances 
+
 Pour installer les dépendances du projet :
 
 ```bash
 yarn
+```
+
+### Configuration l'API back-end
+
+Configurer l'url par défault du serveur back-end:
+
+```bash
+# Copier l'exemple de l'environnement
+cp .env.example .env
+
+# Configurer l'url
+nano .env
+```
+
+Dans le fichier **.env** définir l'url (exemple):
+
+```bash
+VITE_AXIOS_SERVER='https://vote-url-api-par-default.com'
 ```
 
 ## 🪄 Usage

@@ -9,7 +9,7 @@
     z-index: 1;
     position: fixed;
     top: 0;
-    background-color: rgba(127, 127, 127, 0.65);
+    background-color: rgba(0, 0, 0, 0.5);
     width: 100vw;
     height: 100vh;
   }
@@ -25,17 +25,21 @@
     cursor: pointer;
   }
 
+  .error-message {
+    color: v.$color-error;
+  }
+
   &.is-active {
     z-index: 2;
     position: fixed;
-    top: 30%; 
+    top: 10%;
     left: 0;
-    transform: translate(calc(50vw - 50%), -30%);
+    transform: translate(calc(50vw - 50%), -10%);
     display: flex;
+    flex-direction: column;
     text-align: center;
     background-color: #ffffff;
-    max-width: 28rem;
-    height: 430px;
+    max-width: 26rem;
     padding: 3.375rem;
     border-radius: 5px;
   }
@@ -48,6 +52,10 @@
     padding: 10px;
     font-family: 'Open Sans';
     margin-bottom: 10px;
+
+    &:focus {
+      border-color: #6da4aa;
+    }
   }
 
   button {
@@ -59,6 +67,17 @@
     border-radius: 5px;
     color: #ffffff;
     cursor: pointer;
+
+    &:hover {
+      -webkit-animation: action 1s 1 alternate;
+      animation: action 1s 1 alternate;
+    }
+  }
+
+  .checkbox-is-adult {
+    width: 20px;
+    height: 20px;
+    margin: 1.2rem 15px;
   }
 
   .login {
@@ -69,5 +88,34 @@
   .create-account {
     margin-top: 1.2rem;
     background-color: v.$color-primary;
+  }
+
+  .btn-registrer {
+    margin: 1.2rem auto;
+    background-color: #e1aa70;
+  }
+
+  @-webkit-keyframes action {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes action {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-5px);
+    }
+    100% {
+      transform: translateY(0);
+    }
   }
 }

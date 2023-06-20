@@ -1,0 +1,200 @@
+@use '../../styles/variables' as v;
+
+h2 {
+  font-size: 2rem;
+  text-align: center;
+
+  @media screen and (max-width: v.$layout-breakpoint-desktop) {
+    font-size: v.$tablet-font-size-title;
+  }
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: v.$mobile-font-size-title;
+  }
+}
+
+.single-product {
+  display: flex;
+  align-items: center;
+
+  @media screen and (max-width: v.$layout-breakpoint-desktop) {
+    flex-wrap: wrap;
+    font-size: v.$tablet-font-size-text;
+  }
+  @media screen and (max-width: v.$layout-breakpoint-tablet) {
+    font-size: v.$mobile-font-size-text;
+  }
+
+  &-media {
+    position: relative;
+    margin-right: 1rem;
+    width: 50%;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      width: 100%;
+      margin: 0;
+    }
+
+    .photo {
+      width: 100%;
+    }
+
+    .fave-icon {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      color: yellow;
+    }
+  }
+
+  &-details {
+    width: 50%;
+    margin-left: 1rem;
+    text-align: center;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      width: 100%;
+      margin: 0;
+    }
+
+    .auction-infos {
+      display: grid;
+      text-align: center;
+
+      .auction-original-price {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+        @media screen and (max-width: v.$layout-breakpoint-desktop) {
+          font-size: 1rem;
+        }
+        @media screen and (max-width: v.$layout-breakpoint-tablet) {
+          font-size: 0.65rem;
+        }
+      }
+    }
+  }
+
+  &-title,
+  &-description {
+    margin-bottom: 1rem;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      margin-top: 1rem;
+    }
+  }
+
+  .auction-remaining-time {
+    border: 3px dotted v.$color-secondary;
+    padding: 0.5rem;
+    border-radius: 5rem;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    @media screen and (max-width: v.$layout-breakpoint-desktop) {
+      font-size: v.$tablet-font-size-major;
+      border: 1.5px dotted v.$color-secondary;
+    }
+    @media screen and (max-width: v.$layout-breakpoint-tablet) {
+      font-size: v.$mobile-font-size-major;
+      border: 0.75px dotted v.$color-secondary;
+    }
+  }
+
+  .auction-amount {
+    margin-top: 1rem;
+    text-align: center;
+
+    .auction-current-price {
+      margin-right: 1rem;
+      font-size: 1.5rem;
+      color: v.$color-primary;
+      @media screen and (max-width: v.$layout-breakpoint-desktop) {
+        font-size: v.$tablet-font-size-major;
+      }
+      @media screen and (max-width: v.$layout-breakpoint-tablet) {
+        font-size: v.$mobile-font-size-major;
+      }
+    }
+
+    .participate-btn {
+      background-color: v.$color-primary;
+      border: none;
+      color: v.$color-text;
+      border-radius: 5px;
+      padding: 10px 20px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      @media screen and (max-width: v.$layout-breakpoint-desktop) {
+        font-size: v.$tablet-font-size-major;
+      }
+      @media screen and (max-width: v.$layout-breakpoint-tablet) {
+        font-size: v.$mobile-font-size-major;
+      }
+    }
+  }
+}
+
+.auction-history {
+  padding: 5rem 0; // TODO: à remettre en margin une fois le footer récupéré
+
+  &-title {
+    margin-bottom: 2rem;
+  }
+
+  &-table {
+    margin: 0 auto;
+    border-collapse: collapse;
+
+    thead {
+      font-size: 1.2rem;
+      background-color: v.$color-searchbar;
+    }
+
+    td {
+      padding: 15px 37px;
+      border: solid 1px black;
+    }
+  }
+}
+
+.modal-auction {
+  &.is-active {
+    z-index: 2;
+    position: fixed;
+    top: 30%;
+    left: 0;
+    transform: translate(calc(50vw - 50%), -30%);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #ffffff;
+    max-width: 28rem;
+    height: 300px;
+    padding: 3.375rem;
+    border-radius: 5px;
+  }
+
+  .auction-confirm-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      border: none;
+      width: 50%;
+      padding: 1rem;
+      justify-content: center;
+      border-radius: 5px;
+      color: v.$color-text;
+      cursor: pointer;
+    }
+
+    .modal-confirm-btn {
+      background-color: v.$color-primary;
+    }
+
+    .modal-cancel-btn {
+      color: black;
+    }
+  }
+}
