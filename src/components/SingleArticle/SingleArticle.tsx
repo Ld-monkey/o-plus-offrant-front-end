@@ -3,13 +3,10 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-
-/*
-Package to format datetime and creating countdown
-*/
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
-import duration from 'dayjs/plugin/duration';
+
+import getFormatDuration from '../../utils/dateFormat';
 
 import './SingleArticle.scss';
 
@@ -30,8 +27,6 @@ interface SingleArticleHistory {
   date: string;
   montant: number;
 }
-
-dayjs.extend(duration);
 
 function SingleArticle() {
   const [article, setArticle] = useState<SingleArticleProps | undefined>(
@@ -62,18 +57,14 @@ function SingleArticle() {
     fetchArticlebyId();
   }, [idArticle]);
 
-  /*
-  Timer
-  */
+  /**
+   * Display and calculate the countdown for an item.
+   */
   useEffect(() => {
-    function calculateCountdown() {
-      const now = dayjs();
-      const auctionTargetDate = dayjs(article?.date_de_fin);
-      const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
-      const formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
-      setCountdown(formattedCountdown);
-    }
-    const countdownInterval = setInterval(calculateCountdown, 1000);
+    const countdownInterval = setInterval(() => {
+      const formatCountdown = getFormatDuration(article?.date_de_fin);
+      setCountdown(formatCountdown);
+    }, 1000);
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 
