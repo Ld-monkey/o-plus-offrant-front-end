@@ -1,11 +1,10 @@
-import { useEffect } from 'react';
 import { useLoaderData } from 'react-router-dom';
 import Cards from '../Cards/Cards';
 import CarouselItem from '../Carousel/Carousel';
 import CategoriesBar from '../CategoriesBar/CategoriesBar';
 
 function Home() {
-  const loaderData = useLoaderData();
+  const loaderData: any = useLoaderData();
 
   const allArticles = loaderData?.allArticles;
   const allCategories = loaderData?.allCategories;
