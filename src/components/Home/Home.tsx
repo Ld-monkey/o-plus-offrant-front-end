@@ -1,12 +1,19 @@
+import { useEffect } from 'react';
+import { useLoaderData } from 'react-router-dom';
 import Cards from '../Cards/Cards';
 import CarouselItem from '../Carousel/Carousel';
 import CategoriesBar from '../CategoriesBar/CategoriesBar';
 
 function Home() {
+  const loaderData = useLoaderData();
+
+  const allArticles = loaderData?.allArticles;
+  const allCategories = loaderData?.allCategories;
+
   return (
     <>
       <CategoriesBar />
-      <Cards />
+      <Cards articles={allArticles} />
       <CarouselItem />
     </>
   );
