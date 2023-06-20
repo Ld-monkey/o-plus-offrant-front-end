@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-
 /*
 Package to format datetime and creating countdown
 */
@@ -11,6 +9,7 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import duration from 'dayjs/plugin/duration';
 
+import axios from '../../api/axios';
 import './SingleArticle.scss';
 
 interface SingleArticleProps {
@@ -47,9 +46,7 @@ function SingleArticle() {
 
   useEffect(() => {
     async function fetchArticlebyId() {
-      const response = await axios.get(
-        `https://didierlam-server.eddi.cloud/api/article/${idArticle}`
-      );
+      const response = await axios.get(`/api/article/${idArticle}`);
       setArticle(response.data.article);
       const articleHistories = response.data.histArticle;
       if (articleHistories.length > 10) {
@@ -82,10 +79,9 @@ function SingleArticle() {
   */
   async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // TODO: si le client est connecté, on ajoute son id dans le json qu'on envoie au back, sinon l'inviter à se connecter / lui ouvrir la modale de connexion
     if (article) {
       try {
-        await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
+        await axios.post(`/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
           acheteurId: 2,
