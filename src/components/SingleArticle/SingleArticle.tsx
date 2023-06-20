@@ -11,6 +11,8 @@ import duration from 'dayjs/plugin/duration';
 
 import axios from '../../api/axios';
 import './SingleArticle.scss';
+import { useAppSelector } from '../../hooks/redux';
+import { faHourglass2 } from '@fortawesome/free-solid-svg-icons';
 
 interface SingleArticleProps {
   id: number;
@@ -44,13 +46,20 @@ function SingleArticle() {
 
   const { idArticle } = useParams();
 
+  const userId = useAppSelector((state) => state.user.id);
+  const userLogged = useAppSelector((state) => state.user.logged);
+  console.log(userLogged);
+
   useEffect(() => {
     async function fetchArticlebyId() {
       const response = await axios.get(`/api/article/${idArticle}`);
       setArticle(response.data.article);
       const articleHistories = response.data.histArticle;
-      if (articleHistories.length > 10) {
-        const latestEntries = articleHistories.slice(-10);
+      const sortedArticleHistories = articleHistories.sort(
+        (a, b) => b.montant - a.montant
+      );
+      if (sortedArticleHistories.length > 10) {
+        const latestEntries = sortedArticleHistories.slice(-10);
         setArticleHistory(latestEntries);
       } else {
         setArticleHistory(response.data.histArticle);
@@ -84,7 +93,7 @@ function SingleArticle() {
         await axios.post(`/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
-          acheteurId: 2,
+          acheteurId: userId,
         });
       } catch (error) {
         console.error(error);
@@ -156,10 +165,10 @@ function SingleArticle() {
                     return (
                       <tr key={history.id}>
                         <td className="auction-history-auctioner">
-                          {history.prenom} {firstLetter}.
+                          {history.prenom} {firstLetter} .
                         </td>
                         <td className="auction-history-price">
-                          {history.montant} Tokens
+                          {history.montant}€
                         </td>
                         <td className="auction-history-date">
                           {formattedDate}
@@ -170,9 +179,7 @@ function SingleArticle() {
                 </tbody>
               </table>
             ) : (
-              <p className="auction-no-history">
-                L&apos;article n&apos;a pas encore d&apos;enchérisseur 😞
-              </p>
+              <p className="auction-no-history">Soyez le premier à enchérir</p>
             )}
           </section>
         </div>
@@ -202,6 +209,11 @@ function SingleArticle() {
                   {Math.round(article.montant * (1 + 5 / 100))}€ sur cet article
                   ?
                 </h2>
+                {!userLogged && (
+                  <p className="error-message">
+                    Veuillez-vous connecter pour enchérir sur cet article.
+                  </p>
+                )}
                 <div className="modal-footer">
                   <button
                     type="button"
@@ -212,9 +224,15 @@ function SingleArticle() {
                   >
                     Annuler
                   </button>
-                  <button type="submit" className="modal-confirm-btn">
-                    Confirmer
-                  </button>
+                  {userLogged ? (
+                    <button type="submit" className="modal-confirm-btn">
+                      Confirmer
+                    </button>
+                  ) : (
+                    <button type="submit" className="modal-disabled-btn">
+                      Confirmer
+                    </button>
+                  )}
                 </div>
               </form>
             </div>
