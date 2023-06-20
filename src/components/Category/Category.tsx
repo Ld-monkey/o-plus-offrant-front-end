@@ -1,50 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Category.scss';
 
-/**
- * Sort increase price.
- */
-// function sortIncreasePrice() {
-//   console.log('sortIncreasePrice');
-// }
-
-/**
- * Sort decrease price.
- */
-// function sortDecreasePrice() {
-//   console.log('sortDecreasePrice');
-// }
-
-/**
- * Check the checkbox.
- */
-// function checkCategory() {
-//   const isChecked = event?.target.checked;
-//   const value = event?.target.value;
-
-//   if (!isChecked) {
-//     return;
-//   }
-
-//   switch (value) {
-//     case 'increase':
-//       sortIncreasePrice();
-//       break;
-//     case 'decrease':
-//       sortDecreasePrice();
-//       break;
-//     default:
-//       console.log('unknow action');
-//       break;
-//   }
-// }
-
-/**
- * Quand cliqué il faut faire apparaitre une pop-up être vous sûr de surenchérir à "Montant+5%"
- * modale/pop up : Confirmez vous votre enchère à Montant+5% ? OUI / ANNULER
- */
 function handlePriceMore() {}
 
 interface ArticlesProps {
@@ -54,88 +12,87 @@ interface ArticlesProps {
   prix_de_depart: string;
   date_de_fin: string;
   montant: string;
+  categorie_id: number;
+  categorie: string;
+  categorie_nom: string;
 }
 
-function Category() {
-  const [checkedValues, setCheckedValues] = useState<string>();
-  const [articles, setArticles] = useState<ArticlesProps[]>([]);
+interface CategoriesProps {
+  id: number;
+  nom: string;
+}
+type CategoryChecked = string;
 
-  const { idCategory } = useParams();
+function Category() {
+  const [articles, setArticles] = useState<ArticlesProps[]>([]);
+  const [categories, setCategories] = useState<CategoriesProps[]>([]);
+  const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
+    []
+  );
+  const location = useLocation();
+
+  const categoryClicked = location.state ? location.state.nameCategory : '';
 
   useEffect(() => {
     async function fetchArticles() {
-      const apiReq = idCategory
-        ? `https://didierlam-server.eddi.cloud/api/category/${idCategory}/articles`
-        : `https://didierlam-server.eddi.cloud/api/articles`;
+      const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
       try {
         const response = await axios.get(apiReq);
-        if (idCategory) {
-          setArticles(response.data.filteredArticles);
-        } else {
-          setArticles(response.data.allArticles);
-        }
+
+        setArticles(response.data.allArticles);
+
+        setCategories(response.data.allCategories);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }
-    fetchArticles();
-  }, [idCategory]);
+    if (categoryClicked !== '') {
+      setCategoriesChecked([categoryClicked]);
+    }
 
-  function handleChangeCategory(event: React.ChangeEvent<HTMLInputElement>) {
-    const { value, checked } = event.target;
+    fetchArticles();
+  }, [categoryClicked]);
+
+  const filteredArticles = articles.filter((article) =>
+    categoriesChecked.length > 0
+      ? categoriesChecked.some((categoryChecked) =>
+          article.categorie_nom.includes(categoryChecked)
+        )
+      : articles
+  );
+
+  const handleChangeCategoryChecked = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const { checked, value } = event.target;
 
     if (checked) {
-      setCheckedValues(value);
+      setCategoriesChecked([...categoriesChecked, value]);
+    } else {
+      setCategoriesChecked(
+        categoriesChecked.filter((categorie) => categorie !== value)
+      );
     }
-  }
+  };
 
   return (
     <>
       <div id="wrapper">
         <form className="Sort_Choice">
-          <p className="Category_Choice">
-            <span>Catégories :</span>
-            <label htmlFor="">
-              <input
-                type="checkbox"
-                value="Sport_&_Loisirs"
-                onChange={handleChangeCategory}
-              />
-              <span>Sport & Loisirs</span>
-            </label>
-            <label htmlFor="">
-              <input
-                type="checkbox"
-                value="Maison_&_Jardin"
-                onChange={handleChangeCategory}
-              />
-              <span>Maison & Jardin</span>
-            </label>
-            <label htmlFor="">
-              <input
-                type="checkbox"
-                value="High_Tech"
-                onChange={handleChangeCategory}
-              />
-              <span>High Tech</span>
-            </label>
-            <label htmlFor="">
-              <input
-                type="checkbox"
-                value="Mode"
-                onChange={handleChangeCategory}
-              />
-              <span>Mode</span>
-            </label>
-            <label htmlFor="">
-              <input
-                type="checkbox"
-                value="Livres"
-                onChange={handleChangeCategory}
-              />
-              <span>Livres</span>
-            </label>
-          </p>
+          {categories.map((categorie) => (
+            <div className="Category_Choice" key={categorie.id}>
+              <label htmlFor="">
+                <input
+                  type="checkbox"
+                  value={categorie.nom}
+                  onChange={handleChangeCategoryChecked}
+                  checked={categoriesChecked.includes(categorie.nom)}
+                />
+                <span>{categorie.nom}</span>
+              </label>
+            </div>
+          ))}
           <div className="Tri">
             <div>
               <span>Trier par prix :</span>
@@ -151,53 +108,91 @@ function Category() {
             <div>
               <span>Trier par la durée :</span>
               <label htmlFor="La plus courte" className="categoryName">
-                <input type="radio" name="TriTimer" checked />
+                <input
+                  type="radio"
+                  name="TriTimer"
+                  // checked
+                  // onChange={handleChangeTimerSort}
+                />
                 <span>La plus courte</span>
               </label>
               <label htmlFor="La plus longue" className="categoryName">
-                <input type="radio" name="TriTimer" />
+                <input
+                  type="radio"
+                  name="TriTimer"
+                  // onChange={handleChangeTimerSort}
+                />
                 <span>La plus longue</span>
               </label>
             </div>
           </div>
         </form>
       </div>
-      <div className="containerCardCat">
-        {articles.map((article) => (
-          <Link
-            key={article.id}
-            to={`/produit/${article.id}`}
-            className="cardCat"
-          >
-            <img
-              className="pictureItem"
-              src={`https://didierlam-server.eddi.cloud/${article.photo}`}
-              alt={article.name}
-            />
-            <h3 className="nameItem">{article.name}</h3>
-            <p className="priceItem">
-              Prix initial : {article.prix_de_depart}€
-            </p>
-
-            <div className="liveAuction">
-              <p className="timerAuction">
-                Temps restant : {article.date_de_fin}
+      {categoriesChecked ? (
+        <div className="containerCardCat">
+          {filteredArticles.map((filteredArticle) => (
+            <Link key={filteredArticle.id} to="/produit/1" className="cardCat">
+              <img
+                className="pictureItem"
+                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                alt={filteredArticle.name}
+              />
+              <h3 className="nameItem">{filteredArticle.name}</h3>
+              <p className="priceItem">
+                Prix initial : {filteredArticle.prix_de_depart}€
               </p>
-              <p className="liveAuction__proceNow">
-                Prix enchère actuelle : {article.montant} €
-                <button
-                  type="button"
-                  className="liveAuction-button"
-                  onClick={handlePriceMore}
-                >
-                  Surenchérir !
-                </button>
-              </p>
-            </div>
-          </Link>
-        ))}
-      </div>
 
+              <div className="liveAuction">
+                <p className="timerAuction">
+                  Temps restant : {filteredArticle.date_de_fin}
+                </p>
+                <p className="liveAuction__proceNow">
+                  Prix enchère actuelle : {filteredArticle.montant} €
+                  <button
+                    type="button"
+                    className="liveAuction-button"
+                    onClick={handlePriceMore}
+                  >
+                    Surenchérir !
+                  </button>
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <div className="containerCardCat">
+          {filteredArticles.map((article) => (
+            <Link key={article.id} to="/produit/1" className="cardCat">
+              <img
+                className="pictureItem"
+                src={`https://didierlam-server.eddi.cloud/${article.photo}`}
+                alt={article.name}
+              />
+              <h3 className="nameItem">{article.name}</h3>
+              <p className="priceItem">
+                Prix initial : {article.prix_de_depart}€
+              </p>
+
+              <div className="liveAuction">
+                <p className="timerAuction">
+                  Temps restant : {article.date_de_fin}
+                </p>
+                <p className="liveAuction__proceNow">
+                  Prix enchère actuelle : {article.montant} €
+                  <button
+                    type="button"
+                    className="liveAuction-button"
+                    onClick={handlePriceMore}
+                  >
+                    Surenchérir !
+                  </button>
+                </p>
+              </div>
+            </Link>
+          ))}
+        </div>
+      )}
       <div id="wrapper">
         <div className="button_container">
           <button type="button" className="buttonPage">
@@ -213,3 +208,14 @@ function Category() {
 }
 
 export default Category;
+
+//     function handleChangePriceSort() {
+//       articles.sort((a, b) => a.montant - b.montant); //Tri Croissant
+//       articles.sort((a, b) => b.montant - a.montant); //Tri Décroissant
+//     }
+
+//     function handleChangeTimerSort() {
+//       articles.sort((a, b) => a.date_de_fin - b.date_de_fin); //Temps Restant Croissant
+//       articles.sort((a, b) => b.date_de_fin - a.date_de_fin); //Temps Restant Décroissant
+//     }
+//   }

@@ -20,6 +20,7 @@ function CategoriesBar() {
         );
         setCategories(response.data);
       } catch (error) {
+        // eslint-disable-next-line no-console
         console.error(error);
       }
     }
@@ -32,8 +33,9 @@ function CategoriesBar() {
         {categories.map((category) => (
           <NavLink
             key={category.id}
-            to={`/category/${category.id}/produits`}
+            to="/produits"
             className="categories-link"
+            state={{ nameCategory: `${category.nom}` }}
           >
             {category.nom}
           </NavLink>
