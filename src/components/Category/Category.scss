@@ -1,17 +1,22 @@
 @use '../../styles/variables' as v;
 
+@media screen and (max-width: v.$layout-breakpoint-tablet) {
+}
+
 .Sort_Choice {
   border: solid 1px v.$color-searchbar;
   padding: 20px;
   margin: 20px;
   border-radius: 25px;
 }
+.Category_Choice {
+  font-size: bolder;
+}
 .Sort,
 .Category_Choice {
   color: rgb(222, 190, 75);
   margin-bottom: 10;
   font-weight: bolder;
-  // border-bottom: solid 1px black;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -26,7 +31,6 @@
   justify-content: space-around;
   margin: 10px;
   font-weight: 500;
-  flex-grow: 0;
 }
 
 .cardCat {
@@ -38,19 +42,24 @@
   display: inline;
   position: relative;
   img {
-    max-height: 50%;
-    max-width: 90%;
+    width: 18rem;
+    height: 13rem;
     margin: 10px auto;
     padding: 10px;
     background-color: white;
     border-radius: 5%;
+    overflow: hidden;
   }
-  p {
+  p,
+  h3 {
     text-align: center;
-    font-size: 1.2rem;
+    font-size: 0.9rem;
     margin: 10px;
     font-weight: 800;
     color: rgb(122, 119, 119);
+  }
+  h3 {
+    font-size: 1.4rem;
   }
 }
 .liveAuction-button {

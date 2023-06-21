@@ -5,7 +5,7 @@ import './Category.scss';
 
 interface ArticlesProps {
   id: number;
-  name: string;
+  nom: string;
   photo: string;
   prix_de_depart: string;
   date_de_fin: string;
@@ -107,20 +107,11 @@ function Category() {
             </div>
             <div>
               <label htmlFor="La plus courte" className="categoryName">
-                <input
-                  type="radio"
-                  name="Tri"
-                  // checked
-                  // onChange={handleChangeTimerSort}
-                />
+                <input type="radio" name="Tri" />
                 <span> Durée la plus courte</span>
               </label>
               <label htmlFor="La plus longue" className="categoryName">
-                <input
-                  type="radio"
-                  name="Tri"
-                  // onChange={handleChangeTimerSort}
-                />
+                <input type="radio" name="Tri" />
                 <span>Durée la plus longue</span>
               </label>
             </div>
@@ -134,12 +125,14 @@ function Category() {
             to={`/produit/${filteredArticle.id}`}
             className="cardCat"
           >
-            <img
-              className="pictureItem"
-              src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-              alt={filteredArticle.name}
-            />
-            <h3 className="nameItem">{filteredArticle.name}</h3>
+            <h3 className="nameItem">{filteredArticle.nom}</h3>
+            <div className="imgContainer">
+              <img
+                className="pictureItem"
+                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                alt={filteredArticle.nom}
+              />
+            </div>
             <p className="priceItem">
               Prix initial : {filteredArticle.prix_de_depart}€
             </p>
