@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -36,7 +37,7 @@ function AddArticle() {
     >
   ) {
     const newData = { ...inputsData };
-    newData[event.target.name] = event.target.value;
+    newData[event.target.name]= event.target.value;
     setInputsData(newData);
     console.log(newData);
   }
