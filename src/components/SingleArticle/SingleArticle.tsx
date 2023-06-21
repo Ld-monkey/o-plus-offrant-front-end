@@ -43,6 +43,7 @@ function SingleArticle() {
     []
   );
   const [countdown, setCountdown] = useState('');
+  const [auctionFinished, setAuctionFinished] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [lastBidder, setLastBidder] = useState<number | null>(null);
 
@@ -87,6 +88,9 @@ function SingleArticle() {
         formattedCountdown = `${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
       }
       setCountdown(formattedCountdown);
+      if (auctionDuration.asMilliseconds() <= 0) {
+        setAuctionFinished(true);
+      }
     }
     const countdownInterval = setInterval(calculateCountdown, 1000);
     return () => clearInterval(countdownInterval);
@@ -134,14 +138,16 @@ function SingleArticle() {
                   Prix de départ: {article.prix_de_depart}€
                 </span>
                 <span className="auction-remaining-time">
-                  Temps restant : {countdown}
+                  {auctionFinished
+                    ? "L'enchère est terminée 🥺"
+                    : `Temps restant : ${countdown}`}
                 </span>
               </div>
               <div className="auction-amount">
                 <span className="auction-current-price">
                   Mise actuelle : {article.montant}€
                 </span>
-                {userId === article.utilisateur_vente_id ? (
+                {auctionFinished || userId === article.utilisateur_vente_id ? (
                   <button
                     className="participate-btn disabled"
                     type="button"
@@ -241,7 +247,7 @@ function SingleArticle() {
                 )} */}
                 {lastBidder === userId && (
                   <p className="error-message">
-                    Vous avez déjà la meilleurs enchère.
+                    Vous avez déjà la meilleure enchère.
                   </p>
                 )}
 
