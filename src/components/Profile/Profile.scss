@@ -54,18 +54,34 @@ table {
   display: flex;
   justify-content: center;
 
+  .user-label,
+  .user-infos {
+    span {
+      margin-bottom: 1rem;
+    }
+  }
+
   div {
     display: flex;
     flex-direction: column;
     width: 15%;
 
     input {
-      width: 300px;
+      width: 200px;
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      color: v.$color-text;
+      background-color: v.$color-primary;
+      border: none;
+      padding: 10px;
+      border-radius: 5px;
+      width: fit-content;
     }
   }
 }
 
-// ARTICLES
 .icons-column {
   width: 80px;
   padding: 0;
@@ -76,9 +92,7 @@ table {
     padding: 5px;
   }
 }
-// AUCTIONS
 
-// WON AUCTIONS
 .empty-table {
   font-size: 1.2rem;
   text-align: center;

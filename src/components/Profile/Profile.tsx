@@ -147,7 +147,7 @@ function Profile() {
                   onChange={(e) => handleInputChange(e, 'adresse_mail')}
                 />
                 <button type="button" onClick={handleSaveButton}>
-                  Save
+                  Enregistrer
                 </button>
               </>
             ) : (
