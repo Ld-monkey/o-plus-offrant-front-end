@@ -57,7 +57,8 @@ function SingleArticle() {
       setArticle(response.data.article);
       const articleHistories = response.data.histArticle;
       const sortedArticleHistories = articleHistories.sort(
-        (a, b) => b.montant - a.montant
+        (a: { montant: number }, b: { montant: number }) =>
+          b.montant - a.montant
       );
       if (sortedArticleHistories.length > 10) {
         const latestEntries = sortedArticleHistories.slice(0, 10);
