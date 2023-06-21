@@ -10,6 +10,8 @@ import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import UserProfile from './components/UserProfile/UserProfile';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +37,14 @@ const router = createBrowserRouter([
       {
         path: 'produit/creation',
         element: <AddArticle />,
+      },
+      {
+        path: '/profile',
+        element: (
+          <PrivateRoute>
+            <UserProfile />
+          </PrivateRoute>
+        ),
       },
     ],
   },

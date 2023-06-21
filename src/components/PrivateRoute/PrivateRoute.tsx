@@ -1,7 +1,11 @@
 import { Navigate } from 'react-router-dom';
 import { useAppSelector } from '../../hooks/redux';
 
-function PrivateRoute({ children }) {
+type Props = {
+  children: JSX.Element | JSX.Element[];
+};
+
+function PrivateRoute({ children }: Props) {
   const { logged: isLogged } = useAppSelector((state) => state.user);
 
   if (!isLogged) {
