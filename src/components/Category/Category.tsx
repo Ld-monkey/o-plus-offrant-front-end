@@ -95,34 +95,33 @@ function Category() {
           </div>
           <div className="Sort">
             <div>
-              <span>Trier par prix :</span>
+              <span>Trier par :</span>
               <label htmlFor="Croissant" className="categoryName">
-                <input type="radio" value="increase" name="TriPrice" />
-                <span>Croissant</span>
+                <input type="radio" value="increase" name="Tri" />
+                <span>Prix Croissant</span>
               </label>
               <label htmlFor="Décroissant" className="categoryName">
-                <input type="radio" value="decrease" name="TriPrice" />
-                <span>Décroissant</span>
+                <input type="radio" value="decrease" name="Tri" />
+                <span>Prix Décroissant</span>
               </label>
             </div>
             <div>
-              <span>Trier par la durée :</span>
               <label htmlFor="La plus courte" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   // checked
                   // onChange={handleChangeTimerSort}
                 />
-                <span>La plus courte</span>
+                <span> Durée la plus courte</span>
               </label>
               <label htmlFor="La plus longue" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   // onChange={handleChangeTimerSort}
                 />
-                <span>La plus longue</span>
+                <span>Durée la plus longue</span>
               </label>
             </div>
           </div>
