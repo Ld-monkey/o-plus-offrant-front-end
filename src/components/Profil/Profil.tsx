@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, unstable_HistoryRouter } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
@@ -68,6 +68,9 @@ function Profile() {
     try {
       const response = await axios.delete(`/api/profile/${userId}/delete`);
       console.log(response);
+      if (response.status === 200) {
+        window.location.href = '/';
+      }
     } catch (error) {
       console.error(error);
     }
@@ -288,12 +291,15 @@ function Profile() {
             aria-hidden="true"
           />
           <div
-            className={openModal ? 'modal-auction is-active' : 'modal-auction'}
+            className={openModal ? 'modal-delete is-active' : 'modal-delete'}
           >
             <form method="post" onSubmit={handleDelete}>
               <h2 className="user-delete-title">
                 Êtes-vous sûr.e de vouloir supprimer votre compte ?
               </h2>
+              <h3 className="user-delete-action">
+                ⚠️ Cette action est irréversible. ⚠️
+              </h3>
               <div className="modal-footer">
                 <button
                   type="button"
