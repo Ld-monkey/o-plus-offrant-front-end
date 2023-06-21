@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 /*
@@ -12,7 +12,6 @@ import duration from 'dayjs/plugin/duration';
 import axios from '../../api/axios';
 import './SingleArticle.scss';
 import { useAppSelector } from '../../hooks/redux';
-import { faHourglass2 } from '@fortawesome/free-solid-svg-icons';
 
 interface SingleArticleProps {
   id: number;
@@ -22,6 +21,7 @@ interface SingleArticleProps {
   prix_de_depart: number;
   date_de_fin: string;
   montant: number;
+  utilisateur_vente_id: number;
 }
 
 interface SingleArticleHistory {
@@ -30,6 +30,7 @@ interface SingleArticleHistory {
   prenom: string;
   date: string;
   montant: number;
+  utilisateur_id: number;
 }
 
 dayjs.extend(duration);
@@ -43,12 +44,12 @@ function SingleArticle() {
   );
   const [countdown, setCountdown] = useState('');
   const [openModal, setOpenModal] = useState(false);
+  const [lastBidder, setLastBidder] = useState<number | null>(null);
 
   const { idArticle } = useParams();
 
   const userId = useAppSelector((state) => state.user.id);
   const userLogged = useAppSelector((state) => state.user.logged);
-  console.log(userLogged);
 
   useEffect(() => {
     async function fetchArticlebyId() {
@@ -59,11 +60,12 @@ function SingleArticle() {
         (a, b) => b.montant - a.montant
       );
       if (sortedArticleHistories.length > 10) {
-        const latestEntries = sortedArticleHistories.slice(-10);
+        const latestEntries = sortedArticleHistories.slice(0, 10);
         setArticleHistory(latestEntries);
       } else {
-        setArticleHistory(response.data.histArticle);
+        setArticleHistory(sortedArticleHistories);
       }
+      setLastBidder(sortedArticleHistories[0].utilisateur_id);
     }
     fetchArticlebyId();
   }, [idArticle]);
@@ -217,29 +219,54 @@ function SingleArticle() {
                 </h2>
                 {!userLogged && (
                   <p className="error-message">
-                    Veuillez-vous connecter pour enchérir sur cet article.
+                    Veuillez-vous connecter pour pouvoir enchérir sur cet
+                    article.
                   </p>
                 )}
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="modal-cancel-btn"
-                    onClick={() => {
-                      setOpenModal(false);
-                    }}
-                  >
-                    Annuler
-                  </button>
-                  {userLogged ? (
-                    <button type="submit" className="modal-confirm-btn">
-                      Confirmer
-                    </button>
-                  ) : (
-                    <button type="submit" className="modal-disabled-btn">
-                      Confirmer
-                    </button>
+                {userId === article.utilisateur_vente_id && (
+                  <p className="error-message">
+                    Vous ne pouvez pas enchérir sur votre article.
+                  </p>
+                )}
+                {lastBidder === userId && (
+                  <p className="error-message">
+                    Vous ne pouvez pas ré-enchérir sur le même article.
+                  </p>
+                )}
+
+                {lastBidder !== userId &&
+                  userLogged &&
+                  userId !== article.utilisateur_vente_id && (
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="modal-cancel-btn"
+                        onClick={() => {
+                          setOpenModal(false);
+                        }}
+                      >
+                        Annuler
+                      </button>
+                      <button type="submit" className="modal-confirm-btn">
+                        Confirmer
+                      </button>
+                    </div>
                   )}
-                </div>
+                {(!userLogged ||
+                  lastBidder === userId ||
+                  (userLogged && userId === article.utilisateur_vente_id)) && (
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="modal-cancel-btn"
+                      onClick={() => {
+                        setOpenModal(false);
+                      }}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </>

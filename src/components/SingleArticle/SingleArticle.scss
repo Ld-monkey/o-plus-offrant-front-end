@@ -208,8 +208,9 @@ h2 {
     .modal-cancel-btn {
       color: black;
     }
+
     .modal-disabled-btn {
-      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 }
