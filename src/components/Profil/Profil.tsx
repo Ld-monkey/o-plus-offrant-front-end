@@ -4,6 +4,12 @@ function Profil() {
   return (
     <>
       <h2>Mon Profil</h2>
+      <div>
+        <h3>Historiques des enchères</h3>
+        <h3>Mode de paiement</h3>
+        <h3>Mes favoris</h3>
+        <h3>Sécurité</h3>
+      </div>
       <form method="post" className="add-article-form">
         <div className="article-name">
           <label htmlFor="titre">Nom :</label>
