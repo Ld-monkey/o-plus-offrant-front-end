@@ -3,8 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import axios from 'axios';
 import './Category.scss';
 
-function handlePriceMore() {}
-
 interface ArticlesProps {
   id: number;
   name: string;
@@ -80,20 +78,22 @@ function Category() {
     <>
       <div id="wrapper">
         <form className="Sort_Choice">
-          {categories.map((categorie) => (
-            <div className="Category_Choice" key={categorie.id}>
-              <label htmlFor="">
-                <input
-                  type="checkbox"
-                  value={categorie.nom}
-                  onChange={handleChangeCategoryChecked}
-                  checked={categoriesChecked.includes(categorie.nom)}
-                />
-                <span>{categorie.nom}</span>
-              </label>
-            </div>
-          ))}
-          <div className="Tri">
+          <div className="Category_Choice">
+            {categories.map((categorie) => (
+              <div className="Category_Choice" key={categorie.id}>
+                <label htmlFor="">
+                  <input
+                    type="checkbox"
+                    value={categorie.nom}
+                    onChange={handleChangeCategoryChecked}
+                    checked={categoriesChecked.includes(categorie.nom)}
+                  />
+                  <span>{categorie.nom}</span>
+                </label>
+              </div>
+            ))}
+          </div>
+          <div className="Sort">
             <div>
               <span>Trier par prix :</span>
               <label htmlFor="Croissant" className="categoryName">
@@ -128,75 +128,38 @@ function Category() {
           </div>
         </form>
       </div>
-      {categoriesChecked ? (
-        <div className="containerCardCat">
-          {filteredArticles.map((filteredArticle) => (
-            <Link
-              key={filteredArticle.id}
-              to={`/produit/${filteredArticle.id}`}
-              className="cardCat"
-            >
-              <img
-                className="pictureItem"
-                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-                alt={filteredArticle.name}
-              />
-              <h3 className="nameItem">{filteredArticle.name}</h3>
-              <p className="priceItem">
-                Prix initial : {filteredArticle.prix_de_depart}€
-              </p>
+      <div className="containerCardCat">
+        {filteredArticles.map((filteredArticle) => (
+          <Link
+            key={filteredArticle.id}
+            to={`/produit/${filteredArticle.id}`}
+            className="cardCat"
+          >
+            <img
+              className="pictureItem"
+              src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+              alt={filteredArticle.name}
+            />
+            <h3 className="nameItem">{filteredArticle.name}</h3>
+            <p className="priceItem">
+              Prix initial : {filteredArticle.prix_de_depart}€
+            </p>
 
-              <div className="liveAuction">
-                <p className="timerAuction">
-                  Temps restant : {filteredArticle.date_de_fin}
-                </p>
-                <p className="liveAuction__proceNow">
-                  Prix enchère actuelle : {filteredArticle.montant} €
-                  <button
-                    type="button"
-                    className="liveAuction-button"
-                    onClick={handlePriceMore}
-                  >
-                    Surenchérir !
-                  </button>
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      ) : (
-        <div className="containerCardCat">
-          {filteredArticles.map((article) => (
-            <Link key={article.id} to="/produit/1" className="cardCat">
-              <img
-                className="pictureItem"
-                src={`https://didierlam-server.eddi.cloud/${article.photo}`}
-                alt={article.name}
-              />
-              <h3 className="nameItem">{article.name}</h3>
-              <p className="priceItem">
-                Prix initial : {article.prix_de_depart}€
+            <div className="liveAuction">
+              <p className="timerAuction">
+                Temps restant : {filteredArticle.date_de_fin}
               </p>
+              <p className="liveAuction__proceNow">
+                Prix enchère actuelle : {filteredArticle.montant} €
+                <button type="button" className="liveAuction-button">
+                  Surenchérir !
+                </button>
+              </p>
+            </div>
+          </Link>
+        ))}
+      </div>
 
-              <div className="liveAuction">
-                <p className="timerAuction">
-                  Temps restant : {article.date_de_fin}
-                </p>
-                <p className="liveAuction__proceNow">
-                  Prix enchère actuelle : {article.montant} €
-                  <button
-                    type="button"
-                    className="liveAuction-button"
-                    onClick={handlePriceMore}
-                  >
-                    Surenchérir !
-                  </button>
-                </p>
-              </div>
-            </Link>
-          ))}
-        </div>
-      )}
       <div id="wrapper">
         <div className="button_container">
           <button type="button" className="buttonPage">

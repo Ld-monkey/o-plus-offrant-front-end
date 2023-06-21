@@ -6,7 +6,7 @@
   margin: 20px;
   border-radius: 25px;
 }
-.Tri,
+.Sort,
 .Category_Choice {
   color: rgb(222, 190, 75);
   margin-bottom: 10;
@@ -27,17 +27,40 @@
 }
 
 .cardCat {
-  width: 370px;
+  width: 316px;
+  height: 429px;
   border-radius: 5%;
   margin: 30px;
   background-color: rgb(253, 245, 234);
+  display: inline;
+  position: relative;
+  img {
+    max-height: 50%;
+    max-width: 90%;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 5%;
+  }
+  p {
+    text-align: center;
+    font-size: 1.2rem;
+    margin: 10px;
+    font-weight: 800;
+    color: rgb(122, 119, 119);
+  }
 }
 .liveAuction-button {
-  margin: 10px;
+  font-size: 1.2rem;
+  padding: 7px;
+  border-radius: 25px;
+  position: absolute;
+  bottom: 10px;
+  left: 50%;
+  transform: translateX(-50%);
   background-color: rgb(109, 163, 187);
   color: rgb(255, 255, 255);
   font-weight: bolder;
-  border-radius: 25px;
   border: none;
 }
 
@@ -52,4 +75,7 @@
   color: rgb(255, 255, 255);
   border-radius: 25px;
   border: none;
+  font-size: 1.2rem;
+  padding: 10px;
+  width: 250px;
 }
