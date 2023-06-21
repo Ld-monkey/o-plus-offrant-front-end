@@ -1,0 +1,9 @@
+.stackArticle {
+    &:first-child {
+        border: 1px solid red;
+    }
+
+    &:last-child {
+        border: 1px solid green;
+    }
+}

@@ -30,25 +30,29 @@ const responsive = {
 };
 
 function CarouselItem({ articles }: { articles: IRandomItems[] }) {
-  const mostRecentItems = articles.slice(0, 5);
+  const mostRecentItems = articles.slice(0, 2);
   const olderItems = articles.slice(6, 12);
   return (
     <div id="wrapper">
       <h2>Ventes courtes</h2>
-      <Carousel responsive={responsive}>
-        {mostRecentItems.map((item) => (
-          <div key={item.id} style={{ height: '100%' }}>
-            <Card
-              id={item.id}
-              description=""
-              image={`${API}${item.photo}`}
-              title={item.nom}
-              price={item.montant}
-              endTime={item.date_de_fin}
-            />
-          </div>
-        ))}
-      </Carousel>
+      {/* <Carousel responsive={responsive}></Carousel> */}
+
+      <div className="cards">
+        <div className="cards-root">
+          {mostRecentItems.map((item) => (
+            <div key={item.id}>
+              <Card
+                id={item.id}
+                description=""
+                image={`${API}${item.photo}`}
+                title={item.nom}
+                price={item.montant}
+                endTime={item.date_de_fin}
+              />
+            </div>
+          ))}
+        </div>
+      </div>
 
       <h2>Ventes longues</h2>
       <Carousel responsive={responsive}>

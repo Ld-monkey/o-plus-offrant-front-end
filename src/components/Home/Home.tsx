@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import Cards from '../Cards/Cards';
 import CarouselItem from '../Carousel/Carousel';
 import CategoriesBar from '../CategoriesBar/CategoriesBar';
+import StackArticles from '../StackArticles/StackArticles';
 
 function Home() {
   const loaderData: any = useLoaderData();
@@ -12,7 +13,8 @@ function Home() {
   return (
     <>
       <CategoriesBar />
-      <Cards articles={allArticles} />
+      <StackArticles articles={allArticles} />
+      {/* <Cards articles={allArticles} /> */}
       <CarouselItem articles={allArticles} />
     </>
   );
