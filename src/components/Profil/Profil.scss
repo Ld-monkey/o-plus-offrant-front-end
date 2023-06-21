@@ -1,8 +1,56 @@
+@use '../../styles/variables' as v;
+
 section {
   margin-bottom: 2.5rem;
 }
 
-.user-infos {
+table {
+  text-align: center;
+  width: 100%;
+  margin: 0 auto;
+  border-collapse: collapse;
+
+  thead {
+    font-size: 1.2rem;
+    background-color: v.$color-searchbar;
+  }
+
+  td,
+  th {
+    padding: 10px 10px;
+    border: solid 1px black;
+  }
+}
+
+.section-title {
+  margin-bottom: 1.5rem;
+}
+
+.user-title {
+  display: flex;
+  justify-content: center;
+  margin: 1.5rem 0;
+
+  .icons-user {
+    font-size: 1.5rem;
+    color: v.$color-primary;
+    margin-left: 0.5rem;
+  }
+
+  .icon-update,
+  .icon-delete {
+    padding: 5px;
+    cursor: pointer;
+  }
+
+  .icon-update:hover,
+  .icon-delete:hover {
+    color: v.$color-secondary;
+  }
+}
+
+// USER
+.user {
   display: flex;
   justify-content: center;
 
@@ -17,6 +65,17 @@ section {
   }
 }
 
-.section-title {
-  margin-bottom: 1.5rem;
+// ARTICLES
+.icons-column {
+  width: 80px;
+  padding: 0;
+
+  .icon-update,
+  .icon-delete {
+    font-size: 1.2rem;
+    padding: 5px;
+  }
 }
+// AUCTIONS
+
+// WON AUCTIONS
