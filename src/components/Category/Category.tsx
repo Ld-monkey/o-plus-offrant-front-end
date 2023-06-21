@@ -32,14 +32,26 @@ function Category() {
   const location = useLocation();
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
+  function handleSortByPriceIncrease(items: any) {
+    const sortedArticlesIncrease = [...items];
+    sortedArticlesIncrease.sort(
+      (a, b) => Number(a.montant) - Number(b.montant)
+    );
+    return sortedArticlesIncrease;
+  }
 
   useEffect(() => {
     async function fetchArticles() {
       const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
+
       try {
         const response = await axios.get(apiReq);
 
-        setArticles(response.data.allArticles);
+        // setArticles(response.data.allArticles);
+        const sortArticles = handleSortByPriceIncrease(
+          response.data.allArticles
+        );
+        setArticles(sortArticles);
 
         setCategories(response.data.allCategories);
       } catch (error) {
@@ -75,22 +87,14 @@ function Category() {
       );
     }
   };
-  const handleSortByPriceIncrease = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
-    const sortedArticlesIncrease = [...articles];
-    sortedArticlesIncrease.sort(
-      (a, b) => Number(a.montant) - Number(b.montant)
-    );
-  };
-  const handleSortByPriceDecrease = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ): void => {
+
+  const handleSortByPriceDecrease = (): void => {
     const sortedArticlesDecrease = [...articles];
 
     sortedArticlesDecrease.sort(
       (a, b) => Number(b.montant) - Number(a.montant)
     );
+    setArticles(sortedArticlesDecrease);
   };
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
@@ -119,7 +123,10 @@ function Category() {
                   type="radio"
                   value="increase"
                   name="TriPrice"
-                  onClick={handleSortByPriceIncrease}
+                  defaultChecked
+                  onClick={() =>
+                    setArticles(handleSortByPriceIncrease(articles))
+                  }
                 />
                 <span>Croissant</span>
               </label>
