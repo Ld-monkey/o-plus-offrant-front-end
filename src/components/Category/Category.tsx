@@ -75,7 +75,24 @@ function Category() {
       );
     }
   };
-
+  const handleSortByPriceIncrease = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    const sortedArticlesIncrease = [...articles];
+    sortedArticlesIncrease.sort(
+      (a, b) => Number(a.montant) - Number(b.montant)
+    );
+  };
+  const handleSortByPriceDecrease = (
+    event: React.MouseEvent<HTMLButtonElement>
+  ): void => {
+    const sortedArticlesDecrease = [...articles];
+    sortedArticlesDecrease.sort(
+      (a, b) => Number(b.montant) - Number(a.montant)
+    );
+  };
+  //  const [sortvalue; Setsortvalue] = useState("");
+  //   const sortOptions = ["montant"]
   return (
     <>
       <div id="wrapper">
@@ -97,11 +114,21 @@ function Category() {
             <div>
               <span>Trier par prix :</span>
               <label htmlFor="Croissant" className="categoryName">
-                <input type="radio" value="increase" name="TriPrice" />
+                <input
+                  type="radio"
+                  value="increase"
+                  name="TriPrice"
+                  onClick={handleSortByPriceIncrease}
+                />
                 <span>Croissant</span>
               </label>
               <label htmlFor="Décroissant" className="categoryName">
-                <input type="radio" value="decrease" name="TriPrice" />
+                <input
+                  type="radio"
+                  value="decrease"
+                  name="TriPrice"
+                  onClick={handleSortByPriceDecrease}
+                />
                 <span>Décroissant</span>
               </label>
             </div>

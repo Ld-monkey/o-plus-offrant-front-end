@@ -10,6 +10,7 @@ import Home from './components/Home/Home';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
+import Profil from './components/Profil/Profil';
 
 const router = createBrowserRouter([
   {
@@ -35,6 +36,10 @@ const router = createBrowserRouter([
       {
         path: 'produit/creation',
         element: <AddArticle />,
+      },
+      {
+        path: 'profil',
+        element: <Profil />,
       },
     ],
   },
