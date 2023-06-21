@@ -75,6 +75,7 @@ function Category() {
       );
     }
   };
+
   const handleSortByPriceIncrease = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
@@ -82,7 +83,9 @@ function Category() {
     sortedArticlesIncrease.sort(
       (a, b) => Number(a.montant) - Number(b.montant)
     );
+    console.log('log1', event.target);
   };
+
   const handleSortByPriceDecrease = (
     event: React.MouseEvent<HTMLButtonElement>
   ): void => {
@@ -90,6 +93,7 @@ function Category() {
     sortedArticlesDecrease.sort(
       (a, b) => Number(b.montant) - Number(a.montant)
     );
+    console.log('log2', event.target);
   };
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
