@@ -3,14 +3,10 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 
 import './CategoriesBar.scss';
-
-interface Category {
-  id: number;
-  nom: string;
-}
+import CategoriesProps from '../../@types/interfaces';
 
 function CategoriesBar() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoriesProps[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
