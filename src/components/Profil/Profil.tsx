@@ -1,10 +1,17 @@
 import { Link } from 'react-router-dom';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+
 import './Profil.scss';
+import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 
 function Profile() {
   return (
     <div id="wrapper">
-      <h2>Mes informations</h2>
+      <h2 className="section-title">
+        Mes informations
+        <FontAwesomeIcon icon={faPenToSquare} />
+        <FontAwesomeIcon icon={faTrashCan} />
+      </h2>
       <section className="user-infos">
         <div className="label">
           <span>Nom :</span>
@@ -20,7 +27,7 @@ function Profile() {
       </section>
 
       <section className="my-articles">
-        <h2>Mes articles</h2>
+        <h2 className="section-title">Mes articles</h2>
         <table className="auction-history-table">
           <thead>
             <tr>
@@ -38,7 +45,7 @@ function Profile() {
       </section>
 
       <section className="my-auctions">
-        <h2>Mes enchères en cours</h2>
+        <h2 className="section-title">Mes enchères en cours</h2>
         <table className="auction-history-table">
           <thead>
             <tr>
@@ -58,7 +65,7 @@ function Profile() {
       </section>
 
       <section className="auctions_won">
-        <h2>Mes enchères remportées</h2>
+        <h2 className="section-title">Mes enchères remportées</h2>
         <table className="auction-history-table">
           <thead>
             <tr>
