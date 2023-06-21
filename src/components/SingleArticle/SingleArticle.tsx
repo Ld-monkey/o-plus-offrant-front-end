@@ -140,15 +140,25 @@ function SingleArticle() {
                 <span className="auction-current-price">
                   Mise actuelle : {article.montant}€
                 </span>
-                <button
-                  className="participate-btn"
-                  type="button"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                >
-                  Enchérir
-                </button>
+                {userId === article.utilisateur_vente_id ? (
+                  <button
+                    className="participate-btn disabled"
+                    type="button"
+                    disabled
+                  >
+                    Enchérir
+                  </button>
+                ) : (
+                  <button
+                    className="participate-btn"
+                    type="button"
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
+                  >
+                    Enchérir
+                  </button>
+                )}
               </div>
             </div>
           </section>
@@ -223,14 +233,14 @@ function SingleArticle() {
                     article.
                   </p>
                 )}
-                {userId === article.utilisateur_vente_id && (
+                {/* {userId === article.utilisateur_vente_id && (
                   <p className="error-message">
                     Vous ne pouvez pas enchérir sur votre article.
                   </p>
-                )}
+                )} */}
                 {lastBidder === userId && (
                   <p className="error-message">
-                    Vous ne pouvez pas ré-enchérir sur le même article.
+                    Vous avez déjà la meilleurs enchère.
                   </p>
                 )}
 

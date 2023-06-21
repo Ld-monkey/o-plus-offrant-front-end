@@ -126,6 +126,10 @@ h2 {
         font-size: v.$mobile-font-size-major;
       }
     }
+
+    .disabled {
+      display: none;
+    }
   }
 }
 
