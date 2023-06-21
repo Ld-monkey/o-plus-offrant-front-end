@@ -1,0 +1,18 @@
+.user-infos {
+  display: flex;
+  justify-content: center;
+
+  div {
+    display: flex;
+    flex-direction: column;
+    width: 15%;
+
+    input {
+      width: 300px;
+    }
+  }
+}
+
+section {
+  margin-bottom: 2.5rem;
+}
