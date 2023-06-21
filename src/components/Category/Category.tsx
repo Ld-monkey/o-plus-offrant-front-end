@@ -167,14 +167,3 @@ function Category() {
 }
 
 export default Category;
-
-//     function handleChangePriceSort() {
-//       articles.sort((a, b) => a.montant - b.montant); //Tri Croissant
-//       articles.sort((a, b) => b.montant - a.montant); //Tri Décroissant
-//     }
-
-//     function handleChangeTimerSort() {
-//       articles.sort((a, b) => a.date_de_fin - b.date_de_fin); //Temps Restant Croissant
-//       articles.sort((a, b) => b.date_de_fin - a.date_de_fin); //Temps Restant Décroissant
-//     }
-//   }
