@@ -80,14 +80,20 @@ function SingleArticle() {
       const now = dayjs();
       const auctionTargetDate = dayjs(article?.date_de_fin);
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
-      let formattedCountdown = `${auctionDuration.days()} jours ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
-      if (auctionDuration.days() === 1) {
-        formattedCountdown = `${auctionDuration.days()} jour ${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
+
+      let days = auctionDuration.days();
+      let hours = auctionDuration.hours();
+      let minutes = auctionDuration.minutes();
+      let seconds = auctionDuration.seconds();
+
+      if (days === 1) {
+        setCountdown(`${days} jour ${hours}:${minutes}:${seconds}`);
+      } else if (days === 0) {
+        setCountdown(`${hours}:${minutes}:${seconds}`);
+      } else {
+        setCountdown(`${days} jours ${hours}:${minutes}:${seconds}`);
       }
-      if (auctionDuration.days() === 0) {
-        formattedCountdown = `${auctionDuration.hours()}:${auctionDuration.minutes()}:${auctionDuration.seconds()}`;
-      }
-      setCountdown(formattedCountdown);
+
       if (auctionDuration.asMilliseconds() <= 0) {
         setAuctionFinished(true);
       }
@@ -140,7 +146,10 @@ function SingleArticle() {
                 <span className="auction-remaining-time">
                   {auctionFinished
                     ? "L'enchère est terminée 🥺"
-                    : `Temps restant : ${countdown}`}
+                    : `Temps restant: ${countdown.replace(
+                        /:(\d)(?!\d)/g,
+                        ':0$1'
+                      )}`}
                 </span>
               </div>
               <div className="auction-amount">
@@ -240,11 +249,7 @@ function SingleArticle() {
                     article.
                   </p>
                 )}
-                {/* {userId === article.utilisateur_vente_id && (
-                  <p className="error-message">
-                    Vous ne pouvez pas enchérir sur votre article.
-                  </p>
-                )} */}
+
                 {lastBidder === userId && (
                   <p className="error-message">
                     Vous avez déjà la meilleure enchère.
