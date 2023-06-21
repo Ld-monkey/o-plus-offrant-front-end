@@ -32,6 +32,7 @@ function Category() {
   const location = useLocation();
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
+
   function handleSortByPriceIncrease(items: any) {
     const sortedArticlesIncrease = [...items];
     sortedArticlesIncrease.sort(
@@ -96,6 +97,35 @@ function Category() {
     );
     setArticles(sortedArticlesDecrease);
   };
+
+  /**
+   * Sort items based on end date time.
+   * @param items - All articles.
+   * @param action - 2 types of actions 'increase' or 'decrease'
+   */
+  const handleChangeTimerSort = (
+    items: ArticlesProps[],
+    action: 'increase' | 'decrease'
+  ): void => {
+    console.log(items);
+    const now = Number(new Date());
+    const sortedArticles = [...articles];
+    if (action === 'increase') {
+      sortedArticles.sort(
+        (a, b) =>
+          Math.abs(Number(new Date(a.date_de_fin)) - now) -
+          Math.abs(Number(new Date(b.date_de_fin)) - now)
+      );
+    } else {
+      sortedArticles.sort(
+        (a, b) =>
+          Math.abs(Number(new Date(b.date_de_fin)) - now) -
+          Math.abs(Number(new Date(a.date_de_fin)) - now)
+      );
+    }
+    setArticles(sortedArticles);
+  };
+
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
   return (
@@ -146,8 +176,7 @@ function Category() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  // checked
-                  // onChange={handleChangeTimerSort}
+                  onChange={() => handleChangeTimerSort(articles, 'increase')}
                 />
                 <span>La plus courte</span>
               </label>
@@ -155,7 +184,7 @@ function Category() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  // onChange={handleChangeTimerSort}
+                  onChange={() => handleChangeTimerSort(articles, 'decrease')}
                 />
                 <span>La plus longue</span>
               </label>
