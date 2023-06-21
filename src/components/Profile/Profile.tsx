@@ -1,9 +1,9 @@
-import { Link, unstable_HistoryRouter } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
 
-import './Profil.scss';
+import './Profile.scss';
 import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
