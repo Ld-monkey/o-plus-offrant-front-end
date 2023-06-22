@@ -11,11 +11,12 @@ function Cards({ items }: { items: IRandomItems[] }) {
             <Card
               key={item.id}
               id={item.id}
-              image={item.image}
+              photo={item.photo}
               description={item.description}
-              title={item.titre}
-              price={item.prix}
-              endTime={item.dateFin}
+              nom={item.nom}
+              montant={item.montant}
+              date_de_fin={item.date_de_fin}
+              label={item.label}
             />
           ))}
       </div>

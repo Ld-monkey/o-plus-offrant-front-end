@@ -3,16 +3,27 @@ import { Link } from 'react-router-dom';
 import getFormatDuration from '../../utils/dateFormat';
 import './Cards.scss';
 
+const API = import.meta.env.VITE_AXIOS_SERVER;
+
 interface ICard {
   id: number;
-  image: string | undefined;
+  photo: string | undefined;
   description: string | undefined;
-  title: string | undefined;
-  price: number;
-  endTime: string;
+  nom: string | undefined;
+  montant: number;
+  date_de_fin: string;
+  label: undefined | string;
 }
 
-function Card({ id, image, description, title, price, endTime }: ICard) {
+function Card({
+  id,
+  photo,
+  description,
+  nom,
+  montant,
+  date_de_fin,
+  label,
+}: ICard) {
   const [countdown, setCountdown] = useState('');
 
   /**
@@ -20,23 +31,25 @@ function Card({ id, image, description, title, price, endTime }: ICard) {
    */
   useEffect(() => {
     const countdownInterval = setInterval(() => {
-      const formatCountdown = getFormatDuration(endTime);
+      const formatCountdown = getFormatDuration(date_de_fin);
       setCountdown(formatCountdown);
     }, 1000);
     return () => clearInterval(countdownInterval);
-  }, [endTime]);
+  }, [date_de_fin]);
+
+  const imageUrl = photo ? `${API}${photo}` : undefined;
 
   return (
     <div className="cards-container">
       <Link to={`produit/${id}`} className="card">
         <div className="card-img">
-          <span className="current-auction">Dernière chance</span>
-          <img src={image} alt={description} />
+          {label && <span className="current-auction">{label}</span>}
+          <img src={imageUrl} alt={description} />
         </div>
         <div className="card-legend">
-          <p>{title}</p>
+          <p>{nom}</p>
           <div className="card-legend__data">
-            <span className="card-legend__tokens">{price} €</span>
+            <span className="card-legend__tokens">{montant} €</span>
             <span className="card-legend__times">{countdown}</span>
           </div>
         </div>

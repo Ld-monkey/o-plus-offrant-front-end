@@ -10,4 +10,5 @@ export interface IRandomItems {
   description: string | undefined;
   prix: number;
   dateFin: string;
+  label: undefined | string;
 }
