@@ -1,3 +1,22 @@
-$color: #fff;
-$color-primary: #61dafb;
-$color-bg: #282c34;
+$color-text: #fff;
+$color-on-text: black;
+$color-primary: #0c7eb4;
+$color-secondary: #e99a28;
+$color-searchbar: #ebebeb;
+$color-lake: #6da4aa;
+$color-on-lake: #F1F6F7;
+
+$color-error: #b23542;
+
+$tablet-font-size-text: 0.8rem;
+$mobile-font-size-text: 0.5rem;
+
+$tablet-font-size-major: 1rem;
+$mobile-font-size-major: 0.8rem;
+
+$tablet-font-size-title: 1.5rem;
+$mobile-font-size-title: 1rem;
+
+$layout-breakpoint-tablet: 577px;
+$layout-breakpoint-desktop: 960px;
+$layout-breakpoint-tablet-navbar: 595px;

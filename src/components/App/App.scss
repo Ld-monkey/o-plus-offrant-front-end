@@ -1,5 +1,7 @@
 @use '../../styles/variables' as v;
 
-.App {
-  text-align: center;
+#wrapper {
+  margin: 0 auto;
+  max-width: 60rem;
+  width: 90vw;
 }

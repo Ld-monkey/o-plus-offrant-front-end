@@ -1,0 +1,17 @@
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+}
+
+@mixin remove-border {
+  outline: none;
+  border: none;
+}
+
+@mixin buttons-style {
+  @include flex-center;
+  @include remove-border;
+  height: 40px;
+  padding: 0 10px;
+  text-decoration: none;
+}

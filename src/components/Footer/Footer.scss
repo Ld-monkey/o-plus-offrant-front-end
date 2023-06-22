@@ -1,0 +1,38 @@
+@use '../../styles/variables' as v;
+
+.Footer {
+  display: flex;
+  flex-direction: column;
+
+  justify-content: center;
+  align-items: center;
+
+  gap: 50px;
+
+  text-align: center; 
+
+  background-color: v.$color-primary;
+  color: v.$color-text;
+  padding: 50px;
+  line-height: 2rem;
+
+  @media (min-width: v.$layout-breakpoint-tablet) {
+    flex-direction: row;
+    text-align: left;
+    gap: 150px;
+  }
+
+  &__info,
+  &__Pseudo {
+    padding: 2px;
+  }
+
+  a {
+    display: block;
+    color: v.$color-text;
+    &:hover {
+        text-decoration: underline;
+    }
+  }
+}
+    
