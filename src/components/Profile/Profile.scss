@@ -43,9 +43,12 @@ table {
     cursor: pointer;
   }
 
-  .icon-update:hover,
-  .icon-delete:hover {
+  .icon-update:hover {
     color: v.$color-secondary;
+  }
+
+  .icon-delete:hover {
+    color: red;
   }
 }
 
