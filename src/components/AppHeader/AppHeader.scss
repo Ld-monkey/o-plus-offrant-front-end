@@ -18,6 +18,7 @@
     &-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 0.75rem;
     }
 
@@ -26,8 +27,21 @@
     }
   }
 
-  &-btn-sell,
-  &-btn-category,
+  &-link-sell,
+  &-link-category {
+    svg {
+      padding-right: 10px;
+    }
+
+    &:hover {
+      text-decoration: underline;
+
+      svg {
+        opacity: 0.8;
+      }
+    }
+  }
+
   &-btn-login {
     border: none;
     outline: none;
@@ -45,18 +59,6 @@
 
       svg {
         padding-right: 10px;
-      }
-    }
-  }
-
-  &-btn-sell,
-  &-btn-category {
-    &:hover {
-      svg {
-        opacity: 0.8;
-      }
-      a {
-        text-decoration: underline;
       }
     }
   }

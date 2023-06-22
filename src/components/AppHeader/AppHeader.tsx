@@ -84,14 +84,14 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               />
             </form>
             <div className="header-navbar-container">
-              <button type="button" className="header-btn-sell">
+              <Link to="produit/creation" className="header-link-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <Link to="produit/creation">Vendre</Link>
-              </button>
-              <button type="button" className="header-btn-category">
+                Vendre
+              </Link>
+              <Link to="produits" className="header-link-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <Link to="produits">Toutes les ventes</Link>
-              </button>
+                Articles
+              </Link>
               {!isLogged ? (
                 <button
                   type="button"
