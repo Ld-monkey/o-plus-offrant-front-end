@@ -9,10 +9,10 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import duration from 'dayjs/plugin/duration';
 
-import axios from '../../api/axios';
-import './SingleArticle.scss';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import axios from '../../api/axios';
+import './SingleArticle.scss';
 
 interface SingleArticleProps {
   id: number;
@@ -37,6 +37,10 @@ interface SingleArticleHistory {
 dayjs.extend(duration);
 
 function SingleArticle() {
+  const privateAxios = useAxiosPrivate();
+  const userId = useAppSelector((state) => state.user.id);
+  const userLogged = useAppSelector((state) => state.user.logged);
+
   const [article, setArticle] = useState<SingleArticleProps | undefined>(
     undefined
   );
@@ -49,11 +53,6 @@ function SingleArticle() {
   const [lastBidder, setLastBidder] = useState<number | null>(null);
 
   const { idArticle } = useParams();
-
-  const userId = useAppSelector((state) => state.user.id);
-  const userLogged = useAppSelector((state) => state.user.logged);
-
-  const privateAxios = useAxiosPrivate();
 
   useEffect(() => {
     async function fetchArticlebyId() {

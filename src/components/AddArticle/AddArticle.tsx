@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 import './AddArticle.scss';
 
@@ -9,6 +10,8 @@ interface CategoriesProps {
 }
 
 function AddArticle() {
+  const privateAxios = useAxiosPrivate();
+
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
 
   useEffect(() => {
@@ -55,7 +58,7 @@ function AddArticle() {
   // async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
   //   event.preventDefault();
   //   try {
-  //     const response = await axios.post(
+  //     const response = await privateAxios.post(
   //       'https://didierlam-server.eddi.cloud/article/creation/add',
   //       {
   //         nom: inputsData.titre,
@@ -70,7 +73,7 @@ function AddArticle() {
   //     );
   //     console.log(response);
   //   } catch (error) {
-  //     console.error(error);
+  //     console.error('Veuillez-vous connecter / inscrire', error);
   //   }
   // }
 
@@ -80,14 +83,18 @@ function AddArticle() {
     event.preventDefault();
     const formData = new FormData();
     formData.append('photo', image);
-
-    const result = await axios.post(
-      'https://didierlam-server.eddi.cloud/api/images',
-      formData,
-      {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      }
-    );
+    try {
+      const result = await privateAxios.post(
+        'https://didierlam-server.eddi.cloud/api/images',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+      console.log(result);
+    } catch (error) {
+      console.error('Veuillez-vous connecter / inscrire', error);
+    }
   };
 
   return (
