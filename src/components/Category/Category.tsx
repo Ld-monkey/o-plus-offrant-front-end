@@ -33,13 +33,26 @@ function Category() {
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
 
+  function handleSortByPriceIncrease(items: any) {
+    const sortedArticlesIncrease = [...items];
+    sortedArticlesIncrease.sort(
+      (a, b) => Number(a.montant) - Number(b.montant)
+    );
+    return sortedArticlesIncrease;
+  }
+
   useEffect(() => {
     async function fetchArticles() {
       const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
+
       try {
         const response = await axios.get(apiReq);
 
-        setArticles(response.data.allArticles);
+        // setArticles(response.data.allArticles);
+        const sortArticles = handleSortByPriceIncrease(
+          response.data.allArticles
+        );
+        setArticles(sortArticles);
 
         setCategories(response.data.allCategories);
       } catch (error) {
@@ -76,6 +89,45 @@ function Category() {
     }
   };
 
+  const handleSortByPriceDecrease = (): void => {
+    const sortedArticlesDecrease = [...articles];
+
+    sortedArticlesDecrease.sort(
+      (a, b) => Number(b.montant) - Number(a.montant)
+    );
+    setArticles(sortedArticlesDecrease);
+  };
+
+  /**
+   * Sort items based on end date time.
+   * @param items - All articles.
+   * @param action - 2 types of actions 'increase' or 'decrease'
+   */
+  const handleChangeTimerSort = (
+    items: ArticlesProps[],
+    action: 'increase' | 'decrease'
+  ): void => {
+    console.log(items);
+    const now = Number(new Date());
+    const sortedArticles = [...articles];
+    if (action === 'increase') {
+      sortedArticles.sort(
+        (a, b) =>
+          Math.abs(Number(new Date(a.date_de_fin)) - now) -
+          Math.abs(Number(new Date(b.date_de_fin)) - now)
+      );
+    } else {
+      sortedArticles.sort(
+        (a, b) =>
+          Math.abs(Number(new Date(b.date_de_fin)) - now) -
+          Math.abs(Number(new Date(a.date_de_fin)) - now)
+      );
+    }
+    setArticles(sortedArticles);
+  };
+
+  //  const [sortvalue; Setsortvalue] = useState("");
+  //   const sortOptions = ["montant"]
   return (
     <>
       <div id="wrapper">
@@ -97,11 +149,24 @@ function Category() {
             <div>
               <span>Trier par prix :</span>
               <label htmlFor="Croissant" className="categoryName">
-                <input type="radio" value="increase" name="TriPrice" />
+                <input
+                  type="radio"
+                  value="increase"
+                  name="TriPrice"
+                  defaultChecked
+                  onClick={() =>
+                    setArticles(handleSortByPriceIncrease(articles))
+                  }
+                />
                 <span>Croissant</span>
               </label>
               <label htmlFor="Décroissant" className="categoryName">
-                <input type="radio" value="decrease" name="TriPrice" />
+                <input
+                  type="radio"
+                  value="decrease"
+                  name="TriPrice"
+                  onClick={handleSortByPriceDecrease}
+                />
                 <span>Décroissant</span>
               </label>
             </div>
@@ -111,8 +176,7 @@ function Category() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  // checked
-                  // onChange={handleChangeTimerSort}
+                  onChange={() => handleChangeTimerSort(articles, 'increase')}
                 />
                 <span>La plus courte</span>
               </label>
@@ -120,7 +184,7 @@ function Category() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  // onChange={handleChangeTimerSort}
+                  onChange={() => handleChangeTimerSort(articles, 'decrease')}
                 />
                 <span>La plus longue</span>
               </label>
