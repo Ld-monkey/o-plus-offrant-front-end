@@ -13,6 +13,7 @@ interface UserProps {
   nom: string;
   prenom: string;
   adresse_mail: string;
+  adresse: string;
 }
 
 interface UserArticles {
@@ -45,6 +46,7 @@ function Profile() {
     nom: '',
     prenom: '',
     adresse_mail: '',
+    adresse: '',
   });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
@@ -129,6 +131,7 @@ function Profile() {
             <span>Nom :</span>
             <span>Prénom :</span>
             <span>Email :</span>
+            <span>Adresse :</span>
           </div>
 
           <div className="user-infos">
@@ -149,6 +152,11 @@ function Profile() {
                   value={userInfo.adresse_mail}
                   onChange={(e) => handleInputChange(e, 'adresse_mail')}
                 />
+                <input
+                  type="text"
+                  value={userInfo.adresse}
+                  onChange={(e) => handleInputChange(e, 'adresse')}
+                />
                 <button type="button" onClick={handleSaveButton}>
                   Enregistrer
                 </button>
@@ -158,6 +166,7 @@ function Profile() {
                 <span>{userInfo.nom}</span>
                 <span>{userInfo.prenom}</span>
                 <span>{userInfo.adresse_mail}</span>
+                <span>{userInfo.adresse}</span>
               </>
             )}
           </div>
