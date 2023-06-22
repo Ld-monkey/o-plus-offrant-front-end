@@ -2,8 +2,6 @@ import Cards from '../Cards/Cards';
 import { IRandomItems } from '../../@types/articles';
 import './StackArticles.scss';
 
-const API = import.meta.env.VITE_AXIOS_SERVER;
-
 function StackArticles({ articles }: { articles: IRandomItems[] }) {
   /**
    * Get two indexes randomly.
@@ -26,35 +24,39 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
     return indexArticles;
   };
 
-  const [firstItem, secondItem] = getRandomItems(articles.length);
+  const [firstItem, secondItem] = articles
+    ? getRandomItems(articles.length)
+    : [undefined, undefined];
 
-  const items = [
-    {
-      id: articles[firstItem].id,
-      titre: articles[firstItem].nom,
-      image: `${API}${articles[firstItem].photo}`,
-      alt: articles[firstItem].nom,
-      description: articles[firstItem].description,
-      prix: articles[firstItem].montant,
-      dateFin: articles[firstItem].date_de_fin,
-    },
-    {
-      id: articles[secondItem].id,
-      titre: articles[secondItem].nom,
-      image: `${API}${articles[secondItem].photo}`,
-      alt: articles[secondItem].nom,
-      description: articles[secondItem].description,
-      prix: articles[secondItem].montant,
-      dateFin: '2023-10-25T01:00:00.000Z',
-    },
-  ];
+  const messageLabel = 'Dernière chance';
+
+  const items = articles
+    ? [
+        {
+          id: articles[firstItem].id,
+          nom: articles[firstItem].nom,
+          photo: `${articles[firstItem].photo}`,
+          description: articles[firstItem].description,
+          montant: articles[firstItem].montant,
+          date_de_fin: articles[firstItem].date_de_fin,
+          label: messageLabel,
+        },
+        {
+          id: articles[secondItem].id,
+          nom: articles[secondItem].nom,
+          photo: `${articles[secondItem].photo}`,
+          description: articles[secondItem].description,
+          montant: articles[secondItem].montant,
+          date_de_fin: articles[secondItem].date_de_fin,
+          label: messageLabel,
+        },
+      ]
+    : undefined;
 
   return (
     <div id="wrapper">
       <h2>Enchères</h2>
-      <div className="stackArticles">
-        <Cards items={items} />
-      </div>
+      <div className="stackArticles">{items && <Cards items={items} />}</div>
     </div>
   );
 }
