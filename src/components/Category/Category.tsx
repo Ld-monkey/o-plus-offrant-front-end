@@ -118,7 +118,7 @@ function Category() {
           </div>
         </form>
       </div>
-      <div className="containerCardCat">
+      <div id="wrapper" className="containerCardCat">
         {filteredArticles.map((filteredArticle) => (
           <Link
             key={filteredArticle.id}

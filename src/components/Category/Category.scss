@@ -1,8 +1,5 @@
 @use '../../styles/variables' as v;
 
-@media screen and (max-width: v.$layout-breakpoint-tablet) {
-}
-
 .Sort_Choice {
   border: solid 1px v.$color-searchbar;
   padding: 20px;
@@ -34,36 +31,37 @@
 }
 
 .cardCat {
-  width: 316px;
-  height: 429px;
+  width: 260px;
+  height: 400px;
   border-radius: 5%;
   margin: 30px;
+  padding: 5px;
   background-color: rgb(253, 245, 234);
   display: inline;
   position: relative;
   img {
-    width: 18rem;
-    height: 13rem;
+    width: 16rem;
+    height: 12rem;
     margin: 10px auto;
     padding: 10px;
     background-color: white;
-    border-radius: 5%;
+    border-radius: 8%;
     overflow: hidden;
   }
   p,
   h3 {
     text-align: center;
-    font-size: 0.9rem;
+    font-size: 0.7rem;
     margin: 10px;
     font-weight: 800;
     color: rgb(122, 119, 119);
   }
   h3 {
-    font-size: 1.4rem;
+    font-size: 1.2rem;
   }
 }
 .liveAuction-button {
-  font-size: 1.2rem;
+  font-size: 1rem;
   padding: 7px;
   border-radius: 25px;
   position: absolute;
