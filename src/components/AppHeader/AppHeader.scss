@@ -52,27 +52,6 @@
     }
   }
 
-  &-btn-login {
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-
-    a {
-      display: none;
-    }
-
-    @media (min-width: 435px) {
-      a {
-        display: inline;
-      }
-
-      svg {
-        padding-right: 10px;
-      }
-    }
-  }
-
   .icon-dollar,
   .icon-category,
   .icon-user {
@@ -89,8 +68,26 @@
 
   &-btn-login {
     display: none;
+    border: none;
+    background: none;
+    cursor: pointer;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    a {
+      display: none;
+    }
+
+    @media (min-width: 435px) {
+      a {
+        display: inline;
+      }
+
+      svg {
+        margin-top: 4px;
+        padding-right: 10px;
+      }
+    }
+
+    @media (min-width: 620px) {
       display: inline;
       padding: 10px;
       background-color: v.$color-primary;
@@ -145,7 +142,7 @@
     display: inline-block;
     position: relative;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media (min-width: 620px) {
       display: none;
     }
   }
@@ -205,7 +202,6 @@
     outline: none;
     border: none;
     background: none;
-    padding-top: 5px;
   }
 
   input {
@@ -229,7 +225,7 @@
       }
     }
 
-    @media (max-width: 640px) {
+    @media (max-width: 650px) {
       display: none;
     }
   }
