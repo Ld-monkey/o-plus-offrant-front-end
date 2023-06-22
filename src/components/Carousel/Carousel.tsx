@@ -1,11 +1,12 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 
-import { Link } from 'react-router-dom';
 import { IRandomItems } from '../../@types/articles';
 
 import Card from '../Cards/Card';
 import '../Cards/Cards.scss';
+import Cards from '../Cards/Cards';
+import './Carousel.scss';
 
 const API = import.meta.env.VITE_AXIOS_SERVER;
 
@@ -30,45 +31,48 @@ const responsive = {
 };
 
 function CarouselItem({ articles }: { articles: IRandomItems[] }) {
-  const mostRecentItems = articles.slice(0, 2);
-  const olderItems = articles.slice(6, 12);
+  const mostRecentItems = articles ? articles.slice(0, 5) : undefined;
+  const olderItems = articles ? articles.slice(6, 12) : undefined;
   return (
     <div id="wrapper">
-      <h2>Ventes courtes</h2>
-      {/* <Carousel responsive={responsive}></Carousel> */}
-
-      <div className="cards">
-        <div className="cards-root">
+      <h2 className="title-carousel">Ventes courtes</h2>
+      {articles && (
+        <Carousel
+          responsive={responsive}
+          containerClass="carousel-container"
+          partialVisible={false}
+        >
           {mostRecentItems.map((item) => (
             <div key={item.id}>
               <Card
                 id={item.id}
                 description=""
-                image={`${API}${item.photo}`}
-                title={item.nom}
-                price={item.montant}
-                endTime={item.date_de_fin}
+                photo={item.photo}
+                nom={item.nom}
+                montant={item.montant}
+                date_de_fin={item.date_de_fin}
               />
             </div>
           ))}
-        </div>
-      </div>
-
-      <h2>Ventes longues</h2>
-      <Carousel responsive={responsive}>
-        {olderItems.map((item) => (
-          <div key={item.id} style={{ height: '100%' }}>
-            <Card
-              id={item.id}
-              description=""
-              image={`${API}${item.photo}`}
-              title={item.nom}
-              price={item.montant}
-              endTime={item.date_de_fin}
-            />
-          </div>
-        ))}
-      </Carousel>
+        </Carousel>
+      )}
+      <h2 className="title-carousel">Ventes longues</h2>
+      {articles && (
+        <Carousel responsive={responsive}>
+          {olderItems.map((item) => (
+            <div key={item.id}>
+              <Card
+                id={item.id}
+                description=""
+                photo={item.photo}
+                nom={item.nom}
+                montant={item.montant}
+                date_de_fin={item.date_de_fin}
+              />
+            </div>
+          ))}
+        </Carousel>
+      )}
     </div>
   );
 }
