@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import './Profile.scss';
 import { useEffect, useState } from 'react';
-import axios, { axiosPrivate } from '../../api/axios';
+import { axiosPrivate } from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
@@ -81,10 +81,7 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      const response = await axiosPrivate.patch(
-        `/api/profile/${userId}/update`,
-        userInfo
-      );
+      await axiosPrivate.patch(`/api/profile/${userId}/update`, userInfo);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
