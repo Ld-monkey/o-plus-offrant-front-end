@@ -67,7 +67,9 @@ function SingleArticle() {
       } else {
         setArticleHistory(sortedArticleHistories);
       }
-      setLastBidder(sortedArticleHistories[0].utilisateur_id);
+      if (sortedArticleHistories.length) {
+        setLastBidder(sortedArticleHistories[0].utilisateur_id);
+      }
     }
     fetchArticlebyId();
   }, [idArticle]);
@@ -81,10 +83,10 @@ function SingleArticle() {
       const auctionTargetDate = dayjs(article?.date_de_fin);
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
 
-      let days = auctionDuration.days();
-      let hours = auctionDuration.hours();
-      let minutes = auctionDuration.minutes();
-      let seconds = auctionDuration.seconds();
+      const days = auctionDuration.days();
+      const hours = auctionDuration.hours();
+      const minutes = auctionDuration.minutes();
+      const seconds = auctionDuration.seconds();
 
       if (days === 1) {
         setCountdown(`${days} jour ${hours}:${minutes}:${seconds}`);
