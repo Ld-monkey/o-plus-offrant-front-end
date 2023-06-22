@@ -1,7 +1,10 @@
 import Cards from '../Cards/Cards';
+import { IRandomItems } from '../../@types/articles';
 import './StackArticles.scss';
 
-function StackArticles() {
+const API = import.meta.env.VITE_AXIOS_SERVER;
+
+function StackArticles({ articles }: { articles: IRandomItems[] }) {
   /**
    * Get two indexes randomly.
    * @param totalArticle { number } - Total number of items.
@@ -50,7 +53,7 @@ function StackArticles() {
     <div id="wrapper">
       <h2>Enchères</h2>
       <div className="stackArticles">
-        <Cards />
+        <Cards items={items} />
       </div>
     </div>
   );

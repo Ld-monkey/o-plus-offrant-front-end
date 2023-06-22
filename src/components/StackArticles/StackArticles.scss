@@ -1,9 +1,16 @@
-.stackArticle {
-    &:first-child {
-        border: 1px solid red;
-    }
+@use "../../styles/variables" as v;
 
-    &:last-child {
-        border: 1px solid green;
+.stackArticles {
+  .cards-container:nth-child(1) {
+    flex: 2;
+  }
+
+  .cards-container:nth-child(2) {
+    flex: 1;
+    display: none;
+
+    @media (min-width: v.$layout-breakpoint-tablet) {
+      display: block;
     }
+  }
 }
