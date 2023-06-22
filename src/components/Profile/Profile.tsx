@@ -25,9 +25,10 @@ interface UserArticles {
 
 interface UserAuctions {
   id: number;
-  montant: number;
+  nom: string;
   date: string;
-  // nom: string; => nom du produit
+  mon_enchere: number;
+  enchere_actuelle: number;
 }
 
 interface UserWonAuctions {
@@ -83,7 +84,11 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      await axiosPrivate.patch(`/api/profile/${userId}/update`, userInfo);
+      const response = await axiosPrivate.patch(
+        `/api/profile/${userId}/update`,
+        userInfo
+      );
+      console.log(response);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
@@ -233,6 +238,7 @@ function Profile() {
                 <tr>
                   <th>Nom de l&apos;article</th>
                   <th>Mise actuelle</th>
+                  <th>Ma mise</th>
                   <th>Date de fin de vente</th>
                 </tr>
               </thead>
@@ -245,10 +251,11 @@ function Profile() {
                     <tr key={userAuction.id}>
                       <td>
                         <Link to={`/produit/${userAuction.id}`}>
-                          NOM DU PRODUIT
+                          {userAuction.nom}
                         </Link>
                       </td>
-                      <td>{userAuction.montant}€</td>
+                      <td>{userAuction.enchere_actuelle}€</td>
+                      <td>{userAuction.mon_enchere}€</td>
                       <td>{formattedDate}</td>
                     </tr>
                   );
