@@ -1,14 +1,9 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-
 import { IRandomItems } from '../../@types/articles';
-
 import Card from '../Cards/Card';
 import '../Cards/Cards.scss';
-import Cards from '../Cards/Cards';
 import './Carousel.scss';
-
-const API = import.meta.env.VITE_AXIOS_SERVER;
 
 const responsive = {
   superLargeDesktop: {
@@ -42,35 +37,39 @@ function CarouselItem({ articles }: { articles: IRandomItems[] }) {
           containerClass="carousel-container"
           partialVisible={false}
         >
-          {mostRecentItems.map((item) => (
-            <div key={item.id}>
-              <Card
-                id={item.id}
-                description=""
-                photo={item.photo}
-                nom={item.nom}
-                montant={item.montant}
-                date_de_fin={item.date_de_fin}
-              />
-            </div>
-          ))}
+          {mostRecentItems &&
+            mostRecentItems.map((item) => (
+              <div key={item.id}>
+                <Card
+                  id={item.id}
+                  description=""
+                  photo={item.photo}
+                  nom={item.nom}
+                  montant={item.montant}
+                  date_de_fin={item.date_de_fin}
+                  label={undefined}
+                />
+              </div>
+            ))}
         </Carousel>
       )}
       <h2 className="title-carousel">Ventes longues</h2>
       {articles && (
         <Carousel responsive={responsive}>
-          {olderItems.map((item) => (
-            <div key={item.id}>
-              <Card
-                id={item.id}
-                description=""
-                photo={item.photo}
-                nom={item.nom}
-                montant={item.montant}
-                date_de_fin={item.date_de_fin}
-              />
-            </div>
-          ))}
+          {olderItems &&
+            olderItems.map((item) => (
+              <div key={item.id}>
+                <Card
+                  id={item.id}
+                  description=""
+                  photo={item.photo}
+                  nom={item.nom}
+                  montant={item.montant}
+                  date_de_fin={item.date_de_fin}
+                  label={undefined}
+                />
+              </div>
+            ))}
         </Carousel>
       )}
     </div>

@@ -24,13 +24,11 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
     return indexArticles;
   };
 
-  const [firstItem, secondItem] = articles
-    ? getRandomItems(articles.length)
-    : [undefined, undefined];
+  const [firstItem, secondItem] = getRandomItems(articles.length);
 
   const messageLabel = 'Dernière chance';
 
-  const items = articles
+  const itemsArticles = articles.length
     ? [
         {
           id: articles[firstItem].id,
@@ -56,7 +54,9 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
   return (
     <div id="wrapper">
       <h2>Enchères</h2>
-      <div className="stackArticles">{items && <Cards items={items} />}</div>
+      <div className="stackArticles">
+        {itemsArticles && <Cards items={itemsArticles} />}
+      </div>
     </div>
   );
 }
