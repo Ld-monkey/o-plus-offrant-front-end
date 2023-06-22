@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import {
@@ -14,12 +14,19 @@ import PopupBox from './PopupBox';
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
 
   const {
     logged: isLogged,
     prenom: username,
     logo_profile: avatar,
   } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!isLogged) {
+      setOpenPopup(false);
+    }
+  }, [isLogged]);
 
   /**
    * Split name when to long.
@@ -57,12 +64,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
     console.log(contentSearchBar);
-  }
-
-  const [openPopup, setOpenPopup] = useState<boolean>(false);
-
-  function handlePopup() {
-    setOpenPopup(!openPopup);
   }
 
   return (
@@ -111,8 +112,8 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               ) : (
                 <div
                   className="loging-container"
-                  onMouseEnter={() => handlePopup()}
-                  onMouseLeave={() => handlePopup()}
+                  onMouseEnter={() => setOpenPopup(true)}
+                  onMouseLeave={() => setOpenPopup(false)}
                 >
                   <button type="button" className="header-btn-online">
                     <div className="logo-user-profil">
