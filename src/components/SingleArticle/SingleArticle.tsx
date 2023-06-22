@@ -2,9 +2,9 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-/*
-Package to format datetime and creating countdown
-*/
+/**
+ * Package to format datetime and creating countdown
+ */
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 import duration from 'dayjs/plugin/duration';
@@ -77,9 +77,9 @@ function SingleArticle() {
     fetchArticlebyId();
   }, [idArticle]);
 
-  /*
-  Timer
-  */
+  /**
+   * Timer
+   */
   useEffect(() => {
     function calculateCountdown() {
       const now = dayjs();
@@ -173,7 +173,7 @@ function SingleArticle() {
                   <button
                     className="participate-btn"
                     type="button"
-                    onClick={(e) => {
+                    onClick={() => {
                       setOpenModal(true);
                     }}
                   >

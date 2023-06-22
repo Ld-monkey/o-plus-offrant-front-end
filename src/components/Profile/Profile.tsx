@@ -5,8 +5,9 @@ import dayjs from 'dayjs';
 
 import './Profile.scss';
 import { useEffect, useState } from 'react';
-import axios from '../../api/axios';
+import axios, { axiosPrivate } from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 interface UserProps {
   nom: string;
@@ -35,6 +36,9 @@ interface UserWonAuctions {
 }
 
 function Profile() {
+  const privateAxios = useAxiosPrivate();
+  const userId = useAppSelector((state) => state.user.id);
+
   const [isEditing, setIsEditing] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
@@ -46,35 +50,23 @@ function Profile() {
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
 
-  const userId = useAppSelector((state) => state.user.id);
-
   useEffect(() => {
     async function fetchUserbyId() {
-      const response = await axios.get(`/api/profile/${userId}`);
-      setUserInfo(response.data.profile);
-      setUserArticles(response.data.histSell);
-      setUserAuctions(response.data.histBuy);
-      setUserWonAuctions(response.data.wonAuction);
+      try {
+        const response = await privateAxios.get(`/api/profile/${userId}`);
+        setUserInfo(response.data.profile);
+        setUserArticles(response.data.histSell);
+        setUserAuctions(response.data.histBuy);
+        setUserWonAuctions(response.data.wonAuction);
+      } catch (error) {
+        console.error('Veuillez vous connecter', error);
+      }
     }
     fetchUserbyId();
-  }, [userId]);
+  }, [privateAxios, userId]);
 
   function handleEdit() {
     setIsEditing(true);
-  }
-
-  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      const response = await axios.delete(`/api/profile/${userId}/delete`);
-      console.log(response);
-      if (response.status === 200) {
-        window.location.href = '/';
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setOpenModal(false);
   }
 
   function handleInputChange(
@@ -89,15 +81,29 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      const response = await axios.patch(
+      const response = await axiosPrivate.patch(
         `/api/profile/${userId}/update`,
         userInfo
       );
-      console.log(response);
     } catch (error) {
-      console.error(error);
+      console.error('Veuillez vous reconnecter', error);
     }
     setIsEditing(false);
+  }
+
+  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const response = await privateAxios.delete(
+        `/api/profile/${userId}/delete`
+      );
+      if (response.status === 200) {
+        window.location.href = '/';
+      }
+    } catch (error) {
+      console.error('Veuillez vous reconnecter', error);
+    }
+    setOpenModal(false);
   }
 
   return (
