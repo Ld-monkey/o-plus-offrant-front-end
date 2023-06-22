@@ -9,10 +9,11 @@ import Category from './components/Category/Category';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
-import axios from './api/axios';
 
 import './styles/index.scss';
 import getAllArticles from './api/articles';
+import PrivateRoute from './components/PrivateRoute/PrivateRoute';
+import Profile from './components/Profile/Profile';
 
 const router = createBrowserRouter([
   {
@@ -29,16 +30,20 @@ const router = createBrowserRouter([
         element: <Category />,
       },
       {
-        path: 'category/:idCategory/produits',
-        element: <Category />,
-      },
-      {
         path: 'produit/:idArticle',
         element: <SingleArticle />,
       },
       {
         path: 'produit/creation',
         element: <AddArticle />,
+      },
+      {
+        path: '/profile',
+        element: (
+          <PrivateRoute>
+            <Profile />
+          </PrivateRoute>
+        ),
       },
     ],
   },

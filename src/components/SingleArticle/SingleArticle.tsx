@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
@@ -8,7 +7,9 @@ import 'dayjs/locale/fr';
 
 import getFormatDuration from '../../utils/dateFormat';
 
+import axios from '../../api/axios';
 import './SingleArticle.scss';
+import { useAppSelector } from '../../hooks/redux';
 
 interface SingleArticleProps {
   id: number;
@@ -18,6 +19,7 @@ interface SingleArticleProps {
   prix_de_depart: number;
   date_de_fin: string;
   montant: number;
+  utilisateur_vente_id: number;
 }
 
 interface SingleArticleHistory {
@@ -26,6 +28,7 @@ interface SingleArticleHistory {
   prenom: string;
   date: string;
   montant: number;
+  utilisateur_id: number;
 }
 
 function SingleArticle() {
@@ -36,22 +39,32 @@ function SingleArticle() {
     []
   );
   const [countdown, setCountdown] = useState('');
+  const [auctionFinished, setAuctionFinished] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const [lastBidder, setLastBidder] = useState<number | null>(null);
 
   const { idArticle } = useParams();
 
+  const userId = useAppSelector((state) => state.user.id);
+  const userLogged = useAppSelector((state) => state.user.logged);
+
   useEffect(() => {
     async function fetchArticlebyId() {
-      const response = await axios.get(
-        `https://didierlam-server.eddi.cloud/api/article/${idArticle}`
-      );
+      const response = await axios.get(`/api/article/${idArticle}`);
       setArticle(response.data.article);
       const articleHistories = response.data.histArticle;
-      if (articleHistories.length > 10) {
-        const latestEntries = articleHistories.slice(-10);
+      const sortedArticleHistories = articleHistories.sort(
+        (a: { montant: number }, b: { montant: number }) =>
+          b.montant - a.montant
+      );
+      if (sortedArticleHistories.length > 10) {
+        const latestEntries = sortedArticleHistories.slice(0, 10);
         setArticleHistory(latestEntries);
       } else {
-        setArticleHistory(response.data.histArticle);
+        setArticleHistory(sortedArticleHistories);
+      }
+      if (sortedArticleHistories.length) {
+        setLastBidder(sortedArticleHistories[0].utilisateur_id);
       }
     }
     fetchArticlebyId();
@@ -63,6 +76,12 @@ function SingleArticle() {
   useEffect(() => {
     const countdownInterval = setInterval(() => {
       const formatCountdown = getFormatDuration(article?.date_de_fin);
+
+      // When the countdown is over.
+      if (formatCountdown === '0') {
+        setAuctionFinished(true);
+      }
+
       setCountdown(formatCountdown);
     }, 1000);
     return () => clearInterval(countdownInterval);
@@ -73,13 +92,12 @@ function SingleArticle() {
   */
   async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    // TODO: si le client est connecté, on ajoute son id dans le json qu'on envoie au back, sinon l'inviter à se connecter / lui ouvrir la modale de connexion
     if (article) {
       try {
-        await axios.post(`https://didierlam-server.eddi.cloud/api/auction`, {
+        await axios.post(`/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
-          acheteurId: 2,
+          acheteurId: userId,
         });
       } catch (error) {
         console.error(error);
@@ -111,56 +129,77 @@ function SingleArticle() {
                   Prix de départ: {article.prix_de_depart}€
                 </span>
                 <span className="auction-remaining-time">
-                  Temps restant : {countdown}
+                  {auctionFinished
+                    ? "L'enchère est terminée 🥺"
+                    : `Temps restant: ${countdown.replace(
+                        /:(\d)(?!\d)/g,
+                        ':0$1'
+                      )}`}
                 </span>
               </div>
               <div className="auction-amount">
                 <span className="auction-current-price">
                   Mise actuelle : {article.montant}€
                 </span>
-                <button
-                  className="participate-btn"
-                  type="button"
-                  onClick={() => {
-                    setOpenModal(true);
-                  }}
-                >
-                  Enchérir
-                </button>
+                {auctionFinished || userId === article.utilisateur_vente_id ? (
+                  <button
+                    className="participate-btn disabled"
+                    type="button"
+                    disabled
+                  >
+                    Enchérir
+                  </button>
+                ) : (
+                  <button
+                    className="participate-btn"
+                    type="button"
+                    onClick={() => {
+                      setOpenModal(true);
+                    }}
+                  >
+                    Enchérir
+                  </button>
+                )}
               </div>
             </div>
           </section>
 
           <section className="auction-history">
             <h2 className="auction-history-title">Historique des enchères</h2>
-            <table className="auction-history-table">
-              <thead>
-                <tr>
-                  <td>Nom de l&apos;enchérisseur</td>
-                  <td>Montant de l&apos;enchère</td>
-                  <td>Date de l&apos;enchère</td>
-                </tr>
-              </thead>
-              <tbody>
-                {articleHistory.map((history) => {
-                  const firstLetter = history.nom.charAt(0);
-                  const formattedDate = dayjs(history.date).format(
-                    'DD-MM-YYYY [à] HH:mm'
-                  );
-                  return (
-                    <tr key={history.id}>
-                      <td className="auction-history-auctioner">
-                        {history.prenom} {firstLetter}.
-                      </td>
-                      <td className="auction-history-price">
-                        {history.montant} Tokens
-                      </td>
-                      <td className="auction-history-date">{formattedDate}</td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            {articleHistory.length ? (
+              <table className="auction-history-table">
+                <thead>
+                  <tr>
+                    <td>Nom de l&apos;enchérisseur</td>
+                    <td>Montant de l&apos;enchère</td>
+                    <td>Date de l&apos;enchère</td>
+                  </tr>
+                </thead>
+                <tbody>
+                  {articleHistory.map((history) => {
+                    const firstLetter = history.nom.charAt(0);
+                    const formattedDate = dayjs(history.date).format(
+                      'DD-MM-YYYY [à] HH:mm'
+                    );
+                    return (
+                      <tr key={history.id}>
+                        <td className="auction-history-auctioner">
+                          {history.prenom} {firstLetter} .
+                        </td>
+                        <td className="auction-history-price">
+                          {history.montant}€
+                        </td>
+                        <td className="auction-history-date">
+                          {formattedDate}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            ) : (
+              <p className="auction-no-history">Soyez le premier à enchérir</p>
+            )}
           </section>
         </div>
         {openModal && (
@@ -189,20 +228,52 @@ function SingleArticle() {
                   {Math.round(article.montant * (1 + 5 / 100))}€ sur cet article
                   ?
                 </h2>
-                <div className="modal-footer">
-                  <button
-                    type="button"
-                    className="modal-cancel-btn"
-                    onClick={() => {
-                      setOpenModal(false);
-                    }}
-                  >
-                    Annuler
-                  </button>
-                  <button type="submit" className="modal-confirm-btn">
-                    Confirmer
-                  </button>
-                </div>
+                {!userLogged && (
+                  <p className="error-message">
+                    Veuillez-vous connecter pour pouvoir enchérir sur cet
+                    article.
+                  </p>
+                )}
+
+                {lastBidder === userId && (
+                  <p className="error-message">
+                    Vous avez déjà la meilleure enchère.
+                  </p>
+                )}
+
+                {lastBidder !== userId &&
+                  userLogged &&
+                  userId !== article.utilisateur_vente_id && (
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="modal-cancel-btn"
+                        onClick={() => {
+                          setOpenModal(false);
+                        }}
+                      >
+                        Annuler
+                      </button>
+                      <button type="submit" className="modal-confirm-btn">
+                        Confirmer
+                      </button>
+                    </div>
+                  )}
+                {(!userLogged ||
+                  lastBidder === userId ||
+                  (userLogged && userId === article.utilisateur_vente_id)) && (
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="modal-cancel-btn"
+                      onClick={() => {
+                        setOpenModal(false);
+                      }}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                )}
               </form>
             </div>
           </>
@@ -210,7 +281,13 @@ function SingleArticle() {
       </>
     );
   }
-  return <p>Le produit que vous recherchez n&apos;existe pas.</p>;
+  return (
+    <div id="wrapper">
+      <p className="not-found">
+        Le produit que vous recherchez n&apos;existe pas.
+      </p>
+    </div>
+  );
 }
 
 export default SingleArticle;

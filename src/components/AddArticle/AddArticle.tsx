@@ -37,7 +37,7 @@ function AddArticle() {
     >
   ) {
     const newData = { ...inputsData };
-    newData[event.target.name]= event.target.value;
+    newData[event.target.name] = event.target.value;
     setInputsData(newData);
     console.log(newData);
   }
@@ -91,8 +91,8 @@ function AddArticle() {
 
   return (
     <div id="wrapper">
-      <h2>Vendre votre article</h2>
-      <form method="post" className="add-article-form" onSubmit={handleSubmit}>
+      <h2>Vendez votre article</h2>
+      <form method="post" className="add-article-form">
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
           <input
