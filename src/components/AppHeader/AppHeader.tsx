@@ -9,6 +9,7 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 import { useAppSelector } from '../../hooks/redux';
+import PopupBox from './PopupBox';
 
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -58,6 +59,12 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     console.log(contentSearchBar);
   }
 
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
+
+  function handlePopup() {
+    setOpenPopup(!openPopup);
+  }
+
   return (
     <>
       <header className="header">
@@ -102,16 +109,19 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                   <span>Connexion / Inscription</span>
                 </button>
               ) : (
-                <button
-                  type="button"
-                  className="header-btn-online"
-                  onClick={toggleModalLogin}
+                <div
+                  className="loging-container"
+                  onMouseEnter={() => handlePopup()}
+                  onMouseLeave={() => handlePopup()}
                 >
-                  <div className="logo-user-profil">
-                    <img src={avatar} alt="avatar" className="avatar" />
-                  </div>
-                  <span>Bonjour {splitUsername(username)}</span>
-                </button>
+                  <button type="button" className="header-btn-online">
+                    <div className="logo-user-profil">
+                      <img src={avatar} alt="avatar" className="avatar" />
+                    </div>
+                    <span>Bonjour {splitUsername(username)}</span>
+                  </button>
+                  {openPopup && <PopupBox />}
+                </div>
               )}
               {/* Hamburger menu */}
               <div className="hamburger-menu">

@@ -42,6 +42,16 @@
     }
   }
 
+  .loging-container {
+    position: relative;
+    display: none;
+    height: 100%;
+
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+      display: block;
+    }
+  }
+
   &-btn-login {
     border: none;
     outline: none;
