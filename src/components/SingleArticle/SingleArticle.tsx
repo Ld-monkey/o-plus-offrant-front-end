@@ -12,6 +12,7 @@ import duration from 'dayjs/plugin/duration';
 import axios from '../../api/axios';
 import './SingleArticle.scss';
 import { useAppSelector } from '../../hooks/redux';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
 interface SingleArticleProps {
   id: number;
@@ -51,6 +52,8 @@ function SingleArticle() {
 
   const userId = useAppSelector((state) => state.user.id);
   const userLogged = useAppSelector((state) => state.user.logged);
+
+  const privateAxios = useAxiosPrivate();
 
   useEffect(() => {
     async function fetchArticlebyId() {
@@ -104,20 +107,20 @@ function SingleArticle() {
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 
-  /*
-  Send updated data to the API
-  */
+  /**
+   * Send updated data to the API
+   */
   async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (article) {
       try {
-        await axios.post(`/api/auction`, {
+        await privateAxios.post(`/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
           acheteurId: userId,
         });
       } catch (error) {
-        console.error(error);
+        console.error('Veuillez vous reconnecter', error);
       }
     }
     setOpenModal(false);
@@ -170,7 +173,7 @@ function SingleArticle() {
                   <button
                     className="participate-btn"
                     type="button"
-                    onClick={() => {
+                    onClick={(e) => {
                       setOpenModal(true);
                     }}
                   >
