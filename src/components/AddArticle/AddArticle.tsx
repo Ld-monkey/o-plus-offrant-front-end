@@ -84,13 +84,9 @@ function AddArticle() {
     const formData = new FormData();
     formData.append('photo', image);
     try {
-      const result = await privateAxios.post(
-        'https://didierlam-server.eddi.cloud/api/images',
-        formData,
-        {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        }
-      );
+      const result = await privateAxios.post('/api/images', formData, {
+        headers: { 'Content-Type': 'multipart/form-data' },
+      });
       console.log(result);
     } catch (error) {
       console.error('Veuillez-vous connecter / inscrire', error);

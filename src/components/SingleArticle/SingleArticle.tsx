@@ -109,15 +109,38 @@ function SingleArticle() {
   /**
    * Send updated data to the API
    */
+  // async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
+  //   event.preventDefault();
+  //   if (article) {
+  //     try {
+  //       await privateAxios.post(`/api/auction`, {
+  //         prix: Math.round(article.montant * (1 + 5 / 100)),
+  //         articleId: idArticle,
+  //         acheteurId: userId,
+  //       });
+  //     } catch (error) {
+  //       console.error('Veuillez vous reconnecter', error);
+  //     }
+  //   }
+  //   setOpenModal(false);
+  // }
+
   async function handleAuctionSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     if (article) {
       try {
-        await privateAxios.post(`/api/auction`, {
+        const response = await privateAxios.post(`/api/auction`, {
           prix: Math.round(article.montant * (1 + 5 / 100)),
           articleId: idArticle,
           acheteurId: userId,
         });
+        const updatedArticle = {
+          ...article,
+          montant: response.data.newMontant,
+        };
+        const updatedHistory = [...articleHistory, response.data.newHistory];
+        setArticle(updatedArticle);
+        setArticleHistory(updatedHistory);
       } catch (error) {
         console.error('Veuillez vous reconnecter', error);
       }
@@ -249,12 +272,12 @@ function SingleArticle() {
                 </h2>
                 {!userLogged && (
                   <p className="error-message">
-                    Veuillez-vous connecter pour pouvoir enchérir sur cet
+                    Veuillez vous connecter afin d&apos;enchérir sur cet
                     article.
                   </p>
                 )}
 
-                {lastBidder === userId && (
+                {articleHistory.length > 0 && lastBidder === userId && (
                   <p className="error-message">
                     Vous avez déjà la meilleure enchère.
                   </p>
