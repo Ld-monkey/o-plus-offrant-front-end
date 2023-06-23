@@ -86,14 +86,16 @@ function SingleArticle() {
       const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
 
       const days = auctionDuration.days();
-      const hours = auctionDuration.hours();
-      const minutes = auctionDuration.minutes();
-      const seconds = auctionDuration.seconds();
+      const hours = auctionDuration.hours().toString().padStart(2, '0');
+      const minutes = auctionDuration.minutes().toString().padStart(2, '0');
+      const seconds = auctionDuration.seconds().toString().padStart(2, '0');
 
       if (days === 1) {
         setCountdown(`${days} jour ${hours}:${minutes}:${seconds}`);
       } else if (days === 0) {
         setCountdown(`${hours}:${minutes}:${seconds}`);
+      } else if (hours === '00') {
+        setCountdown(`${days} jours ${minutes}:${seconds}`);
       } else {
         setCountdown(`${days} jours ${hours}:${minutes}:${seconds}`);
       }

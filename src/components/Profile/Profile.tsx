@@ -5,7 +5,7 @@ import dayjs from 'dayjs';
 
 import './Profile.scss';
 import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../../api/axios';
+import axios from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 
@@ -53,6 +53,8 @@ function Profile() {
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
 
+  console.log(userInfo);
+
   useEffect(() => {
     async function fetchUserbyId() {
       try {
@@ -84,10 +86,12 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      const response = await axiosPrivate.patch(
-        `/api/profile/${userId}/update`,
-        userInfo
-      );
+      const response = await axios.patch(`/api/profile/${userId}/update`, {
+        nom: userInfo.nom,
+        prenom: userInfo.prenom,
+        adresse: userInfo.adresse,
+        adresse_mail: userInfo.adresse_mail,
+      });
       console.log(response);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
@@ -98,12 +102,11 @@ function Profile() {
   async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const response = await privateAxios.delete(
-        `/api/profile/${userId}/delete`
-      );
+      const response = await axios.delete(`/api/profile/${userId}/delete`);
       if (response.status === 200) {
         window.location.href = '/';
       }
+      console.log(response);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
@@ -198,7 +201,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userArticle.id}>
+                    <tr key={userArticle.date_de_fin}>
                       <td>
                         <Link to={`/produit/${userArticle.id}`}>
                           {userArticle.nom}
@@ -248,7 +251,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userAuction.id}>
+                    <tr key={userAuction.date}>
                       <td>
                         <Link to={`/produit/${userAuction.id}`}>
                           {userAuction.nom}
