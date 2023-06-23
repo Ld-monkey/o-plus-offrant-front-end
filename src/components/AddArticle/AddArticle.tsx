@@ -72,12 +72,21 @@ function AddArticle() {
   //   }
   // }
 
-  const [image, setImage] = useState<string | Blob>('');
+  const [image, setImage] = useState<FileList | null>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!image) {
+      throw Error('Custom erreur : Aucune image.');
+    }
+    console.log(image);
+
+    const imageUpload = image[0];
+    console.log(imageUpload);
+
     const formData = new FormData();
-    formData.append('photo', image);
+    formData.append('photo', imageUpload);
     try {
       const result = await privateAxios.post('/api/images', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
@@ -167,7 +176,7 @@ function AddArticle() {
             accept="image/*"
             id="photo"
             name="photo"
-            onChange={(e) => setImage(e.target.files[0])}
+            onChange={(e) => setImage(e.target?.files)}
           />
         </div>
 
