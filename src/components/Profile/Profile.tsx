@@ -56,6 +56,7 @@ function Profile() {
   useEffect(() => {
     async function fetchUserbyId() {
       try {
+        console.log('coucou 1');
         const response = await privateAxios.get(`/api/profile/${userId}`);
         setUserInfo(response.data.profile);
         setUserArticles(response.data.histSell);
@@ -84,9 +85,15 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
+      const correctInfo = {
+        nom: userInfo.nom,
+        prenom: userInfo.prenom,
+        adresse: userInfo.adresse,
+        adresse_mail: userInfo.adresse_mail,
+      };
       const response = await axiosPrivate.patch(
         `/api/profile/${userId}/update`,
-        userInfo
+        correctInfo
       );
       console.log(response);
     } catch (error) {
