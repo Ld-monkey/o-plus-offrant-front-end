@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
@@ -101,12 +101,14 @@ function Profile() {
     setIsEditing(false);
   }
 
+  const navigate = useNavigate();
+
   async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const response = await axios.delete(`/api/profile/${userId}/delete`);
       if (response.status === 200) {
-        window.location.href = '/';
+        navigate('/');
       }
       console.log(response);
     } catch (error) {
