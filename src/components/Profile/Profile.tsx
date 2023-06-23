@@ -56,7 +56,6 @@ function Profile() {
   useEffect(() => {
     async function fetchUserbyId() {
       try {
-        console.log('coucou 1');
         const response = await privateAxios.get(`/api/profile/${userId}`);
         setUserInfo(response.data.profile);
         setUserArticles(response.data.histSell);
