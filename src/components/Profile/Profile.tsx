@@ -20,6 +20,7 @@ interface UserArticles {
   id: number;
   nom: string;
   montant: number;
+  date_et_heure: string;
   date_de_fin: string;
 }
 
@@ -35,6 +36,7 @@ interface UserWonAuctions {
   id: number;
   nom: string;
   montant: string;
+  date_et_heure: string;
 }
 
 function Profile() {
@@ -201,7 +203,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userArticle.date_de_fin}>
+                    <tr key={`${userArticle.id}.${userArticle.date_et_heure}`}>
                       <td>
                         <Link to={`/produit/${userArticle.id}`}>
                           {userArticle.nom}
@@ -251,7 +253,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userAuction.date}>
+                    <tr key={`${userAuction.id}.${userAuction.mon_enchere}`}>
                       <td>
                         <Link to={`/produit/${userAuction.id}`}>
                           {userAuction.nom}
@@ -282,7 +284,9 @@ function Profile() {
               </thead>
               <tbody>
                 {userWonAuctions.map((userWonAuction) => (
-                  <tr key={userWonAuction.id}>
+                  <tr
+                    key={`${userWonAuction.id}.${userWonAuction.date_et_heure}`}
+                  >
                     <td>
                       <Link to={`/produit/${userWonAuction.id}`}>
                         {userWonAuction.nom}
