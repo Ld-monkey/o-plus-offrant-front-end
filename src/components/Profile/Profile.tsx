@@ -18,7 +18,6 @@ interface UserArticles {
   id: number;
   nom: string;
   montant: number;
-  date_et_heure: string;
   date_de_fin: string;
 }
 

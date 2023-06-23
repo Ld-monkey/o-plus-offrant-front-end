@@ -14,7 +14,6 @@ import axios from '../../api/axios';
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
-  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const {
     logged: isLogged,
@@ -110,20 +109,18 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                 />
               </form>
               <div className="resultSearch">
-                {contentSearchBar && // Et logique si le contenu de la barre et vide ne pas afficher la liste.
+                {contentSearchBar &&
                   articles
                     .filter((element) =>
                       element.nom
                         .toLowerCase()
                         .includes(contentSearchBar.toLowerCase())
                     )
-                    // filtre les elements qui contiennent le contenu de la barre de
                     .map((article) => (
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
                       <ul className="arraySearch" key={article.id}>
                         <li className="list-inside">
                           <Link
-                            onClick={() => setContentSearchBar(article.nom)} // auto complétion en cliquant sur la proposition et remets à jour avec une fonction fléchée anonyme sinon boucle infinie
+                            onClick={() => setContentSearchBar(article.nom)}
                             to={`/produit/${article.id}`}
                           >
                             {article.nom}
