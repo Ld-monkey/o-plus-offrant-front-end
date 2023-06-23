@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import {
@@ -9,16 +9,24 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 import { useAppSelector } from '../../hooks/redux';
+import PopupBox from './PopupBox';
 
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
 
   const {
     logged: isLogged,
     prenom: username,
     logo_profile: avatar,
   } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!isLogged) {
+      setOpenPopup(false);
+    }
+  }, [isLogged]);
 
   /**
    * Split name when to long.
@@ -84,14 +92,14 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               />
             </form>
             <div className="header-navbar-container">
-              <button type="button" className="header-btn-sell">
+              <Link to="produit/creation" className="header-link-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <Link to="produit/creation">Vendre</Link>
-              </button>
-              <button type="button" className="header-btn-category">
+                Vendre
+              </Link>
+              <Link to="produits" className="header-link-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <Link to="produits">Toutes les ventes</Link>
-              </button>
+                Articles
+              </Link>
               {!isLogged ? (
                 <button
                   type="button"
@@ -102,16 +110,19 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                   <span>Connexion / Inscription</span>
                 </button>
               ) : (
-                <button
-                  type="button"
-                  className="header-btn-online"
-                  onClick={toggleModalLogin}
+                <div
+                  className="loging-container"
+                  onMouseEnter={() => setOpenPopup(true)}
+                  onMouseLeave={() => setOpenPopup(false)}
                 >
-                  <div className="logo-user-profil">
-                    <img src={avatar} alt="avatar" className="avatar" />
-                  </div>
-                  <span>Bonjour {splitUsername(username)}</span>
-                </button>
+                  <button type="button" className="header-btn-online">
+                    <div className="logo-user-profil">
+                      <img src={avatar} alt="avatar" className="avatar" />
+                    </div>
+                    <span>Bonjour {splitUsername(username)}</span>
+                  </button>
+                  {openPopup && <PopupBox />}
+                </div>
               )}
               {/* Hamburger menu */}
               <div className="hamburger-menu">

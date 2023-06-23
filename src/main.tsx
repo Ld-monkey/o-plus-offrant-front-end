@@ -3,13 +3,15 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import { Provider } from 'react-redux';
 
-import './styles/index.scss';
 import App from './components/App/App';
-import Category from './components/Category/Category';
 import Home from './components/Home/Home';
+import Category from './components/Category/Category';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
+
+import './styles/index.scss';
+import getAllArticles from './api/articles';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Profile from './components/Profile/Profile';
 
@@ -20,6 +22,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
+        loader: getAllArticles,
         element: <Home />,
       },
       {

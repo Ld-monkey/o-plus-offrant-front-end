@@ -2,12 +2,10 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStar } from '@fortawesome/free-regular-svg-icons';
-/**
- * Package to format datetime and creating countdown
- */
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
-import duration from 'dayjs/plugin/duration';
+
+import getFormatDuration from '../../utils/dateFormat';
 
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
@@ -33,8 +31,6 @@ interface SingleArticleHistory {
   montant: number;
   utilisateur_id: number;
 }
-
-dayjs.extend(duration);
 
 function SingleArticle() {
   const privateAxios = useAxiosPrivate();
@@ -77,32 +73,19 @@ function SingleArticle() {
   }, [idArticle]);
 
   /**
-   * Timer
+   * Display and calculate the countdown for an item.
    */
   useEffect(() => {
-    function calculateCountdown() {
-      const now = dayjs();
-      const auctionTargetDate = dayjs(article?.date_de_fin);
-      const auctionDuration = dayjs.duration(auctionTargetDate.diff(now));
+    const countdownInterval = setInterval(() => {
+      const formatCountdown = getFormatDuration(article?.date_de_fin);
 
-      const days = auctionDuration.days();
-      const hours = auctionDuration.hours();
-      const minutes = auctionDuration.minutes();
-      const seconds = auctionDuration.seconds();
-
-      if (days === 1) {
-        setCountdown(`${days} jour ${hours}:${minutes}:${seconds}`);
-      } else if (days === 0) {
-        setCountdown(`${hours}:${minutes}:${seconds}`);
-      } else {
-        setCountdown(`${days} jours ${hours}:${minutes}:${seconds}`);
-      }
-
-      if (auctionDuration.asMilliseconds() <= 0) {
+      // When the countdown is over.
+      if (formatCountdown === '0') {
         setAuctionFinished(true);
       }
-    }
-    const countdownInterval = setInterval(calculateCountdown, 1000);
+
+      setCountdown(formatCountdown);
+    }, 1000);
     return () => clearInterval(countdownInterval);
   }, [article?.date_de_fin]);
 

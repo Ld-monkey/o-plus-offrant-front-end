@@ -75,7 +75,12 @@ function Login({
   const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ email, pwd })).then(unwrapResult).catch(httpErrorHandler);
+    dispatch(login({ email, pwd }))
+      .then(unwrapResult)
+      .then(() => {
+        toggleModalLogin();
+      })
+      .catch(httpErrorHandler);
   };
 
   /**

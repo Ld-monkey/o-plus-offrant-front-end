@@ -1,13 +1,8 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
-
+import CategoriesProps from '../../@types/interfaces';
 import './AddArticle.scss';
-
-interface CategoriesProps {
-  id: number;
-  nom: string;
-}
 
 function AddArticle() {
   const privateAxios = useAxiosPrivate();
