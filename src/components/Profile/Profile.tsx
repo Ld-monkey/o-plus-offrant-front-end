@@ -1,12 +1,12 @@
-import { Link } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import dayjs from 'dayjs';
+import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-regular-svg-icons";
+import dayjs from "dayjs";
 
-import './Profile.scss';
-import { useEffect, useState } from 'react';
-import axios from '../../api/axios';
-import { useAppSelector } from '../../hooks/redux';
+import "./Profile.scss";
+import { useEffect, useState } from "react";
+import axios from "../../api/axios";
+import { useAppSelector } from "../../hooks/redux";
 
 interface UserProps {
   nom: string;
@@ -18,6 +18,7 @@ interface UserArticles {
   id: number;
   nom: string;
   montant: number;
+  date_et_heure: string;
   date_de_fin: string;
 }
 
@@ -38,9 +39,9 @@ function Profile() {
   const [isEditing, setIsEditing] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
-    nom: '',
-    prenom: '',
-    adresse_mail: '',
+    nom: "",
+    prenom: "",
+    adresse_mail: "",
   });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
@@ -69,7 +70,7 @@ function Profile() {
       const response = await axios.delete(`/api/profile/${userId}/delete`);
       console.log(response);
       if (response.status === 200) {
-        window.location.href = '/';
+        window.location.href = "/";
       }
     } catch (error) {
       console.error(error);
@@ -134,17 +135,17 @@ function Profile() {
                 <input
                   type="text"
                   value={userInfo.nom}
-                  onChange={(e) => handleInputChange(e, 'nom')}
+                  onChange={(e) => handleInputChange(e, "nom")}
                 />
                 <input
                   type="text"
                   value={userInfo.prenom}
-                  onChange={(e) => handleInputChange(e, 'prenom')}
+                  onChange={(e) => handleInputChange(e, "prenom")}
                 />
                 <input
                   type="text"
                   value={userInfo.adresse_mail}
-                  onChange={(e) => handleInputChange(e, 'adresse_mail')}
+                  onChange={(e) => handleInputChange(e, "adresse_mail")}
                 />
                 <button type="button" onClick={handleSaveButton}>
                   Enregistrer
@@ -178,7 +179,7 @@ function Profile() {
               <tbody>
                 {userArticles.map((userArticle) => {
                   const formattedDate = dayjs(userArticle.date_de_fin).format(
-                    'DD-MM-YYYY [à] HH:mm'
+                    "DD-MM-YYYY [à] HH:mm"
                   );
                   return (
                     <tr key={userArticle.id}>
@@ -227,7 +228,7 @@ function Profile() {
               <tbody>
                 {userAuctions.map((userAuction) => {
                   const formattedDate = dayjs(userAuction.date).format(
-                    'DD-MM-YYYY [à] HH:mm'
+                    "DD-MM-YYYY [à] HH:mm"
                   );
                   return (
                     <tr key={userAuction.id}>
@@ -280,8 +281,8 @@ function Profile() {
           <div
             className={
               openModal
-                ? 'entire-shadow-screen is-active'
-                : 'entire-shadow-screen'
+                ? "entire-shadow-screen is-active"
+                : "entire-shadow-screen"
             }
             onClick={() => {
               setOpenModal(false);
@@ -291,7 +292,7 @@ function Profile() {
             aria-hidden="true"
           />
           <div
-            className={openModal ? 'modal-delete is-active' : 'modal-delete'}
+            className={openModal ? "modal-delete is-active" : "modal-delete"}
           >
             <form method="post" onSubmit={handleDelete}>
               <h2 className="user-delete-title">

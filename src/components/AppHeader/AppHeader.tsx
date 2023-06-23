@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import {
@@ -9,10 +9,12 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 import { useAppSelector } from '../../hooks/redux';
+import axios from '../../api/axios';
 
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+  const [selectedArticle, setSelectedArticle] = useState(null);
 
   const {
     logged: isLogged,
@@ -43,6 +45,29 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     setIsOpen(!isOpen);
   }
 
+  interface ArticlesProps {
+    id: number;
+    nom: string;
+    photo: string;
+    prix_de_depart: string;
+    date_de_fin: string;
+    montant: string;
+    categorie_id: number;
+    categorie: string;
+    categorie_nom: string;
+  }
+  const [articles, setArticles] = useState<ArticlesProps[]>([]);
+  useEffect(() => {
+    async function fetchArticles() {
+      try {
+        const response = await axios.get('/api/articles');
+        setArticles(response.data.allArticles);
+      } catch {
+        console.log('error');
+      }
+    }
+    fetchArticles();
+  });
   /**
    * Updates searchbar content.
    */
@@ -55,7 +80,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
    */
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(contentSearchBar);
   }
 
   return (
@@ -67,22 +91,48 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               <h1 className="header-logo">O+ Offrant</h1>
             </Link>
             {/* inside navbar */}
-            <form
-              className="searchbar inside-navbar"
-              role="search"
-              onSubmit={handleSubmit}
-            >
-              <button type="button">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-              <input
-                type="search"
-                name="searchbar"
-                placeholder="Que cherchez-vous ?"
-                aria-label="Search article through site content"
-                onChange={changeInputContent}
-              />
-            </form>
+            <div className="container-inside">
+              <form
+                className="searchbar inside-navbar"
+                role="search"
+                onSubmit={handleSubmit}
+              >
+                <button type="button">
+                  <FontAwesomeIcon icon={faMagnifyingGlass} />
+                </button>
+                <input
+                  type="search"
+                  name="searchbar"
+                  placeholder="Que cherchez-vous ?"
+                  aria-label="Search article through site content"
+                  onChange={changeInputContent}
+                  value={contentSearchBar}
+                />
+              </form>
+              <div className="resultSearch">
+                {contentSearchBar && // Et logique si le contenu de la barre et vide ne pas afficher la liste.
+                  articles
+                    .filter((element) =>
+                      element.nom
+                        .toLowerCase()
+                        .includes(contentSearchBar.toLowerCase())
+                    )
+                    // filtre les elements qui contiennent le contenu de la barre de
+                    .map((article) => (
+                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+                      <ul className="arraySearch" key={article.id}>
+                        <li className="list-inside">
+                          <Link
+                            onClick={() => setContentSearchBar(article.nom)} // auto complétion en cliquant sur la proposition et remets à jour avec une fonction fléchée anonyme sinon boucle infinie
+                            to={`/produit/${article.id}`}
+                          >
+                            {article.nom}
+                          </Link>
+                        </li>
+                      </ul>
+                    ))}
+              </div>
+            </div>
             <div className="header-navbar-container">
               <button type="button" className="header-btn-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
