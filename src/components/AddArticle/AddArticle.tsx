@@ -84,7 +84,7 @@ function AddArticle() {
                 titre: e.target.value,
               }))
             }
-            value={inputsData.titre}
+            value={inputsData.titre.slice(0, 30)}
             placeholder="Mug O'Clock"
           />
         </div>
