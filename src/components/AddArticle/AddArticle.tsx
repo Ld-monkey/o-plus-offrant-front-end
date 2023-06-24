@@ -1,20 +1,21 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CategoriesProps from '../../@types/interfaces';
 import './AddArticle.scss';
+import axios from '../../api/axios';
+import { useAppSelector } from '../../hooks/redux';
 
 function AddArticle() {
   const privateAxios = useAxiosPrivate();
+  const userId = useAppSelector((state) => state.user.id);
 
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get(
-          'https://didierlam-server.eddi.cloud/api/categories'
-        );
+        const response = await axios.get('/api/categories');
         setCategories(response.data);
       } catch (error) {
         console.error(error);
@@ -40,19 +41,28 @@ function AddArticle() {
     if (!image) {
       throw Error('Custom erreur : Aucune image.');
     }
-    console.log(image);
 
     const imageUpload = image[0];
-    console.log(imageUpload);
 
     const formData = new FormData();
+    formData.append('nom', inputsData.titre);
+    formData.append('description', inputsData.description);
+    formData.append('categorie_id', inputsData.categorie);
+    formData.append('prix_de_depart', inputsData.prix_de_depart);
+    formData.append('date_de_fin', inputsData.temps_de_vente);
     formData.append('photo', imageUpload);
+    formData.append('date_et_heure', new Date().toJSON());
+    formData.append('utilisateur_vente_id', userId);
+    formData.append('montant', inputsData.prix_de_depart);
+
     try {
-      const result = await privateAxios.post('/api/images', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log(result);
-      console.log(formData);
+      const result = await privateAxios.post(
+        '/article/creation/add',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
     } catch (error) {
       console.error('Veuillez-vous connecter / inscrire', error);
     }
@@ -100,7 +110,7 @@ function AddArticle() {
           <label htmlFor="categorie">Catégorie :</label>
           <select
             id="categorie"
-            // defaultValue="default-value"
+            defaultValue="default-value"
             name="categorie"
             onChange={(e) =>
               setInputsData((prevState) => ({
@@ -108,7 +118,6 @@ function AddArticle() {
                 categorie: e.target.value,
               }))
             }
-            value={inputsData.categorie}
             required
           >
             <option className="default-option" value="default-value" disabled>
@@ -143,7 +152,7 @@ function AddArticle() {
         <div className="article-timer">
           <label htmlFor="temps-de-vente">Temps de vente :</label>
           <input
-            type="date"
+            type="datetime-local"
             name="temps_de_vente"
             id="temps-de-vente"
             onChange={(e) =>
