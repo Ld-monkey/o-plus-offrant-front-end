@@ -27,11 +27,8 @@ interface ArticlesProps {
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
-<<<<<<< HEAD
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
-=======
->>>>>>> feature-searchbar
 
   const {
     logged: isLogged,
