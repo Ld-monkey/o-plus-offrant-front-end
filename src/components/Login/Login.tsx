@@ -18,6 +18,7 @@ function Login({
   const [pwd, setPwd] = useState<string>('');
   const [firstname, setFirstName] = useState<string>('');
   const [lastname, setLastName] = useState<string>('');
+  const [street, setStreet] = useState<string>('');
 
   const [isLegalAge, setIsLegalAge] = useState<boolean>(false);
 
@@ -39,6 +40,7 @@ function Login({
       setLastName('');
       setEmail('');
       setPwd('');
+      setStreet('');
 
       setErrMsg('');
     };
@@ -75,7 +77,12 @@ function Login({
   const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ email, pwd })).then(unwrapResult).catch(httpErrorHandler);
+    dispatch(login({ email, pwd }))
+      .then(unwrapResult)
+      .then(() => {
+        toggleModalLogin();
+      })
+      .catch(httpErrorHandler);
   };
 
   /**
@@ -90,7 +97,7 @@ function Login({
       return;
     }
 
-    dispatch(registrer({ firstname, lastname, email, pwd }))
+    dispatch(registrer({ firstname, lastname, street, email, pwd }))
       .then(unwrapResult)
       .then((response) => {
         if (response === 200) {
@@ -187,6 +194,14 @@ function Login({
               type="email"
               placeholder="Email"
               name="email"
+              required
+            />
+            <input
+              value={street}
+              onChange={(e) => setStreet(e.target.value)}
+              type="text"
+              placeholder="Adresse principale"
+              name="adresse"
               required
             />
             <input

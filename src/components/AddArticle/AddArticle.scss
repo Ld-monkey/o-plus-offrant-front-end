@@ -48,23 +48,6 @@ h2 {
     }
   }
 
-  .article-timer {
-    input {
-      width: 1rem;
-      margin-right: 5px;
-    }
-
-    .wrapper {
-      label {
-        margin-left: 15px;
-      }
-      @media screen and (max-width: v.$layout-breakpoint-tablet) {
-        flex-direction: row;
-        justify-content: space-around;
-      }
-    }
-  }
-
   .form-submit-btn {
     margin-top: 2rem;
     justify-content: end;

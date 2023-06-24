@@ -30,7 +30,7 @@ function App() {
       <AppHeader toggleModalLogin={checkOpenModal} />
       <Outlet />
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
-      <Footer />
+      <Footer toggleModalLogin={checkOpenModal} />
     </div>
   );
 }

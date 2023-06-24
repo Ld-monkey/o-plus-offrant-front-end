@@ -1,4 +1,4 @@
-import { useState, FormEvent } from 'react';
+import { useState, FormEvent, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { Link } from 'react-router-dom';
 import {
@@ -9,16 +9,48 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
 import { useAppSelector } from '../../hooks/redux';
+import PopupBox from './PopupBox';
+import axios from '../../api/axios';
+
+interface ArticlesProps {
+  id: number;
+  nom: string;
+  photo: string;
+  prix_de_depart: string;
+  date_de_fin: string;
+  montant: string;
+  categorie_id: number;
+  categorie: string;
+  categorie_nom: string;
+}
 
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
+  const [openPopup, setOpenPopup] = useState<boolean>(false);
+  const [articles, setArticles] = useState<ArticlesProps[]>([]);
 
   const {
     logged: isLogged,
     prenom: username,
     logo_profile: avatar,
   } = useAppSelector((state) => state.user);
+
+  useEffect(() => {
+    if (!isLogged) {
+      setOpenPopup(false);
+    }
+
+    async function fetchArticles() {
+      try {
+        const response = await axios.get('/api/articles');
+        setArticles(response.data.allArticles);
+      } catch {
+        console.error('error');
+      }
+    }
+    fetchArticles();
+  }, [isLogged]);
 
   /**
    * Split name when to long.
@@ -55,7 +87,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
    */
   function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
-    console.log(contentSearchBar);
   }
 
   return (
@@ -67,31 +98,57 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               <h1 className="header-logo">O+ Offrant</h1>
             </Link>
             {/* inside navbar */}
-            <form
-              className="searchbar inside-navbar"
-              role="search"
-              onSubmit={handleSubmit}
-            >
-              <button type="button">
-                <FontAwesomeIcon icon={faMagnifyingGlass} />
-              </button>
-              <input
-                type="search"
-                name="searchbar"
-                placeholder="Que cherchez-vous ?"
-                aria-label="Search article through site content"
-                onChange={changeInputContent}
-              />
-            </form>
+            <div className="container-searchbar">
+              <div className="searchbar">
+                <form
+                  className="inside-navbar"
+                  role="search"
+                  onSubmit={handleSubmit}
+                >
+                  <button type="button">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  </button>
+                  <input
+                    type="search"
+                    name="searchbar"
+                    placeholder="Que cherchez-vous ?"
+                    aria-label="Search article through site content"
+                    onChange={changeInputContent}
+                    value={contentSearchBar}
+                  />
+                </form>
+              </div>
+              <div className="resultSearch">
+                <ul className="arraySearch">
+                  {contentSearchBar &&
+                    articles
+                      .filter((element) =>
+                        element.nom
+                          .toLowerCase()
+                          .includes(contentSearchBar.toLowerCase())
+                      )
+                      .map((article) => (
+                        <li className="list-inside" key={article.id}>
+                          <Link
+                            onClick={() => setContentSearchBar('')}
+                            to={`/produit/${article.id}`}
+                          >
+                            {article.nom}
+                          </Link>
+                        </li>
+                      ))}
+                </ul>
+              </div>
+            </div>
             <div className="header-navbar-container">
-              <button type="button" className="header-btn-sell">
+              <Link to="produit/creation" className="header-link-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
-                <Link to="produit/creation">Vendre</Link>
-              </button>
-              <button type="button" className="header-btn-category">
+                Vendre
+              </Link>
+              <Link to="produits" className="header-link-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
-                <Link to="produits">Toutes les ventes</Link>
-              </button>
+                Articles
+              </Link>
               {!isLogged ? (
                 <button
                   type="button"
@@ -102,16 +159,19 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                   <span>Connexion / Inscription</span>
                 </button>
               ) : (
-                <button
-                  type="button"
-                  className="header-btn-online"
-                  onClick={toggleModalLogin}
+                <div
+                  className="loging-container"
+                  onMouseEnter={() => setOpenPopup(true)}
+                  onMouseLeave={() => setOpenPopup(false)}
                 >
-                  <div className="logo-user-profil">
-                    <img src={avatar} alt="avatar" className="avatar" />
-                  </div>
-                  <span>Bonjour {splitUsername(username)}</span>
-                </button>
+                  <button type="button" className="header-btn-online">
+                    <div className="logo-user-profil">
+                      <img src={avatar} alt="avatar" className="avatar" />
+                    </div>
+                    <span>Bonjour {splitUsername(username)}</span>
+                  </button>
+                  {openPopup && <PopupBox />}
+                </div>
               )}
               {/* Hamburger menu */}
               <div className="hamburger-menu">
@@ -135,20 +195,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
           </nav>
         </div>
       </header>
-      {/* outside navbar */}
-      <div id="wrapper">
-        <form className="searchbar outside-navbar" role="search">
-          <button type="button">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-          <input
-            type="search"
-            name="searchbar"
-            placeholder="Que cherchez-vous ?"
-            aria-label="Search article through site content"
-          />
-        </form>
-      </div>
       {isOpen && (
         <aside className="aside-menu">
           <ul className="menu-items">

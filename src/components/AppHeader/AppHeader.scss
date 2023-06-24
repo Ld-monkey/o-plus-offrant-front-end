@@ -18,6 +18,7 @@
     &-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 0.75rem;
     }
 
@@ -26,38 +27,28 @@
     }
   }
 
-  &-btn-sell,
-  &-btn-category,
-  &-btn-login {
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-
-    a {
-      display: none;
+  &-link-sell,
+  &-link-category {
+    svg {
+      padding-right: 10px;
     }
 
-    @media (min-width: 435px) {
-      a {
-        display: inline;
-      }
+    &:hover {
+      text-decoration: underline;
 
       svg {
-        padding-right: 10px;
+        opacity: 0.8;
       }
     }
   }
 
-  &-btn-sell,
-  &-btn-category {
-    &:hover {
-      svg {
-        opacity: 0.8;
-      }
-      a {
-        text-decoration: underline;
-      }
+  .loging-container {
+    position: relative;
+    display: none;
+    height: 100%;
+
+    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+      display: block;
     }
   }
 
@@ -77,8 +68,26 @@
 
   &-btn-login {
     display: none;
+    border: none;
+    background: none;
+    cursor: pointer;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    a {
+      display: none;
+    }
+
+    @media (min-width: 435px) {
+      a {
+        display: inline;
+      }
+
+      svg {
+        margin-top: 4px;
+        padding-right: 10px;
+      }
+    }
+
+    @media (min-width: 620px) {
       display: inline;
       padding: 10px;
       background-color: v.$color-primary;
@@ -133,7 +142,7 @@
     display: inline-block;
     position: relative;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media (min-width: 620px) {
       display: none;
     }
   }
@@ -178,48 +187,32 @@
   }
 }
 
-// Searchbar inside & outside.
-.searchbar {
+// Searchbar
+.container-searchbar {
   flex: 2;
 
   display: flex;
-  justify-content: center;
+  flex-direction: column;
 
-  padding: 8px;
+  border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
   border-radius: 30px;
+  padding: 8px;
+
+  &:focus-within {
+    border: 2px solid v.$color-primary;
+  }
 
   button {
     outline: none;
     border: none;
     background: none;
-    padding-top: 5px;
   }
 
   input {
     outline: none;
     border: none;
     background-color: inherit;
-    width: 100%;
-  }
-
-  &.inside-navbar {
-    @media (max-width: 900px) {
-      background-color: white;
-      justify-content: start;
-
-      button {
-        display: none;
-      }
-
-      input {
-        display: none;
-      }
-    }
-
-    @media (max-width: 640px) {
-      display: none;
-    }
   }
 
   &.outside-navbar {
@@ -227,6 +220,37 @@
 
     @media (min-width: 901px) {
       display: none;
+    }
+  }
+}
+
+// Search suggestions
+.resultSearch {
+  position: relative;
+  z-index: 2;
+
+  .arraySearch {
+    margin-top: 12px;
+    position: absolute;
+    padding: 0;
+    width: 100%;
+    box-shadow: 1px 1px 3px #bdc5c8, -1px 1px 3px #bdc5c8;
+    background-color: white;
+    border-radius: 5px;
+    list-style: none;
+  }
+
+  .list-inside {
+    margin: 0;
+
+    a {
+      display: block;
+      padding: 10px 30px;
+
+      &:hover {
+        background-color: #efefef;
+        cursor: pointer;
+      }
     }
   }
 }

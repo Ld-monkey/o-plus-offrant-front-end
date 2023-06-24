@@ -3,18 +3,18 @@
 .Footer {
   display: flex;
   flex-direction: column;
-
   justify-content: center;
-  align-items: center;
-
   gap: 50px;
-
-  text-align: center; 
 
   background-color: v.$color-primary;
   color: v.$color-text;
+  margin-top: 70px;
   padding: 50px;
   line-height: 2rem;
+
+  h2 {
+    margin-bottom: 40px;
+  }
 
   @media (min-width: v.$layout-breakpoint-tablet) {
     flex-direction: row;
@@ -25,14 +25,18 @@
   &__info,
   &__Pseudo {
     padding: 2px;
+    text-align: center;
+
+    @media (min-width: v.$layout-breakpoint-tablet) {
+      text-align: left;
+    }
   }
 
   a {
     display: block;
     color: v.$color-text;
     &:hover {
-        text-decoration: underline;
+      text-decoration: underline;
     }
   }
 }
-    

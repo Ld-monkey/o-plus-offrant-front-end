@@ -61,7 +61,14 @@ export const registrer = createAsyncThunk(
       lastname,
       email,
       pwd,
-    }: { firstname: string; lastname: string; email: string; pwd: string },
+      street,
+    }: {
+      firstname: string;
+      lastname: string;
+      email: string;
+      pwd: string;
+      street: string;
+    },
     thunkApi
   ) => {
     return axios
@@ -70,6 +77,7 @@ export const registrer = createAsyncThunk(
         nom: lastname,
         adresse_mail: email,
         mot_de_passe: pwd,
+        adresse: street,
       })
       .then((response) => response?.status)
       .catch((error) =>

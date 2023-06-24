@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
+import axios from '../../api/axios';
 import './Category.scss';
 
 interface ArticlesProps {
@@ -41,7 +41,7 @@ function Category() {
 
   useEffect(() => {
     async function fetchArticles() {
-      const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
+      const apiReq = `/api/articles`;
 
       try {
         const response = await axios.get(apiReq);
@@ -105,7 +105,6 @@ function Category() {
     items: ArticlesProps[],
     action: 'increase' | 'decrease'
   ): void => {
-    console.log(items);
     const now = Number(new Date());
     const sortedArticles = [...articles];
     if (action === 'increase') {

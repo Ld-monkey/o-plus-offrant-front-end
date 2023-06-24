@@ -1,17 +1,18 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
-
-import './Profile.scss';
 import { useEffect, useState } from 'react';
 import axios from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
+import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import './Profile.scss';
 
 interface UserProps {
   nom: string;
   prenom: string;
   adresse_mail: string;
+  adresse: string;
 }
 
 interface UserArticles {
@@ -19,62 +20,59 @@ interface UserArticles {
   nom: string;
   montant: number;
   date_de_fin: string;
+  date_et_heure: string;
 }
 
 interface UserAuctions {
   id: number;
-  montant: number;
+  nom: string;
   date: string;
-  // nom: string; => nom du produit
+  mon_enchere: number;
+  enchere_actuelle: number;
 }
 
 interface UserWonAuctions {
   id: number;
   nom: string;
   montant: string;
+  date_et_heure: string;
 }
 
 function Profile() {
+  const privateAxios = useAxiosPrivate();
+  const userId = useAppSelector((state) => state.user.id);
+
   const [isEditing, setIsEditing] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
     nom: '',
     prenom: '',
     adresse_mail: '',
+    adresse: '',
   });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
 
-  const userId = useAppSelector((state) => state.user.id);
+  console.log(userInfo);
 
   useEffect(() => {
     async function fetchUserbyId() {
-      const response = await axios.get(`/api/profile/${userId}`);
-      setUserInfo(response.data.profile);
-      setUserArticles(response.data.histSell);
-      setUserAuctions(response.data.histBuy);
-      setUserWonAuctions(response.data.wonAuction);
+      try {
+        const response = await privateAxios.get(`/api/profile/${userId}`);
+        setUserInfo(response.data.profile);
+        setUserArticles(response.data.histSell);
+        setUserAuctions(response.data.histBuy);
+        setUserWonAuctions(response.data.wonAuction);
+      } catch (error) {
+        console.error('Veuillez vous connecter', error);
+      }
     }
     fetchUserbyId();
-  }, [userId]);
+  }, [privateAxios, userId]);
 
   function handleEdit() {
     setIsEditing(true);
-  }
-
-  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      const response = await axios.delete(`/api/profile/${userId}/delete`);
-      console.log(response);
-      if (response.status === 200) {
-        window.location.href = '/';
-      }
-    } catch (error) {
-      console.error(error);
-    }
-    setOpenModal(false);
   }
 
   function handleInputChange(
@@ -89,15 +87,36 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      const response = await axios.patch(
+      const response = await privateAxios.patch(
         `/api/profile/${userId}/update`,
-        userInfo
+        {
+          nom: userInfo.nom,
+          prenom: userInfo.prenom,
+          adresse: userInfo.adresse,
+          adresse_mail: userInfo.adresse_mail,
+        }
       );
       console.log(response);
     } catch (error) {
-      console.error(error);
+      console.error('Veuillez vous reconnecter', error);
     }
     setIsEditing(false);
+  }
+
+  const navigate = useNavigate();
+
+  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const response = await axios.delete(`/api/profile/${userId}/delete`);
+      if (response.status === 200) {
+        navigate('/');
+      }
+      console.log(response);
+    } catch (error) {
+      console.error('Veuillez vous reconnecter', error);
+    }
+    setOpenModal(false);
   }
 
   return (
@@ -126,6 +145,7 @@ function Profile() {
             <span>Nom :</span>
             <span>Prénom :</span>
             <span>Email :</span>
+            <span>Adresse :</span>
           </div>
 
           <div className="user-infos">
@@ -146,6 +166,11 @@ function Profile() {
                   value={userInfo.adresse_mail}
                   onChange={(e) => handleInputChange(e, 'adresse_mail')}
                 />
+                <input
+                  type="text"
+                  value={userInfo.adresse}
+                  onChange={(e) => handleInputChange(e, 'adresse')}
+                />
                 <button type="button" onClick={handleSaveButton}>
                   Enregistrer
                 </button>
@@ -155,6 +180,7 @@ function Profile() {
                 <span>{userInfo.nom}</span>
                 <span>{userInfo.prenom}</span>
                 <span>{userInfo.adresse_mail}</span>
+                <span>{userInfo.adresse}</span>
               </>
             )}
           </div>
@@ -181,7 +207,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userArticle.id}>
+                    <tr key={`${userArticle.id}.${userArticle.date_et_heure}`}>
                       <td>
                         <Link to={`/produit/${userArticle.id}`}>
                           {userArticle.nom}
@@ -221,6 +247,7 @@ function Profile() {
                 <tr>
                   <th>Nom de l&apos;article</th>
                   <th>Mise actuelle</th>
+                  <th>Ma mise</th>
                   <th>Date de fin de vente</th>
                 </tr>
               </thead>
@@ -230,13 +257,14 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userAuction.id}>
+                    <tr key={`${userAuction.id}.${userAuction.mon_enchere}`}>
                       <td>
                         <Link to={`/produit/${userAuction.id}`}>
-                          NOM DU PRODUIT
+                          {userAuction.nom}
                         </Link>
                       </td>
-                      <td>{userAuction.montant}€</td>
+                      <td>{userAuction.enchere_actuelle}€</td>
+                      <td>{userAuction.mon_enchere}€</td>
                       <td>{formattedDate}</td>
                     </tr>
                   );
@@ -260,7 +288,9 @@ function Profile() {
               </thead>
               <tbody>
                 {userWonAuctions.map((userWonAuction) => (
-                  <tr key={userWonAuction.id}>
+                  <tr
+                    key={`${userWonAuction.id}.${userWonAuction.date_et_heure}`}
+                  >
                     <td>
                       <Link to={`/produit/${userWonAuction.id}`}>
                         {userWonAuction.nom}
