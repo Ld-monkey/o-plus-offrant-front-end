@@ -28,7 +28,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
   const [openPopup, setOpenPopup] = useState<boolean>(false);
-  const [selectedArticle, setSelectedArticle] = useState(null);
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
 
   const {
@@ -37,10 +36,7 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     logo_profile: avatar,
   } = useAppSelector((state) => state.user);
 
-  console.log('coucou');
-
   useEffect(() => {
-    console.log('coucuo bis');
     if (!isLogged) {
       setOpenPopup(false);
     }
@@ -50,7 +46,7 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
         const response = await axios.get('/api/articles');
         setArticles(response.data.allArticles);
       } catch {
-        console.log('error');
+        console.error('error');
       }
     }
     fetchArticles();
@@ -103,7 +99,7 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
             </Link>
             {/* inside navbar */}
             <div className="container-searchbar">
-              <div className="seachbar">
+              <div className="searchbar">
                 <form
                   className="inside-navbar"
                   role="search"
@@ -124,19 +120,17 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               </div>
               <div className="resultSearch">
                 <ul className="arraySearch">
-                  {contentSearchBar && // Et logique si le contenu de la barre et vide ne pas afficher la liste.
+                  {contentSearchBar &&
                     articles
                       .filter((element) =>
                         element.nom
                           .toLowerCase()
                           .includes(contentSearchBar.toLowerCase())
                       )
-                      // filtre les elements qui contiennent le contenu de la barre de
                       .map((article) => (
-                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
                         <li className="list-inside" key={article.id}>
                           <Link
-                            onClick={() => setContentSearchBar(article.nom)} // auto complétion en cliquant sur la proposition et remets à jour avec une fonction fléchée anonyme sinon boucle infinie
+                            onClick={() => setContentSearchBar('')}
                             to={`/produit/${article.id}`}
                           >
                             {article.nom}

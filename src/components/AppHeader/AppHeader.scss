@@ -194,9 +194,14 @@
   display: flex;
   flex-direction: column;
 
-  padding: 8px;
+  border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
   border-radius: 30px;
+  padding: 8px;
+
+  &:focus-within {
+    border: 2px solid v.$color-primary;
+  }
 
   button {
     outline: none;
@@ -205,11 +210,9 @@
   }
 
   input {
-    position: absolute;
     outline: none;
     border: none;
     background-color: inherit;
-    width: 100%;
   }
 
   &.outside-navbar {
