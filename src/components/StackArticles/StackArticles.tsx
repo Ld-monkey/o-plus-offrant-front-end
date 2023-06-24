@@ -1,8 +1,11 @@
+import { useEffect, useState } from 'react';
 import Cards from '../Cards/Cards';
 import { IRandomItems } from '../../@types/articles';
 import './StackArticles.scss';
 
 function StackArticles({ articles }: { articles: IRandomItems[] }) {
+  const [items, setItems] = useState<IRandomItems[] | undefined>();
+
   /**
    * Get two indexes randomly.
    * @param totalArticle { number } - Total number of items.
@@ -24,39 +27,49 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
     return indexArticles;
   };
 
-  const [firstItem, secondItem] = getRandomItems(articles.length);
+  useEffect(() => {
+    function buildArticle(products: IRandomItems[]): IRandomItems[] {
+      // Get two random index.
+      const [firstItem, secondItem] = getRandomItems(products.length);
 
-  const messageLabel = 'Dernière chance';
+      // Custom span top left message.
+      const messageLabel = 'Dernière chance';
 
-  const itemsArticles = articles.length
-    ? [
+      // Build data.
+      const itemsArticles = [
         {
-          id: articles[firstItem].id,
-          nom: articles[firstItem].nom,
-          photo: `${articles[firstItem].photo}`,
-          description: articles[firstItem].description,
-          montant: articles[firstItem].montant,
-          date_de_fin: articles[firstItem].date_de_fin,
+          id: products[firstItem].id,
+          nom: products[firstItem].nom,
+          photo: `${products[firstItem].photo}`,
+          description: products[firstItem].description,
+          montant: products[firstItem].montant,
+          date_de_fin: products[firstItem].date_de_fin,
           label: messageLabel,
         },
         {
-          id: articles[secondItem].id,
-          nom: articles[secondItem].nom,
-          photo: `${articles[secondItem].photo}`,
-          description: articles[secondItem].description,
-          montant: articles[secondItem].montant,
-          date_de_fin: articles[secondItem].date_de_fin,
+          id: products[secondItem].id,
+          nom: products[secondItem].nom,
+          photo: `${products[secondItem].photo}`,
+          description: products[secondItem].description,
+          montant: products[secondItem].montant,
+          date_de_fin: products[secondItem].date_de_fin,
           label: messageLabel,
         },
-      ]
-    : undefined;
+      ];
+
+      return itemsArticles;
+    }
+
+    if (articles) {
+      const result = buildArticle(articles);
+      setItems(result);
+    }
+  }, [articles]);
 
   return (
     <div id="wrapper">
       <h2>Enchères</h2>
-      <div className="stackArticles">
-        {itemsArticles && <Cards items={itemsArticles} />}
-      </div>
+      <div className="stackArticles">{items && <Cards items={items} />}</div>
     </div>
   );
 }
