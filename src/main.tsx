@@ -5,17 +5,17 @@ import { Provider } from 'react-redux';
 
 import App from './components/App/App';
 import Home from './components/Home/Home';
-import Category from './components/Category/Category';
+import Articles from './components/Articles/Articles';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
+import ConditionsUse from './components/CGU/CGU';
+import Profile from './components/Profile/Profile';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 import './styles/index.scss';
 import getAllArticles from './api/articles';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import Profile from './components/Profile/Profile';
-import ErrorPage from './components/ErrorPage/ErrorPage';
-import ConditionsUse from './components/CGU/CGU';
 
 const router = createBrowserRouter([
   {
@@ -30,7 +30,7 @@ const router = createBrowserRouter([
       },
       {
         path: 'articles',
-        element: <Category />,
+        element: <Articles />,
       },
       {
         path: 'article/:idArticle',

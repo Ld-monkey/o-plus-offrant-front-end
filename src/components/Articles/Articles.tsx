@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from '../../api/axios';
-import './Category.scss';
+import './Articles.scss';
 
 interface ArticlesProps {
   id: number;
@@ -21,7 +21,7 @@ interface CategoriesProps {
 }
 type CategoryChecked = string;
 
-function Category() {
+function Articles() {
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
@@ -238,4 +238,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Articles;
