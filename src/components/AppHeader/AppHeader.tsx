@@ -201,20 +201,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
           </nav>
         </div>
       </header>
-      {/* outside navbar */}
-      <div id="wrapper">
-        <form className="searchbar outside-navbar" role="search">
-          <button type="button">
-            <FontAwesomeIcon icon={faMagnifyingGlass} />
-          </button>
-          <input
-            type="search"
-            name="searchbar"
-            placeholder="Que cherchez-vous ?"
-            aria-label="Search article through site content"
-          />
-        </form>
-      </div>
       {isOpen && (
         <aside className="aside-menu">
           <ul className="menu-items">
