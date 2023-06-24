@@ -2,12 +2,11 @@ import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
-
-import './Profile.scss';
 import { useEffect, useState } from 'react';
 import { axiosPrivate } from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import './Profile.scss';
 
 interface UserProps {
   nom: string;
@@ -20,6 +19,7 @@ interface UserArticles {
   id: number;
   nom: string;
   montant: number;
+  date_et_heure: string;
   date_de_fin: string;
 }
 

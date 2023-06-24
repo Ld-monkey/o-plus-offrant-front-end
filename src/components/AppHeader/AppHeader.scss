@@ -211,10 +211,13 @@
     width: 100%;
   }
 
-  &.inside-navbar {
+  &.container-inside {
+    display: flex;
+    flex-direction: column;
+    position: relative;
     @media (max-width: 900px) {
-      background-color: white;
       justify-content: start;
+      background-color: white;
 
       button {
         display: none;
@@ -223,6 +226,10 @@
       input {
         display: none;
       }
+    }
+    .list-inside {
+      list-style: none;
+      background-color: #88b4ba;
     }
 
     @media (max-width: 650px) {
