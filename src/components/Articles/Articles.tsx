@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import axios from '../../api/axios';
 import './Articles.scss';
+import dayjs from 'dayjs';
 
 interface ArticlesProps {
   id: number;
@@ -211,7 +212,10 @@ function Articles() {
 
             <div className="liveAuction">
               <p className="timerAuction">
-                Temps restant : {filteredArticle.date_de_fin}
+                Temps restant :{' '}
+                {dayjs(filteredArticle.date_de_fin).format(
+                  'DD-MM-YYYY [à] HH:mm'
+                )}
               </p>
               <p className="liveAuction__proceNow">
                 Prix enchère actuelle : {filteredArticle.montant} €
