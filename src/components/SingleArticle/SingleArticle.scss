@@ -13,6 +13,7 @@ h2 {
 }
 
 .single-product {
+  margin-top: 2rem;
   display: flex;
   align-items: center;
 
@@ -35,6 +36,10 @@ h2 {
 
     .photo {
       width: 100%;
+      @media screen and (max-width: v.$layout-breakpoint-desktop) {
+        width: 50%;
+        margin: 0 auto;
+      }
     }
 
     .fave-icon {
