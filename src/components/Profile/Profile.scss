@@ -52,7 +52,6 @@ table {
   }
 }
 
-// USER
 .user {
   display: flex;
   justify-content: center;
@@ -129,11 +128,14 @@ table {
     margin-bottom: 2rem;
   }
 
-  .user-delete-action {
-    margin-bottom: 2rem;
+  .user-delete-action,
+  .error-message {
+    font-size: 1.2rem;
+    color: rgb(219, 0, 0);
   }
 
   .modal-footer {
+    margin-top: 2rem;
     display: flex;
     justify-content: center;
     gap: 1rem;

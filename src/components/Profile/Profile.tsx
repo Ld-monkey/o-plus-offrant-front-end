@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-bind */
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
@@ -18,15 +19,16 @@ interface UserProps {
 interface UserArticles {
   id: number;
   nom: string;
+  description: string;
   montant: number;
-  date_de_fin: string;
   date_et_heure: string;
+  date_de_fin: string;
 }
 
 interface UserAuctions {
   id: number;
   nom: string;
-  date: string;
+  date_de_fin: string;
   mon_enchere: number;
   enchere_actuelle: number;
 }
@@ -42,8 +44,8 @@ function Profile() {
   const privateAxios = useAxiosPrivate();
   const userId = useAppSelector((state) => state.user.id);
 
-  const [isEditing, setIsEditing] = useState(false);
-  const [openModal, setOpenModal] = useState(false);
+  const [isEditingUser, setIsEditingUser] = useState(false);
+  const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
     nom: '',
     prenom: '',
@@ -54,7 +56,7 @@ function Profile() {
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
 
-  console.log(userInfo);
+  const navigate = useNavigate();
 
   useEffect(() => {
     async function fetchUserbyId() {
@@ -71,11 +73,11 @@ function Profile() {
     fetchUserbyId();
   }, [privateAxios, userId]);
 
-  function handleEdit() {
-    setIsEditing(true);
+  function handleEditUser() {
+    setIsEditingUser(true);
   }
 
-  function handleInputChange(
+  function handleUserInputChange(
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
   ) {
@@ -100,12 +102,10 @@ function Profile() {
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
-    setIsEditing(false);
+    setIsEditingUser(false);
   }
 
-  const navigate = useNavigate();
-
-  async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
+  async function handleDeleteUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
       const response = await axios.delete(`/api/profile/${userId}/delete`);
@@ -116,8 +116,13 @@ function Profile() {
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
-    setOpenModal(false);
+    setOpenDeleteUserModal(false);
   }
+
+  const notExpiredAuction = userAuctions.filter((userAuction) => {
+    const isAuctionExpired = dayjs().isAfter(userAuction.date_de_fin);
+    return !isAuctionExpired;
+  });
 
   return (
     <>
@@ -128,14 +133,13 @@ function Profile() {
             <FontAwesomeIcon
               icon={faPenToSquare}
               className="icon-update"
-              // eslint-disable-next-line react/jsx-no-bind
-              onClick={handleEdit}
+              onClick={handleEditUser}
             />
             <FontAwesomeIcon
               icon={faTrashCan}
               className="icon-delete"
               onClick={() => {
-                setOpenModal(true);
+                setOpenDeleteUserModal(true);
               }}
             />
           </div>
@@ -149,27 +153,27 @@ function Profile() {
           </div>
 
           <div className="user-infos">
-            {isEditing ? (
+            {isEditingUser ? (
               <>
                 <input
                   type="text"
                   value={userInfo.nom}
-                  onChange={(e) => handleInputChange(e, 'nom')}
+                  onChange={(e) => handleUserInputChange(e, 'nom')}
                 />
                 <input
                   type="text"
                   value={userInfo.prenom}
-                  onChange={(e) => handleInputChange(e, 'prenom')}
+                  onChange={(e) => handleUserInputChange(e, 'prenom')}
                 />
                 <input
                   type="text"
                   value={userInfo.adresse_mail}
-                  onChange={(e) => handleInputChange(e, 'adresse_mail')}
+                  onChange={(e) => handleUserInputChange(e, 'adresse_mail')}
                 />
                 <input
                   type="text"
                   value={userInfo.adresse}
-                  onChange={(e) => handleInputChange(e, 'adresse')}
+                  onChange={(e) => handleUserInputChange(e, 'adresse')}
                 />
                 <button type="button" onClick={handleSaveButton}>
                   Enregistrer
@@ -197,12 +201,14 @@ function Profile() {
               <thead>
                 <tr>
                   <th>Nom de l&apos;article</th>
+                  <th>Description</th>
                   <th>Mise actuelle</th>
                   <th>Date de fin de vente</th>
                 </tr>
               </thead>
               <tbody>
                 {userArticles.map((userArticle) => {
+                  const isExpired = dayjs().isAfter(userArticle.date_de_fin);
                   const formattedDate = dayjs(userArticle.date_de_fin).format(
                     'DD-MM-YYYY [à] HH:mm'
                   );
@@ -213,11 +219,16 @@ function Profile() {
                           {userArticle.nom}
                         </Link>
                       </td>
+                      <td>{userArticle.description}</td>
                       <td>
                         <span>{userArticle.montant}€</span>
                       </td>
                       <td>
-                        <span>{formattedDate}</span>
+                        {isExpired ? (
+                          <span>Expiré</span>
+                        ) : (
+                          <span>{formattedDate}</span>
+                        )}
                       </td>
                       <td className="icons-column">
                         <FontAwesomeIcon
@@ -253,7 +264,8 @@ function Profile() {
               </thead>
               <tbody>
                 {userAuctions.map((userAuction) => {
-                  const formattedDate = dayjs(userAuction.date).format(
+                  const isExpired = dayjs().isAfter(userAuction.date_de_fin);
+                  const formattedDate = dayjs(userAuction.date_de_fin).format(
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
@@ -265,7 +277,13 @@ function Profile() {
                       </td>
                       <td>{userAuction.enchere_actuelle}€</td>
                       <td>{userAuction.mon_enchere}€</td>
-                      <td>{formattedDate}</td>
+                      <td>
+                        {isExpired ? (
+                          <span>Expiré</span>
+                        ) : (
+                          <span>{formattedDate}</span>
+                        )}
+                      </td>
                     </tr>
                   );
                 })}
@@ -305,45 +323,81 @@ function Profile() {
         </section>
       </div>
 
-      {openModal && (
+      {openDeleteUserModal && (
         <>
           <div
             className={
-              openModal
+              openDeleteUserModal
                 ? 'entire-shadow-screen is-active'
                 : 'entire-shadow-screen'
             }
             onClick={() => {
-              setOpenModal(false);
+              setOpenDeleteUserModal(false);
             }}
             role="button"
             aria-label="confirm-delete-user"
             aria-hidden="true"
           />
           <div
-            className={openModal ? 'modal-delete is-active' : 'modal-delete'}
+            className={
+              openDeleteUserModal ? 'modal-delete is-active' : 'modal-delete'
+            }
           >
-            <form method="post" onSubmit={handleDelete}>
+            <form method="post" onSubmit={handleDeleteUser}>
               <h2 className="user-delete-title">
                 Êtes-vous sûr.e de vouloir supprimer votre compte ?
               </h2>
-              <h3 className="user-delete-action">
-                ⚠️ Cette action est irréversible. ⚠️
-              </h3>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="modal-cancel-btn"
-                  onClick={() => {
-                    setOpenModal(false);
-                  }}
-                >
-                  Non
-                </button>
-                <button type="submit" className="modal-confirm-btn">
-                  Oui
-                </button>
-              </div>
+              {userArticles.length || userAuctions.length ? (
+                <>
+                  {/* eslint-disable-next-line no-nested-ternary */}
+                  {userArticles.length && userAuctions.length ? (
+                    <span className="error-message">
+                      Vous avez encore des articles et des enchères en cours.
+                    </span>
+                  ) : userArticles.length ? (
+                    <span className="error-message">
+                      Vous avez encore des articles en vente.
+                    </span>
+                  ) : (
+                    notExpiredAuction.length && (
+                      <span className="error-message">
+                        Vous avez encore des enchères en cours.
+                      </span>
+                    )
+                  )}
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="modal-cancel-btn"
+                      onClick={() => {
+                        setOpenDeleteUserModal(false);
+                      }}
+                    >
+                      Annuler
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <span className="user-delete-action">
+                    ⚠️ Cette action est irréversible. ⚠️
+                  </span>
+                  <div className="modal-footer">
+                    <button
+                      type="button"
+                      className="modal-cancel-btn"
+                      onClick={() => {
+                        setOpenDeleteUserModal(false);
+                      }}
+                    >
+                      Non
+                    </button>
+                    <button type="submit" className="modal-confirm-btn">
+                      Oui
+                    </button>
+                  </div>
+                </>
+              )}
             </form>
           </div>
         </>
