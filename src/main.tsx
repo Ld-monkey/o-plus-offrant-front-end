@@ -15,6 +15,7 @@ import getAllArticles from './api/articles';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
 import Profile from './components/Profile/Profile';
 import ErrorPage from './components/ErrorPage/ErrorPage';
+import ConditionsUse from './components/CGU/CGU';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             <Profile />
           </PrivateRoute>
         ),
+      },
+      {
+        path: 'conditions-generales-d-utilisation',
+        element: <ConditionsUse />,
       },
     ],
   },
