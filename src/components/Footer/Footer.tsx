@@ -1,7 +1,11 @@
 import { Link } from 'react-router-dom';
 import './Footer.scss';
 
-function Footer({ toggleModalLogin }: { toggleModalLogin: () => void }) {
+function Footer({
+  toggleModalLogin,
+}: {
+  toggleModalLogin: () => void | undefined;
+}) {
   return (
     <footer className="Footer">
       <div className="Footer__info">

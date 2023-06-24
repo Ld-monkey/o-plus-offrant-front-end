@@ -1,5 +1,4 @@
 import { Link } from 'react-router-dom';
-import Footer from '../Footer/Footer';
 import './ErrorPage.scss';
 
 function ErrorPage() {
@@ -12,7 +11,6 @@ function ErrorPage() {
           </Link>
         </div>
       </div>
-      <Footer />
     </div>
   );
 }
