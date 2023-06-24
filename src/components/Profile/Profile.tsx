@@ -20,6 +20,7 @@ interface UserArticles {
   nom: string;
   montant: number;
   date_de_fin: string;
+  date_et_heure: string;
 }
 
 interface UserAuctions {
