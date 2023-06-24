@@ -12,8 +12,8 @@ function Footer({ toggleModalLogin }: { toggleModalLogin: () => void }) {
         <Link to="#login" onClick={() => toggleModalLogin()}>
           Connectez-vous
         </Link>
-        <Link to="/produit/creation">Vendre</Link>
-        <Link to="/produits">Catégories</Link>
+        <Link to="/article/creation">Vendre</Link>
+        <Link to="/articles">Articles</Link>
         <Link to="/conditions-generales-d-utilisation">
           Conditions générales d&apos;utilisation
         </Link>

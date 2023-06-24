@@ -29,15 +29,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'produits',
+        path: 'articles',
         element: <Category />,
       },
       {
-        path: 'produit/:idArticle',
+        path: 'article/:idArticle',
         element: <SingleArticle />,
       },
       {
-        path: 'produit/creation',
+        path: 'article/creation',
         element: <AddArticle />,
       },
       {

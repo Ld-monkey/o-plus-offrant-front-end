@@ -41,7 +41,7 @@ function Card({
 
   return (
     <div className="cards-container">
-      <Link to={`produit/${id}`} className="card">
+      <Link to={`article/${id}`} className="card">
         <div className="card-img">
           {label && <span className="current-auction">{label}</span>}
           <img src={imageUrl} alt={description} />

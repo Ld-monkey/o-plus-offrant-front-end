@@ -194,7 +194,7 @@ function Category() {
         {filteredArticles.map((filteredArticle) => (
           <Link
             key={filteredArticle.id}
-            to={`/produit/${filteredArticle.id}`}
+            to={`/article/${filteredArticle.id}`}
             className="cardCat"
           >
             <h3 className="nameItem">{filteredArticle.nom}</h3>

@@ -209,7 +209,7 @@ function Profile() {
                   return (
                     <tr key={`${userArticle.id}.${userArticle.date_et_heure}`}>
                       <td>
-                        <Link to={`/produit/${userArticle.id}`}>
+                        <Link to={`/article/${userArticle.id}`}>
                           {userArticle.nom}
                         </Link>
                       </td>
@@ -259,7 +259,7 @@ function Profile() {
                   return (
                     <tr key={`${userAuction.id}.${userAuction.mon_enchere}`}>
                       <td>
-                        <Link to={`/produit/${userAuction.id}`}>
+                        <Link to={`/article/${userAuction.id}`}>
                           {userAuction.nom}
                         </Link>
                       </td>
@@ -292,7 +292,7 @@ function Profile() {
                     key={`${userWonAuction.id}.${userWonAuction.date_et_heure}`}
                   >
                     <td>
-                      <Link to={`/produit/${userWonAuction.id}`}>
+                      <Link to={`/article/${userWonAuction.id}`}>
                         {userWonAuction.nom}
                       </Link>
                     </td>

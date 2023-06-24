@@ -286,7 +286,7 @@ function SingleArticle() {
   return (
     <div id="wrapper">
       <p className="not-found">
-        Le produit que vous recherchez n&apos;existe pas.
+        L&aposarticle que vous recherchez n&apos;existe pas.
       </p>
     </div>
   );
