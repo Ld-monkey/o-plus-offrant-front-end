@@ -23,54 +23,14 @@ function AddArticle() {
     fetchCategories();
   }, []);
 
-  // const [inputsData, setInputsData] = useState({
-  //   titre: '',
-  //   description: '',
-  //   categorie: '',
-  //   prix_de_depart: '0',
-  //   temps_de_vente: '',
-  //   photo: null,
-  // });
-
-  // function handleChange(
-  //   event: React.ChangeEvent<
-  //     HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-  //   >
-  // ) {
-  //   const newData = { ...inputsData };
-  //   newData[event.target.name] = event.target.value;
-  //   setInputsData(newData);
-  //   console.log(newData);
-  // }
-
-  // const [image, setImage] = useState(null);
-
-  // function handleImageChange(event: React.ChangeEvent<HTMLInputElement>) {
-  //   console.log(event.target.files);
-  //   setImage(event.target.files[0]);
-  // }
-
-  // async function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
-  //   event.preventDefault();
-  //   try {
-  //     const response = await privateAxios.post(
-  //       'https://didierlam-server.eddi.cloud/article/creation/add',
-  //       {
-  //         nom: inputsData.titre,
-  //         description: inputsData.description,
-  //         categorie_id: inputsData.categorie,
-  //         prix_de_depart: inputsData.prix_de_depart,
-  //         date_de_fin: inputsData.temps_de_vente,
-  //         photo: inputsData.photo,
-  //         date_et_heure: new Date().toJSON().slice(0, 10),
-  //         utilisateur_vente_id: 3,
-  //       }
-  //     );
-  //     console.log(response);
-  //   } catch (error) {
-  //     console.error('Veuillez-vous connecter / inscrire', error);
-  //   }
-  // }
+  const [inputsData, setInputsData] = useState({
+    titre: '',
+    description: '',
+    categorie: '',
+    prix_de_depart: '0',
+    temps_de_vente: '',
+    photo: null,
+  });
 
   const [image, setImage] = useState<FileList | null>();
 
@@ -92,6 +52,7 @@ function AddArticle() {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       console.log(result);
+      console.log(formData);
     } catch (error) {
       console.error('Veuillez-vous connecter / inscrire', error);
     }
@@ -107,8 +68,13 @@ function AddArticle() {
             type="text"
             name="titre"
             id="titre"
-            // onChange={(e) => setTitre(e.target.value)}
-            // value={inputsData.titre}
+            onChange={(e) =>
+              setInputsData((prevState) => ({
+                ...prevState,
+                titre: e.target.value,
+              }))
+            }
+            value={inputsData.titre}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -119,8 +85,13 @@ function AddArticle() {
             rows={5}
             name="description"
             id="description"
-            // onChange={(e) => setDescription(e.target.value)}
-            // value={inputsData.description}
+            onChange={(e) =>
+              setInputsData((prevState) => ({
+                ...prevState,
+                description: e.target.value,
+              }))
+            }
+            value={inputsData.description}
             placeholder="Détail de l'article..."
           />
         </div>
@@ -129,9 +100,15 @@ function AddArticle() {
           <label htmlFor="categorie">Catégorie :</label>
           <select
             id="categorie"
-            defaultValue="default-value"
+            // defaultValue="default-value"
             name="categorie"
-            // onChange={(e) => setCategorieId(e.target.value)}
+            onChange={(e) =>
+              setInputsData((prevState) => ({
+                ...prevState,
+                categorie: e.target.value,
+              }))
+            }
+            value={inputsData.categorie}
             required
           >
             <option className="default-option" value="default-value" disabled>
@@ -152,8 +129,13 @@ function AddArticle() {
             min="1"
             name="prix_de_depart"
             id="prix-de-depart"
-            // onChange={(e) => setPrixDeDepart(e.target.value)}
-            // value={inputsData.prix_de_depart}
+            onChange={(e) =>
+              setInputsData((prevState) => ({
+                ...prevState,
+                prix_de_depart: e.target.value,
+              }))
+            }
+            value={inputsData.prix_de_depart}
             placeholder="100"
           />
         </div>
@@ -164,8 +146,13 @@ function AddArticle() {
             type="date"
             name="temps_de_vente"
             id="temps-de-vente"
-            // onChange={(e) => setTempsDeVente(e.target.value)}
-            // value={inputsData.temps_de_vente}
+            onChange={(e) =>
+              setInputsData((prevState) => ({
+                ...prevState,
+                temps_de_vente: e.target.value,
+              }))
+            }
+            value={inputsData.temps_de_vente}
           />
         </div>
 

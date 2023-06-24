@@ -1,9 +1,9 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { axiosPrivate } from '../../api/axios';
+import axios from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import './Profile.scss';
@@ -35,6 +35,7 @@ interface UserWonAuctions {
   id: number;
   nom: string;
   montant: string;
+  date_et_heure: string;
 }
 
 function Profile() {
@@ -52,6 +53,8 @@ function Profile() {
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
+
+  console.log(userInfo);
 
   useEffect(() => {
     async function fetchUserbyId() {
@@ -84,15 +87,14 @@ function Profile() {
 
   async function handleSaveButton() {
     try {
-      const correctInfo = {
-        nom: userInfo.nom,
-        prenom: userInfo.prenom,
-        adresse: userInfo.adresse,
-        adresse_mail: userInfo.adresse_mail,
-      };
-      const response = await axiosPrivate.patch(
+      const response = await privateAxios.patch(
         `/api/profile/${userId}/update`,
-        correctInfo
+        {
+          nom: userInfo.nom,
+          prenom: userInfo.prenom,
+          adresse: userInfo.adresse,
+          adresse_mail: userInfo.adresse_mail,
+        }
       );
       console.log(response);
     } catch (error) {
@@ -101,15 +103,16 @@ function Profile() {
     setIsEditing(false);
   }
 
+  const navigate = useNavigate();
+
   async function handleDelete(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const response = await privateAxios.delete(
-        `/api/profile/${userId}/delete`
-      );
+      const response = await axios.delete(`/api/profile/${userId}/delete`);
       if (response.status === 200) {
-        window.location.href = '/';
+        navigate('/');
       }
+      console.log(response);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
     }
@@ -204,7 +207,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userArticle.id}>
+                    <tr key={`${userArticle.id}.${userArticle.date_et_heure}`}>
                       <td>
                         <Link to={`/produit/${userArticle.id}`}>
                           {userArticle.nom}
@@ -254,7 +257,7 @@ function Profile() {
                     'DD-MM-YYYY [à] HH:mm'
                   );
                   return (
-                    <tr key={userAuction.id}>
+                    <tr key={`${userAuction.id}.${userAuction.mon_enchere}`}>
                       <td>
                         <Link to={`/produit/${userAuction.id}`}>
                           {userAuction.nom}
@@ -285,7 +288,9 @@ function Profile() {
               </thead>
               <tbody>
                 {userWonAuctions.map((userWonAuction) => (
-                  <tr key={userWonAuction.id}>
+                  <tr
+                    key={`${userWonAuction.id}.${userWonAuction.date_et_heure}`}
+                  >
                     <td>
                       <Link to={`/produit/${userWonAuction.id}`}>
                         {userWonAuction.nom}
