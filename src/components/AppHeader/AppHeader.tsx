@@ -12,11 +12,24 @@ import { useAppSelector } from '../../hooks/redux';
 import PopupBox from './PopupBox';
 import axios from '../../api/axios';
 
+interface ArticlesProps {
+  id: number;
+  nom: string;
+  photo: string;
+  prix_de_depart: string;
+  date_de_fin: string;
+  montant: string;
+  categorie_id: number;
+  categorie: string;
+  categorie_nom: string;
+}
+
 function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [isOpen, setIsOpen] = useState(false);
   const [contentSearchBar, setContentSearchBar] = useState('');
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [selectedArticle, setSelectedArticle] = useState(null);
+  const [articles, setArticles] = useState<ArticlesProps[]>([]);
 
   const {
     logged: isLogged,
@@ -24,10 +37,23 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     logo_profile: avatar,
   } = useAppSelector((state) => state.user);
 
+  console.log('coucou');
+
   useEffect(() => {
+    console.log('coucuo bis');
     if (!isLogged) {
       setOpenPopup(false);
     }
+
+    async function fetchArticles() {
+      try {
+        const response = await axios.get('/api/articles');
+        setArticles(response.data.allArticles);
+      } catch {
+        console.log('error');
+      }
+    }
+    fetchArticles();
   }, [isLogged]);
 
   /**
@@ -53,29 +79,6 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     setIsOpen(!isOpen);
   }
 
-  interface ArticlesProps {
-    id: number;
-    nom: string;
-    photo: string;
-    prix_de_depart: string;
-    date_de_fin: string;
-    montant: string;
-    categorie_id: number;
-    categorie: string;
-    categorie_nom: string;
-  }
-  const [articles, setArticles] = useState<ArticlesProps[]>([]);
-  useEffect(() => {
-    async function fetchArticles() {
-      try {
-        const response = await axios.get('/api/articles');
-        setArticles(response.data.allArticles);
-      } catch {
-        console.log('error');
-      }
-    }
-    fetchArticles();
-  });
   /**
    * Updates searchbar content.
    */
@@ -99,37 +102,39 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               <h1 className="header-logo">O+ Offrant</h1>
             </Link>
             {/* inside navbar */}
-            <div className="container-inside">
-              <form
-                className="searchbar inside-navbar"
-                role="search"
-                onSubmit={handleSubmit}
-              >
-                <button type="button">
-                  <FontAwesomeIcon icon={faMagnifyingGlass} />
-                </button>
-                <input
-                  type="search"
-                  name="searchbar"
-                  placeholder="Que cherchez-vous ?"
-                  aria-label="Search article through site content"
-                  onChange={changeInputContent}
-                  value={contentSearchBar}
-                />
-              </form>
+            <div className="container-searchbar">
+              <div className="seachbar">
+                <form
+                  className="inside-navbar"
+                  role="search"
+                  onSubmit={handleSubmit}
+                >
+                  <button type="button">
+                    <FontAwesomeIcon icon={faMagnifyingGlass} />
+                  </button>
+                  <input
+                    type="search"
+                    name="searchbar"
+                    placeholder="Que cherchez-vous ?"
+                    aria-label="Search article through site content"
+                    onChange={changeInputContent}
+                    value={contentSearchBar}
+                  />
+                </form>
+              </div>
               <div className="resultSearch">
-                {contentSearchBar && // Et logique si le contenu de la barre et vide ne pas afficher la liste.
-                  articles
-                    .filter((element) =>
-                      element.nom
-                        .toLowerCase()
-                        .includes(contentSearchBar.toLowerCase())
-                    )
-                    // filtre les elements qui contiennent le contenu de la barre de
-                    .map((article) => (
-                      // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
-                      <ul className="arraySearch" key={article.id}>
-                        <li className="list-inside">
+                <ul className="arraySearch">
+                  {contentSearchBar && // Et logique si le contenu de la barre et vide ne pas afficher la liste.
+                    articles
+                      .filter((element) =>
+                        element.nom
+                          .toLowerCase()
+                          .includes(contentSearchBar.toLowerCase())
+                      )
+                      // filtre les elements qui contiennent le contenu de la barre de
+                      .map((article) => (
+                        // eslint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions
+                        <li className="list-inside" key={article.id}>
                           <Link
                             onClick={() => setContentSearchBar(article.nom)} // auto complétion en cliquant sur la proposition et remets à jour avec une fonction fléchée anonyme sinon boucle infinie
                             to={`/produit/${article.id}`}
@@ -137,8 +142,8 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                             {article.nom}
                           </Link>
                         </li>
-                      </ul>
-                    ))}
+                      ))}
+                </ul>
               </div>
             </div>
             <div className="header-navbar-container">
