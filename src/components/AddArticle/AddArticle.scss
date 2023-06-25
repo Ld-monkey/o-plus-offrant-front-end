@@ -63,3 +63,15 @@ h2 {
     }
   }
 }
+
+.success-msg {
+  text-align: center;
+  font-size: 1.5rem;
+  color: v.$color-secondary;
+}
+
+.error-msg {
+  text-align: center;
+  font-size: 1.5rem;
+  color: red;
+}

@@ -11,6 +11,17 @@ function AddArticle() {
   const userId = useAppSelector((state) => state.user.id);
 
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
+  const [image, setImage] = useState<FileList | null>();
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
+  const [inputsData, setInputsData] = useState({
+    titre: '',
+    description: '',
+    categorie: '',
+    prix_de_depart: '0',
+    temps_de_vente: '',
+    photo: null,
+  });
 
   useEffect(() => {
     async function fetchCategories() {
@@ -23,17 +34,6 @@ function AddArticle() {
     }
     fetchCategories();
   }, []);
-
-  const [inputsData, setInputsData] = useState({
-    titre: '',
-    description: '',
-    categorie: '',
-    prix_de_depart: '0',
-    temps_de_vente: '',
-    photo: null,
-  });
-
-  const [image, setImage] = useState<FileList | null>();
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -56,14 +56,27 @@ function AddArticle() {
     formData.append('montant', inputsData.prix_de_depart);
 
     try {
-      const result = await privateAxios.post(
+      const response = await privateAxios.post(
         '/article/creation/add',
         formData,
         {
           headers: { 'Content-Type': 'multipart/form-data' },
         }
       );
+      if (response.status === 200) {
+        setSuccessMessage('Votre article a bien été enregistré');
+        setInputsData({
+          titre: '',
+          description: '',
+          categorie: '',
+          prix_de_depart: '0',
+          temps_de_vente: '',
+          photo: null,
+        });
+        setImage(null);
+      }
     } catch (error) {
+      setErrorMessage('Veuillez vous connecter / inscrire');
       console.error('Veuillez-vous connecter / inscrire', error);
     }
   };
@@ -182,6 +195,8 @@ function AddArticle() {
           </button>
         </div>
       </form>
+      {successMessage && <div className="success-msg">{successMessage}</div>}
+      {errorMessage && <div className="error-msg">{errorMessage}</div>}
     </div>
   );
 }
