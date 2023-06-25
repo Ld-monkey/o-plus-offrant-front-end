@@ -1,14 +1,16 @@
+/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-bind */
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { logout } from '../../store/reducer/user';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import axios from '../../api/axios';
 import './Profile.scss';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface UserProps {
   nom: string;
@@ -44,9 +46,11 @@ interface UserWonAuctions {
 function Profile() {
   const privateAxios = useAxiosPrivate();
   const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
 
   const [isEditingUser, setIsEditingUser] = useState(false);
   const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
+  const [openDeleteArticleModal, setOpenDeleteArticleModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
     nom: '',
     prenom: '',
@@ -56,7 +60,7 @@ function Profile() {
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
-  const [updateArticleId, setUpdateArticleId] = useState<number>(0);
+  const [updateArticleId, setUpdateArticleId] = useState<number | null>(null);
   const [isEditingArticle, setIsEditingArticle] = useState(false);
 
   const navigate = useNavigate();
@@ -78,7 +82,7 @@ function Profile() {
       }
     }
     fetchUserbyId();
-  }, [privateAxios, userId]);
+  }, [privateAxios, userId, userArticles]);
 
   function handleEditUser() {
     setIsEditingUser(true);
@@ -121,6 +125,7 @@ function Profile() {
     try {
       const response = await axios.delete(`/api/profile/${userId}/delete`);
       if (response.status === 200) {
+        dispatch(logout());
         navigate('/');
       }
       console.log(response);
@@ -183,6 +188,19 @@ function Profile() {
 
   function handleCancelEditArticle() {
     setIsEditingArticle(false);
+  }
+
+  async function handleDeleteArticle(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    try {
+      const response = await axios.delete(`/article/${updateArticleId}/delete`);
+      if (response.status === 200) {
+        console.log("L'article a bien ete supprimé");
+      }
+    } catch (error) {
+      console.log('Veuillez vous reconnecter', error);
+    }
+    setOpenDeleteArticleModal(false);
   }
 
   return (
@@ -343,15 +361,28 @@ function Profile() {
                         )}
                       </td>
                       <td className="icons-column">
-                        <FontAwesomeIcon
-                          icon={faPenToSquare}
-                          className="icon-update"
-                          onClick={() => handleEditArticle(userArticle.id)}
-                        />
-                        <FontAwesomeIcon
-                          icon={faTrashCan}
-                          className="icon-delete"
-                        />
+                        {isExpired ? (
+                          <>
+                            <FontAwesomeIcon
+                              icon={faPenToSquare}
+                              className="icon-update"
+                              onClick={() => handleEditArticle(userArticle.id)}
+                            />
+                            <FontAwesomeIcon
+                              icon={faTrashCan}
+                              className="icon-delete"
+                              onClick={() => {
+                                setOpenDeleteArticleModal(true);
+                              }}
+                            />
+                          </>
+                        ) : (
+                          <FontAwesomeIcon
+                            icon={faPenToSquare}
+                            className="icon-update"
+                            onClick={() => handleEditArticle(userArticle.id)}
+                          />
+                        )}
                       </td>
                     </tr>
                   );
@@ -363,7 +394,7 @@ function Profile() {
 
         <section className="my-auctions">
           <h2 className="section-title">Mes enchères en cours</h2>
-          {userAuctions.length === 0 ? (
+          {notExpiredAuction.length === 0 ? (
             <p className="empty-table">Pas de coup de cœur ?</p>
           ) : (
             <table className="my-auctions-list">
@@ -376,7 +407,7 @@ function Profile() {
                 </tr>
               </thead>
               <tbody>
-                {userAuctions.map((userAuction) => {
+                {notExpiredAuction.map((userAuction) => {
                   const isExpired = dayjs().isAfter(userAuction.date_de_fin);
                   const formattedDate = dayjs(userAuction.date_de_fin).format(
                     'DD-MM-YYYY [à] HH:mm'
@@ -436,6 +467,7 @@ function Profile() {
         </section>
       </div>
 
+      {/* Modal for deleting USER */}
       {openDeleteUserModal && (
         <>
           <div
@@ -456,61 +488,132 @@ function Profile() {
               openDeleteUserModal ? 'modal-delete is-active' : 'modal-delete'
             }
           >
-            <form method="post" onSubmit={handleDeleteUser}>
-              <h2 className="user-delete-title">
-                Êtes-vous sûr.e de vouloir supprimer votre compte ?
-              </h2>
-              {userArticles.length || userAuctions.length ? (
-                <>
-                  {/* eslint-disable-next-line no-nested-ternary */}
-                  {userArticles.length && userAuctions.length ? (
-                    <span className="error-message">
-                      Vous avez encore des articles et des enchères en cours.
-                    </span>
-                  ) : userArticles.length ? (
-                    <span className="error-message">
-                      Vous avez encore des articles en vente.
-                    </span>
-                  ) : (
-                    notExpiredAuction.length && (
+            {!userArticles.length && !notExpiredAuction.length ? (
+              <form method="delete" onSubmit={handleDeleteUser}>
+                <h2 className="delete-title">
+                  Êtes-vous sûr.e de vouloir supprimer votre compte ?
+                </h2>
+                <span className="delete-action">
+                  ⚠️ Cette action est irréversible. ⚠️
+                </span>
+                <div className="modal-footer">
+                  <button
+                    type="button"
+                    className="modal-cancel-btn"
+                    onClick={() => {
+                      setOpenDeleteUserModal(false);
+                    }}
+                  >
+                    Non
+                  </button>
+                  <button type="submit" className="modal-confirm-btn">
+                    Oui
+                  </button>
+                </div>
+              </form>
+            ) : (
+              <form method="delete" onSubmit={handleDeleteUser}>
+                <h2 className="delete-title">
+                  Êtes-vous sûr.e de vouloir supprimer votre compte ?
+                </h2>
+                {userArticles.length || userAuctions.length ? (
+                  <>
+                    {/* eslint-disable-next-line no-nested-ternary */}
+                    {userArticles.length && userAuctions.length ? (
                       <span className="error-message">
-                        Vous avez encore des enchères en cours.
+                        Vous avez encore des articles et des enchères en cours.
                       </span>
-                    )
-                  )}
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="modal-cancel-btn"
-                      onClick={() => {
-                        setOpenDeleteUserModal(false);
-                      }}
-                    >
-                      Annuler
-                    </button>
-                  </div>
-                </>
-              ) : (
-                <>
-                  <span className="user-delete-action">
-                    ⚠️ Cette action est irréversible. ⚠️
-                  </span>
-                  <div className="modal-footer">
-                    <button
-                      type="button"
-                      className="modal-cancel-btn"
-                      onClick={() => {
-                        setOpenDeleteUserModal(false);
-                      }}
-                    >
-                      Non
-                    </button>
-                    <button type="submit" className="modal-confirm-btn">
-                      Oui
-                    </button>
-                  </div>
-                </>
-              )}
+                    ) : userArticles.length ? (
+                      <span className="error-message">
+                        Vous avez encore des articles en vente.
+                      </span>
+                    ) : (
+                      notExpiredAuction.length && (
+                        <span className="error-message">
+                          Vous avez encore des enchères en cours.
+                        </span>
+                      )
+                    )}
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="modal-cancel-btn"
+                        onClick={() => {
+                          setOpenDeleteUserModal(false);
+                        }}
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <span className="delete-action">
+                      ⚠️ Cette action est irréversible. ⚠️
+                    </span>
+                    <div className="modal-footer">
+                      <button
+                        type="button"
+                        className="modal-cancel-btn"
+                        onClick={() => {
+                          setOpenDeleteUserModal(false);
+                        }}
+                      >
+                        Non
+                      </button>
+                      <button type="submit" className="modal-confirm-btn">
+                        Oui
+                      </button>
+                    </div>
+                  </>
+                )}
+              </form>
+            )}
+          </div>
+        </>
+      )}
+      {/* Modal for deleting ARTICLE */}
+      {openDeleteArticleModal && (
+        <>
+          <div
+            className={
+              openDeleteArticleModal
+                ? 'entire-shadow-screen is-active'
+                : 'entire-shadow-screen'
+            }
+            onClick={() => {
+              setOpenDeleteArticleModal(false);
+            }}
+            role="button"
+            aria-label="confirm-delete-article"
+            aria-hidden="true"
+          />
+          <div
+            className={
+              openDeleteArticleModal ? 'modal-delete is-active' : 'modal-delete'
+            }
+          >
+            <form method="delete" onSubmit={handleDeleteArticle}>
+              <h2 className="delete-title">
+                Êtes-vous sûr.e de vouloir supprimer cet article ?
+              </h2>
+              <span className="delete-action">
+                ⚠️ Cette action est irréversible. ⚠️
+              </span>
+              <div className="modal-footer">
+                <button
+                  type="button"
+                  className="modal-cancel-btn"
+                  onClick={() => {
+                    setOpenDeleteArticleModal(false);
+                  }}
+                >
+                  Non
+                </button>
+                <button type="submit" className="modal-confirm-btn">
+                  Oui
+                </button>
+              </div>
             </form>
           </div>
         </>
