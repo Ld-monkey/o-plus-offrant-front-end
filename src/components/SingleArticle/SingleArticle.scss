@@ -35,7 +35,8 @@ h2 {
     }
 
     .photo {
-      width: 100%;
+      max-width: 100%;
+      max-height: 400px;
       @media screen and (max-width: v.$layout-breakpoint-desktop) {
         width: 50%;
         margin: 0 auto;
