@@ -6,11 +6,17 @@ import {
   faSackDollar,
   faToolbox,
   faCircleUser,
+  faUser,
+  faHouse,
+  faMoneyCheckDollar,
+  faCartShopping,
+  faRightFromBracket,
 } from '@fortawesome/free-solid-svg-icons';
 import './AppHeader.scss';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import PopupBox from './PopupBox';
 import axios from '../../api/axios';
+import { logout } from '../../store/reducer/user';
 
 interface ArticlesProps {
   id: number;
@@ -29,6 +35,8 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
   const [contentSearchBar, setContentSearchBar] = useState('');
   const [openPopup, setOpenPopup] = useState<boolean>(false);
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
+
+  const dispatch = useAppDispatch();
 
   const {
     logged: isLogged,
@@ -89,6 +97,13 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     event.preventDefault();
   }
 
+  /**
+   * Logout the user.
+   */
+  function handleLogout() {
+    dispatch(logout());
+    setIsOpen(false);
+  }
   return (
     <>
       <header className="header">
@@ -196,29 +211,55 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
         </div>
       </header>
       <aside className={isOpen ? 'aside-menu is-open' : 'aside-menu'}>
-        <button
-          type="button"
-          className="btn-sidebar"
-          onClick={toggleModalLogin}
-        >
-          <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
-          <span>Connexion / Inscription</span>
-        </button>
+        {isLogged ? (
+          <div className="profile">
+            <Link to="/profile" onClick={() => setIsOpen(false)}>
+              <img src={avatar} alt="avatar" className="avatar" />
+            </Link>
+            <h3>{username}</h3>
+          </div>
+        ) : (
+          <button
+            type="button"
+            className="btn-sidebar"
+            onClick={toggleModalLogin}
+          >
+            <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+            <span>Connexion / Inscription</span>
+          </button>
+        )}
         <ul className="menu-items">
+          {isLogged && (
+            <li>
+              <Link to="/profile" onClick={() => setIsOpen(false)}>
+                <FontAwesomeIcon icon={faUser} />
+                Profil
+              </Link>
+            </li>
+          )}
           <li>
-            <a href="#home">Home</a>
+            <Link to="/" onClick={() => setIsOpen(false)}>
+              <FontAwesomeIcon icon={faHouse} />
+              Accueil
+            </Link>
           </li>
           <li>
-            <a href="#about">About</a>
+            <Link to="/produit/creation" onClick={() => setIsOpen(false)}>
+              <FontAwesomeIcon icon={faMoneyCheckDollar} />
+              Vendre
+            </Link>
           </li>
           <li>
-            <a href="#food">Category</a>
+            <Link to="/produits" onClick={() => setIsOpen(false)}>
+              <FontAwesomeIcon icon={faCartShopping} />
+              Articles
+            </Link>
           </li>
           <li>
-            <a href="#food-menu">Menu</a>
-          </li>
-          <li>
-            <a href="#contact">Contact</a>
+            <Link to="#logout" onClick={() => handleLogout()}>
+              <FontAwesomeIcon icon={faRightFromBracket} />
+              Déconnexion
+            </Link>
           </li>
         </ul>
       </aside>

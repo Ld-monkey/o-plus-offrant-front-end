@@ -15,7 +15,7 @@ function PopupBox() {
         <Link to="/profile">Profil</Link>
         <Link to="/">Accueil</Link>
         <Link to="#logout" onClick={() => handleLogout()}>
-          Déconnection
+          Déconnexion
         </Link>
       </div>
     </div>

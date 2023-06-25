@@ -4,7 +4,7 @@ const API_CAT = 'https://cataas.com';
 
 async function getRandomIdApiCat() {
   try {
-    const randomCuteCat = await axios.get(`https://cataas.com/cat?json=true`);
+    const randomCuteCat = await axios.get(`${API_CAT}/cat?json=true`);
     return randomCuteCat?.data._id;
   } catch (err) {
     return undefined;
@@ -16,7 +16,7 @@ async function getLinkImageProfile() {
   if (!idRandomCat) {
     return undefined;
   }
-  return `${API_CAT}/cat/${idRandomCat}?width=50&height=50`;
+  return `${API_CAT}/cat/${idRandomCat}?width=100&height=100`;
 }
 
 export default getLinkImageProfile;
