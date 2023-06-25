@@ -66,41 +66,6 @@
     color: v.$color-primary;
   }
 
-  &-btn-login {
-    display: none;
-    border: none;
-    background: none;
-    cursor: pointer;
-
-    a {
-      display: none;
-    }
-
-    @media (min-width: 435px) {
-      a {
-        display: inline;
-      }
-
-      svg {
-        margin-top: 4px;
-        padding-right: 10px;
-      }
-    }
-
-    @media (min-width: 620px) {
-      display: inline;
-      padding: 10px;
-      background-color: v.$color-primary;
-      color: v.$color-text;
-      border-radius: 5px;
-      border: 3px solid #fff;
-
-      &:hover {
-        border: 3px solid #88b4ba;
-      }
-    }
-  }
-
   &-btn-online {
     display: none;
 
@@ -141,6 +106,7 @@
   .hamburger-menu {
     display: inline-block;
     position: relative;
+    z-index: 2;
 
     @media (min-width: 620px) {
       display: none;
@@ -154,7 +120,7 @@
   }
 
   .toggler-hamburger {
-    z-index: 1;
+    z-index: 2;
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -192,7 +158,6 @@
   visibility: hidden;
   display: none;
   flex: 2;
-  border: 1px solid red;
 
   border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
@@ -265,16 +230,69 @@
   }
 }
 
+.btn-login {
+  display: none;
+}
+
+.btn-login {
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  a {
+    display: none;
+  }
+
+  @media (min-width: 435px) {
+    a {
+      display: inline;
+    }
+
+    svg {
+      margin-top: 4px;
+      padding-right: 10px;
+    }
+  }
+
+  @media (min-width: 620px) {
+    display: inline;
+    padding: 10px;
+    background-color: v.$color-primary;
+    color: v.$color-text;
+    border-radius: 5px;
+    border: 3px solid #fff;
+
+    &:hover {
+      border: 3px solid #88b4ba;
+    }
+  }
+}
+
+.btn-sidebar {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline;
+  padding: 10px;
+  background-color: v.$color-primary;
+  color: v.$color-text;
+  border-radius: 5px;
+  border: 3px solid #fff;
+}
 
 // sidebar menu
 .aside-menu {
-  position: fixed;
-  visibility: hidden;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding-top: 80px;
   background-color: v.$color-primary;
   z-index: 1;
   top: 0;
-  left: 0;
-  width: 0;
+  width: 100%;
+  left: -100%;
   height: 100%;
   overflow: hidden;
   -webkit-transition: all 0.3s ease-in-out;
@@ -282,8 +300,7 @@
   transition: all 0.3s ease-in-out;
 
   &.is-open {
-    visibility: visible;
-    width: 80%;
+    left: 0;
   }
 
   ul {

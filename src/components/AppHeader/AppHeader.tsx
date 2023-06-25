@@ -152,7 +152,7 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               {!isLogged ? (
                 <button
                   type="button"
-                  className="header-btn-login"
+                  className="btn-login"
                   onClick={toggleModalLogin}
                 >
                   <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
@@ -196,6 +196,14 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
         </div>
       </header>
       <aside className={isOpen ? 'aside-menu is-open' : 'aside-menu'}>
+        <button
+          type="button"
+          className="btn-sidebar"
+          onClick={toggleModalLogin}
+        >
+          <FontAwesomeIcon icon={faCircleUser} className="icon-user" />
+          <span>Connexion / Inscription</span>
+        </button>
         <ul className="menu-items">
           <li>
             <a href="#home">Home</a>
