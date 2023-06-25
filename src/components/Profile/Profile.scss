@@ -29,7 +29,7 @@ table {
 .user-title {
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
 
   .icons-user {
     font-size: 1.5rem;
@@ -63,13 +63,25 @@ table {
     }
   }
 
+  .user-infos {
+    width: 250px;
+  }
+
+  .edit-btn {
+    flex-direction: row;
+    justify-content: end;
+    gap: 15px;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   div {
     display: flex;
     flex-direction: column;
     width: 15%;
 
     input {
-      width: 200px;
+      width: 250px;
       margin-bottom: 0.5rem;
     }
 
@@ -86,17 +98,52 @@ table {
     button:hover {
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
+
+    .cancel-edit-btn {
+      background-color: v.$color-searchbar;
+      color: black;
+    }
   }
 }
 
-.icons-column {
-  width: 80px;
-  padding: 0;
+.my-articles {
+  .icons-column {
+    width: 80px;
+    padding: 0;
 
-  .icon-update,
-  .icon-delete {
-    font-size: 1.2rem;
+    .icon-update,
+    .icon-delete {
+      font-size: 1.2rem;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .icon-update:hover {
+      color: v.$color-secondary;
+    }
+
+    .icon-delete:hover {
+      color: red;
+    }
+  }
+
+  input {
+    outline: none;
+  }
+
+  .icon-cancel,
+  .icon-confirm {
+    font-size: 1.5rem;
     padding: 5px;
+    cursor: pointer;
+  }
+
+  .icon-confirm {
+    color: rgb(57, 223, 57);
+  }
+
+  .icon-cancel {
+    color: red;
   }
 }
 

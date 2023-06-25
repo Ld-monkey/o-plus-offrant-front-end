@@ -4,10 +4,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import axios from '../../api/axios';
 import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
+import axios from '../../api/axios';
 import './Profile.scss';
+import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 
 interface UserProps {
   nom: string;
@@ -55,6 +56,8 @@ function Profile() {
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
+  const [updateArticleId, setUpdateArticleId] = useState<number>(0);
+  const [isEditingArticle, setIsEditingArticle] = useState(false);
 
   const navigate = useNavigate();
 
@@ -63,7 +66,11 @@ function Profile() {
       try {
         const response = await privateAxios.get(`/api/profile/${userId}`);
         setUserInfo(response.data.profile);
-        setUserArticles(response.data.histSell);
+        const articles = response.data.histSell;
+        const sortedUserArticles = articles.sort(
+          (a: { id: number }, b: { id: number }) => a.id - b.id
+        );
+        setUserArticles(sortedUserArticles);
         setUserAuctions(response.data.histBuy);
         setUserWonAuctions(response.data.wonAuction);
       } catch (error) {
@@ -75,6 +82,10 @@ function Profile() {
 
   function handleEditUser() {
     setIsEditingUser(true);
+  }
+
+  function handleCancelEditUser() {
+    setIsEditingUser(false);
   }
 
   function handleUserInputChange(
@@ -123,6 +134,56 @@ function Profile() {
     const isAuctionExpired = dayjs().isAfter(userAuction.date_de_fin);
     return !isAuctionExpired;
   });
+
+  /**
+   * Retrieve the ID of the article we're currently editing
+   * @param id
+   */
+  function handleEditArticle(id: number) {
+    setUpdateArticleId(id);
+    setIsEditingArticle(true);
+  }
+
+  function handleArticleInput(event: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = event.target;
+    setUserArticles((prevState) =>
+      prevState.map((article) =>
+        article.id === updateArticleId ? { ...article, [name]: value } : article
+      )
+    );
+  }
+
+  /**
+   * Send PATCH request to update Article datas
+   */
+  async function handleUpdateArticle() {
+    const editingArticle = userArticles.find(
+      (article) => article.id === updateArticleId
+    );
+    if (!editingArticle) {
+      console.error('Aucun article à mettre à jour');
+    } else {
+      try {
+        const response = await axios.patch(
+          `/article/${updateArticleId}/update`,
+          {
+            nom: editingArticle.nom,
+            description: editingArticle.description,
+            photo: 'photo', // REMOVE FROM THE DATA SENT TO THE BACKEND AND TEST AGAIN !
+            utilisateur_vente_id: userId,
+          }
+        );
+        console.log(response);
+      } catch (error) {
+        console.error('Veuillez vous reconnecter', error);
+      }
+    }
+    setIsEditingArticle(false);
+  }
+
+  function handleCancelEditArticle() {
+    setIsEditingArticle(false);
+  }
 
   return (
     <>
@@ -175,9 +236,18 @@ function Profile() {
                   value={userInfo.adresse}
                   onChange={(e) => handleUserInputChange(e, 'adresse')}
                 />
-                <button type="button" onClick={handleSaveButton}>
-                  Enregistrer
-                </button>
+                <div className="edit-btn">
+                  <button
+                    type="button"
+                    className="cancel-edit-btn"
+                    onClick={handleCancelEditUser}
+                  >
+                    Annuler
+                  </button>
+                  <button type="button" onClick={handleSaveButton}>
+                    Enregistrer
+                  </button>
+                </div>
               </>
             ) : (
               <>
@@ -212,6 +282,48 @@ function Profile() {
                   const formattedDate = dayjs(userArticle.date_de_fin).format(
                     'DD-MM-YYYY [à] HH:mm'
                   );
+                  if (updateArticleId === userArticle.id && isEditingArticle) {
+                    return (
+                      <tr
+                        key={`${userArticle.id}.${userArticle.date_et_heure}`}
+                      >
+                        <td>
+                          <input
+                            type="text"
+                            name="nom"
+                            onChange={handleArticleInput}
+                            value={userArticle.nom}
+                          />
+                        </td>
+                        <td>
+                          <input
+                            type="text"
+                            name="description"
+                            onChange={handleArticleInput}
+                            value={userArticle.description}
+                          />
+                        </td>
+                        <td>
+                          <span>{userArticle.montant}€</span>
+                        </td>
+                        <td>
+                          <span>{formattedDate}</span>
+                        </td>
+                        <td className="icons-column">
+                          <FontAwesomeIcon
+                            icon={faCheck}
+                            className="icon-confirm"
+                            onClick={handleUpdateArticle}
+                          />
+                          <FontAwesomeIcon
+                            icon={faXmark}
+                            className="icon-cancel"
+                            onClick={handleCancelEditArticle}
+                          />
+                        </td>
+                      </tr>
+                    );
+                  }
                   return (
                     <tr key={`${userArticle.id}.${userArticle.date_et_heure}`}>
                       <td>
@@ -234,6 +346,7 @@ function Profile() {
                         <FontAwesomeIcon
                           icon={faPenToSquare}
                           className="icon-update"
+                          onClick={() => handleEditArticle(userArticle.id)}
                         />
                         <FontAwesomeIcon
                           icon={faTrashCan}
