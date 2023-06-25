@@ -1,4 +1,3 @@
-/* eslint-disable no-nested-ternary */
 /* eslint-disable react/jsx-no-bind */
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -6,7 +5,7 @@ import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
 import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
-import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { useAppSelector, useAppDispatch } from '../../hooks/redux';
 import { logout } from '../../store/reducer/user';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import axios from '../../api/axios';
@@ -50,7 +49,6 @@ function Profile() {
 
   const [isEditingUser, setIsEditingUser] = useState(false);
   const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
-  const [openDeleteArticleModal, setOpenDeleteArticleModal] = useState(false);
   const [userInfo, setUserInfo] = useState<UserProps>({
     nom: '',
     prenom: '',
@@ -61,6 +59,7 @@ function Profile() {
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
   const [updateArticleId, setUpdateArticleId] = useState<number | null>(null);
+  const [deleteArticleId, setDeleteArticleId] = useState<number | null>(null);
   const [isEditingArticle, setIsEditingArticle] = useState(false);
 
   const navigate = useNavigate();
@@ -194,17 +193,27 @@ function Profile() {
     setIsEditingArticle(false);
   }
 
-  async function handleDeleteArticle(event: React.FormEvent<HTMLFormElement>) {
-    event.preventDefault();
-    try {
-      const response = await axios.delete(`/article/${updateArticleId}/delete`);
-      if (response.status === 200) {
-        console.log("L'article a bien ete supprimé");
+  /**
+   * Send DELETE request to delete Article from DB
+   * @param id
+   */
+  async function handleDeleteArticleId(id: number) {
+    setDeleteArticleId(id);
+    const filteredArticle = userArticles.find(
+      (article) => article.id === deleteArticleId
+    );
+    if (filteredArticle) {
+      try {
+        const response = await axios.delete(
+          `/article/${deleteArticleId}/delete`
+        );
+        if (response.status === 200) {
+          console.log("L'article a bien ete supprimé");
+        }
+      } catch (error) {
+        console.log('Veuillez vous reconnecter', error);
       }
-    } catch (error) {
-      console.log('Veuillez vous reconnecter', error);
     }
-    setOpenDeleteArticleModal(false);
   }
 
   return (
@@ -375,9 +384,9 @@ function Profile() {
                             <FontAwesomeIcon
                               icon={faTrashCan}
                               className="icon-delete"
-                              onClick={() => {
-                                setOpenDeleteArticleModal(true);
-                              }}
+                              onClick={() =>
+                                handleDeleteArticleId(userArticle.id)
+                              }
                             />
                           </>
                         ) : (
@@ -471,7 +480,6 @@ function Profile() {
         </section>
       </div>
 
-      {/* Modal for deleting USER */}
       {openDeleteUserModal && (
         <>
           <div
@@ -573,52 +581,6 @@ function Profile() {
                 )}
               </form>
             )}
-          </div>
-        </>
-      )}
-      {/* Modal for deleting ARTICLE */}
-      {openDeleteArticleModal && (
-        <>
-          <div
-            className={
-              openDeleteArticleModal
-                ? 'entire-shadow-screen is-active'
-                : 'entire-shadow-screen'
-            }
-            onClick={() => {
-              setOpenDeleteArticleModal(false);
-            }}
-            role="button"
-            aria-label="confirm-delete-article"
-            aria-hidden="true"
-          />
-          <div
-            className={
-              openDeleteArticleModal ? 'modal-delete is-active' : 'modal-delete'
-            }
-          >
-            <form method="delete" onSubmit={handleDeleteArticle}>
-              <h2 className="delete-title">
-                Êtes-vous sûr.e de vouloir supprimer cet article ?
-              </h2>
-              <span className="delete-action">
-                ⚠️ Cette action est irréversible. ⚠️
-              </span>
-              <div className="modal-footer">
-                <button
-                  type="button"
-                  className="modal-cancel-btn"
-                  onClick={() => {
-                    setOpenDeleteArticleModal(false);
-                  }}
-                >
-                  Non
-                </button>
-                <button type="submit" className="modal-confirm-btn">
-                  Oui
-                </button>
-              </div>
-            </form>
           </div>
         </>
       )}
