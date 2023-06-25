@@ -189,23 +189,26 @@
 
 // Searchbar
 .container-searchbar {
+  visibility: hidden;
+  display: none;
   flex: 2;
   border: 1px solid red;
 
-  //border: 2px solid v.$color-searchbar;
+  border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
   border-radius: 30px;
   padding: 8px;
 
-  .searchbar {
-    border: 1px solid yellow;
-    //width: 100%;
 
+  @media (min-width: 683px) {
+    display: block;
+    visibility: visible;
+  }
+
+  .searchbar {
     form {
-      border: 1px solid salmon;
       display: flex;
       flex-wrap: nowrap;
-      //width: 100%;
     }
 
     button {
@@ -215,10 +218,9 @@
     }
 
     input {
-      border: 1px solid green;
       width: 100%;
-      //outline: none;
-      //border: none;
+      outline: none;
+      border: none;
       background-color: inherit;
     }
   }
@@ -229,10 +231,6 @@
 
   &.outside-navbar {
     margin-top: 15px;
-
-    @media (min-width: 901px) {
-      display: none;
-    }
   }
 }
 
@@ -264,5 +262,36 @@
         cursor: pointer;
       }
     }
+  }
+}
+
+
+// sidebar menu
+.aside-menu {
+  position: fixed;
+  visibility: hidden;
+  background-color: v.$color-primary;
+  z-index: 1;
+  top: 0;
+  left: 0;
+  width: 0;
+  height: 100%;
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+
+  &.is-open {
+    visibility: visible;
+    width: 80%;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: white;
   }
 }
