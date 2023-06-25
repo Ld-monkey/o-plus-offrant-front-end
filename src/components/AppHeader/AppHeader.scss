@@ -190,29 +190,41 @@
 // Searchbar
 .container-searchbar {
   flex: 2;
+  border: 1px solid red;
 
-  display: flex;
-  flex-direction: column;
-
-  border: 2px solid v.$color-searchbar;
+  //border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
   border-radius: 30px;
   padding: 8px;
 
+  .searchbar {
+    border: 1px solid yellow;
+    //width: 100%;
+
+    form {
+      border: 1px solid salmon;
+      display: flex;
+      flex-wrap: nowrap;
+      //width: 100%;
+    }
+
+    button {
+      outline: none;
+      border: none;
+      background: none;
+    }
+
+    input {
+      border: 1px solid green;
+      width: 100%;
+      //outline: none;
+      //border: none;
+      background-color: inherit;
+    }
+  }
+
   &:focus-within {
     border: 2px solid v.$color-primary;
-  }
-
-  button {
-    outline: none;
-    border: none;
-    background: none;
-  }
-
-  input {
-    outline: none;
-    border: none;
-    background-color: inherit;
   }
 
   &.outside-navbar {
