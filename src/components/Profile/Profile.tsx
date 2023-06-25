@@ -76,7 +76,11 @@ function Profile() {
         );
         setUserArticles(sortedUserArticles);
         setUserAuctions(response.data.histBuy);
-        setUserWonAuctions(response.data.wonAuction);
+        const auctionsWon = response.data.wonAuction;
+        const filteredWonAuctions = auctionsWon.filter(
+          (auctions) => auctions.prix_de_depart !== auctions.montant
+        );
+        setUserWonAuctions(filteredWonAuctions);
       } catch (error) {
         console.error('Veuillez vous connecter', error);
       }
