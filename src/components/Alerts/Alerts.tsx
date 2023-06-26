@@ -9,22 +9,22 @@ import {
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
 import './Alerts.scss';
-
-interface IPropsNotifications {
-  message?: string | undefined;
-  type?: 'information' | 'warning' | 'error' | 'success' | undefined;
-}
+import { IAlerts } from '../../@types/alerts';
+import { useAppDispatch } from '../../hooks/redux';
+import { destroyAlert } from '../../store/reducer/alerts';
 
 const TIMEOUT = 2000;
 
-function Alerts({ message, type = 'information' }: IPropsNotifications) {
+function Alerts({ message, type = 'information' }: IAlerts) {
   const [enableNotification, setEnableNotification] = useState<boolean>(true);
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
     setTimeout(() => {
       setEnableNotification(false);
+      dispatch(destroyAlert());
     }, TIMEOUT);
-  });
+  }, [dispatch]);
 
   const toggleCloseInformation = () => {
     setEnableNotification(false);

@@ -5,6 +5,7 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login, registrer } from '../../store/reducer/user';
 import './Login.scss';
+import { createAlert } from '../../store/reducer/alerts';
 
 function Login({
   toggleModalLogin,
@@ -81,6 +82,12 @@ function Login({
       .then(unwrapResult)
       .then(() => {
         toggleModalLogin();
+        dispatch(
+          createAlert({
+            message: 'Vous êtes conneté ! Félicitation',
+            type: 'success',
+          })
+        );
       })
       .catch(httpErrorHandler);
   };
