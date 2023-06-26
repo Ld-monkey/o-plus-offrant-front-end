@@ -37,8 +37,6 @@ function AddArticle() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    setSuccessMessage('');
-    setErrorMessage('');
 
     if (!image) {
       throw Error('Custom erreur : Aucune image.');
@@ -67,6 +65,9 @@ function AddArticle() {
       );
       if (response.status === 200) {
         setSuccessMessage('Votre article a bien été enregistré');
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000);
         setInputsData({
           titre: '',
           description: '',
@@ -79,6 +80,9 @@ function AddArticle() {
       }
     } catch (error) {
       setErrorMessage('Veuillez vous connecter / inscrire');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
       console.error('Veuillez-vous connecter / inscrire', error);
     }
   };
