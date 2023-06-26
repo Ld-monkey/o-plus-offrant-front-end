@@ -111,8 +111,13 @@ function Login({
           // Close registrer.
           toggleModalLogin();
 
-          // Display a cool message to inform the user
-          // that the account has been created.
+          dispatch(
+            createAlert({
+              message: `Votre compte avec l'email suivant : ${email} à bien été enregistré. Connectez-vous ensuite avec nos identifiants.`,
+              type: 'success',
+              timeout: 10000, // 10s timeout
+            })
+          );
         }
       })
       .catch(httpErrorHandler);

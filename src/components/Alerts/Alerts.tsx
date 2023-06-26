@@ -13,9 +13,9 @@ import { IAlerts } from '../../@types/alerts';
 import { useAppDispatch } from '../../hooks/redux';
 import { destroyAlert } from '../../store/reducer/alerts';
 
-const TIMEOUT = 2000;
+const TIMEOUT = 3000; // Defaut timeout of alert.
 
-function Alerts({ message, type = 'information' }: IAlerts) {
+function Alerts({ message, type = 'information', timeout = TIMEOUT }: IAlerts) {
   const [enableNotification, setEnableNotification] = useState<boolean>(true);
   const dispatch = useAppDispatch();
 
@@ -23,8 +23,8 @@ function Alerts({ message, type = 'information' }: IAlerts) {
     setTimeout(() => {
       setEnableNotification(false);
       dispatch(destroyAlert());
-    }, TIMEOUT);
-  }, [dispatch]);
+    }, timeout);
+  }, [dispatch, timeout]);
 
   const toggleCloseInformation = () => {
     setEnableNotification(false);

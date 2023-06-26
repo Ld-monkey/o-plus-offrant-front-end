@@ -14,7 +14,11 @@ export interface IsetIsOpenModal {
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
-  const { message, type: alert } = useAppSelector((state) => state.alert);
+  const {
+    message,
+    type: alert,
+    timeout,
+  } = useAppSelector((state) => state.alert);
   const location = useLocation();
 
   const checkOpenModal = () => {
@@ -31,7 +35,7 @@ function App() {
   return (
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
-      {alert && <Alerts message={message} type={alert} />}
+      {alert && <Alerts message={message} type={alert} timeout={timeout} />}
       <Outlet />
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer toggleModalLogin={checkOpenModal} />
