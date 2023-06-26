@@ -32,7 +32,7 @@
 
 .cardCat {
   width: 260px;
-  height: 400px;
+  height: 410px;
   border-radius: 5%;
   margin: 30px;
   padding: 5px;
@@ -49,14 +49,14 @@
     overflow: hidden;
   }
   p,
-  h3 {
+  .nameItem {
     text-align: center;
     font-size: 0.7rem;
     margin: 10px;
     font-weight: 800;
     color: rgb(122, 119, 119);
   }
-  h3 {
+  .nameItem {
     font-size: 1.2rem;
   }
 }

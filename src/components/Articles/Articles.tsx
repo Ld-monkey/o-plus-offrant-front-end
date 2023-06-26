@@ -1,8 +1,9 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 import axios from '../../api/axios';
 import './Articles.scss';
-import dayjs from 'dayjs';
+import getFormatDuration from '../../utils/dateFormat';
 
 interface ArticlesProps {
   id: number;
@@ -28,6 +29,8 @@ function Articles() {
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
+  const [countdown, setCountdown] = useState('');
+
   const location = useLocation();
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
@@ -126,6 +129,7 @@ function Articles() {
 
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
+
   return (
     <>
       <div id="wrapper">
@@ -192,40 +196,40 @@ function Articles() {
         </form>
       </div>
       <div id="wrapper" className="containerCardCat">
-        {filteredArticles.map((filteredArticle) => (
-          <Link
-            key={filteredArticle.id}
-            to={`/article/${filteredArticle.id}`}
-            className="cardCat"
-          >
-            <h3 className="nameItem">{filteredArticle.nom}</h3>
-            <div className="imgContainer">
-              <img
-                className="pictureItem"
-                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-                alt={filteredArticle.nom}
-              />
-            </div>
-            <p className="priceItem">
-              Prix initial : {filteredArticle.prix_de_depart}€
-            </p>
+        {filteredArticles.map((filteredArticle) => {
+          const formattedDate = dayjs(filteredArticle.date_de_fin).format(
+            'DD-MM-YYYY [à] HH:mm'
+          );
+          return (
+            <Link
+              key={filteredArticle.id}
+              to={`/article/${filteredArticle.id}`}
+              className="cardCat"
+            >
+              <h3 className="nameItem">{filteredArticle.nom}</h3>
+              <div className="imgContainer">
+                <img
+                  className="pictureItem"
+                  src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                  alt={filteredArticle.nom}
+                />
+              </div>
+              <div className="liveAuction">
+                <p className="priceItem">
+                  Prix initial : {filteredArticle.prix_de_depart}€
+                </p>
 
-            <div className="liveAuction">
-              <p className="timerAuction">
-                Temps restant :{' '}
-                {dayjs(filteredArticle.date_de_fin).format(
-                  'DD-MM-YYYY [à] HH:mm'
-                )}
-              </p>
-              <p className="liveAuction__proceNow">
-                Prix enchère actuelle : {filteredArticle.montant} €
+                <p className="timerAuction">Date de fin : {formattedDate}</p>
+                <p className="liveAuction__proceNow">
+                  Prix enchère actuelle : {filteredArticle.montant}€
+                </p>
                 <button type="button" className="liveAuction-button">
                   Surenchérir !
                 </button>
-              </p>
-            </div>
-          </Link>
-        ))}
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       <div id="wrapper">
