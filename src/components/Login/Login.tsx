@@ -17,6 +17,7 @@ function Login({
   const [isRegistrerView, setIsRegisterView] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
+  const [pwdConfirmation, setPwdConfirmation] = useState<string>('');
   const [firstname, setFirstName] = useState<string>('');
   const [lastname, setLastName] = useState<string>('');
   const [street, setStreet] = useState<string>('');
@@ -41,6 +42,7 @@ function Login({
       setLastName('');
       setEmail('');
       setPwd('');
+      setPwdConfirmation('');
       setStreet('');
 
       setErrMsg('');
@@ -98,6 +100,13 @@ function Login({
    */
   const handleSubmitRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (pwd !== pwdConfirmation) {
+      setErrMsg('Les mots de passe ne correspondent pas');
+      setPwd('');
+      setPwdConfirmation('');
+      return;
+    }
 
     if (!isLegalAge) {
       setErrMsg('Vous devez avoir 18 ans ou plus.');
@@ -220,8 +229,17 @@ function Login({
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
               type="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
               name="password"
+              autoComplete="new-password"
+              required
+            />
+            <input
+              value={pwdConfirmation}
+              onChange={(e) => setPwdConfirmation(e.target.value)}
+              type="password"
+              placeholder="Confirmation du mot de passe"
+              name="Confirmation password"
               autoComplete="new-password"
               required
             />
