@@ -29,7 +29,6 @@ function Articles() {
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
-  const [countdown, setCountdown] = useState('');
 
   const location = useLocation();
 
