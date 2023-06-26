@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 
@@ -119,7 +117,6 @@ function SingleArticle() {
                 alt={article.nom}
                 className="photo"
               />
-              <FontAwesomeIcon icon={faStar} className="fave-icon" />
             </div>
             <div className="single-product-details">
               <h2 className="single-product-title">{article.nom}</h2>
