@@ -96,7 +96,8 @@ function Profile() {
         setUserAuctions(response.data.histBuy);
         const auctionsWon = response.data.wonAuction;
         const filteredWonAuctions = auctionsWon.filter(
-          (auctions) => auctions.prix_de_depart !== auctions.montant
+          (auctions: { prix_de_depart: string; montant: string }) =>
+            auctions.prix_de_depart !== auctions.montant
         );
         setUserWonAuctions(filteredWonAuctions);
       } catch (error) {

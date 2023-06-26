@@ -244,20 +244,20 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
             </Link>
           </li>
           <li>
-            <Link to="/produit/creation" onClick={() => setIsOpen(false)}>
+            <Link to="/article/creation" onClick={() => setIsOpen(false)}>
               <FontAwesomeIcon icon={faMoneyCheckDollar} />
               Vendre
             </Link>
           </li>
           <li>
-            <Link to="/produits" onClick={() => setIsOpen(false)}>
+            <Link to="/articles" onClick={() => setIsOpen(false)}>
               <FontAwesomeIcon icon={faCartShopping} />
               Articles
             </Link>
           </li>
           {isLogged && (
             <li>
-              <Link to="#logout" onClick={() => handleLogout()}>
+              <Link to="/" onClick={() => handleLogout()}>
                 <FontAwesomeIcon icon={faRightFromBracket} />
                 Déconnexion
               </Link>

@@ -45,6 +45,10 @@ function AddArticle() {
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (!userId) {
+      throw Error("Lidentifiant de l'utilisateur est null");
+    }
+
     if (!image) {
       throw Error('Custom erreur : Aucune image.');
     }
@@ -59,7 +63,7 @@ function AddArticle() {
     formData.append('date_de_fin', inputsData.temps_de_vente);
     formData.append('photo', imageUpload);
     formData.append('date_et_heure', new Date().toJSON());
-    formData.append('utilisateur_vente_id', userId);
+    formData.append('utilisateur_vente_id', userId.toString());
     formData.append('montant', inputsData.prix_de_depart);
 
     try {
