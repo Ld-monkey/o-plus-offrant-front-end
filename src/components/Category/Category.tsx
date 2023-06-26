@@ -122,9 +122,12 @@ function Category() {
     }
     setArticles(sortedArticles);
   };
+  const [page, setPage] = useState(1); // page 1
+  const resultsPerPage = 9; // limite 9 en affichage
+  const startIndex = (page - 1) * resultsPerPage; // page -1 si page 2(-1)= 1 * 9 = 9
+  const endIndex = startIndex + resultsPerPage; // si page 2 + (2*9) =
+  const hasNextPage = endIndex < filteredArticles.length;
 
-  //  const [sortvalue; Setsortvalue] = useState("");
-  //   const sortOptions = ["montant"]
   return (
     <>
       <div id="wrapper">
@@ -147,51 +150,49 @@ function Category() {
           <div className="Sort">
             <div>
               <span>Trier par :</span>
-              <label htmlFor="Croissant" className="categoryName">
+              <label htmlFor="Prix Croissant" className="categoryName">
                 <input
                   type="radio"
                   value="increase"
-                  name="TriPrice"
+                  name="Tri"
                   defaultChecked
                   onClick={() =>
                     setArticles(handleSortByPriceIncrease(articles))
                   }
                 />
-                <span>Croissant</span>
+                <span>Prix Croissant</span>
               </label>
-              <label htmlFor="Décroissant" className="categoryName">
+              <label htmlFor="Prix Décroissant" className="categoryName">
                 <input
                   type="radio"
                   value="decrease"
-                  name="TriPrice"
+                  name="Tri"
                   onClick={handleSortByPriceDecrease}
                 />
-                <span>Décroissant</span>
+                <span>Prix Décroissant</span>
               </label>
-            </div>
-            <div>
-              <label htmlFor="La plus courte" className="categoryName">
+              <label htmlFor="Durée la plus courte" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   onChange={() => handleChangeTimerSort(articles, 'increase')}
                 />
-                <span>La plus courte</span>
+                <span>Durée la plus courte</span>
               </label>
-              <label htmlFor="La plus longue" className="categoryName">
+              <label htmlFor="Durée la plus longue" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   onChange={() => handleChangeTimerSort(articles, 'decrease')}
                 />
-                <span>La plus longue</span>
+                <span>Durée la plus longue</span>
               </label>
             </div>
           </div>
         </form>
       </div>
       <div id="wrapper" className="containerCardCat">
-        {filteredArticles.map((filteredArticle) => (
+        {filteredArticles.slice(startIndex, endIndex).map((filteredArticle) => (
           <Link
             key={filteredArticle.id}
             to={`/produit/${filteredArticle.id}`}
@@ -226,12 +227,24 @@ function Category() {
 
       <div id="wrapper">
         <div className="button_container">
-          <button type="button" className="buttonPage">
-            Page précédente
-          </button>
-          <button type="button" className="buttonPage">
-            Page suivante
-          </button>
+          {page > 1 && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page - 1)}
+            >
+              Page précédente
+            </button>
+          )}
+          {hasNextPage && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page + 1)} // bloqué plus de serveur back mais ici peut etre mettre une condition au +1 page si filtreredArticles.length
+            >
+              Page suivante
+            </button>
+          )}
         </div>
       </div>
     </>
