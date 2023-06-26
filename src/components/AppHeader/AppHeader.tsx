@@ -146,7 +146,7 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
                         <li className="list-inside" key={article.id}>
                           <Link
                             onClick={() => setContentSearchBar('')}
-                            to={`/produit/${article.id}`}
+                            to={`/article/${article.id}`}
                           >
                             {article.nom}
                           </Link>
@@ -156,11 +156,11 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               </div>
             </div>
             <div className="header-navbar-container">
-              <Link to="produit/creation" className="header-link-sell">
+              <Link to="article/creation" className="header-link-sell">
                 <FontAwesomeIcon icon={faSackDollar} className="icon-dollar" />
                 Vendre
               </Link>
-              <Link to="produits" className="header-link-category">
+              <Link to="articles" className="header-link-category">
                 <FontAwesomeIcon icon={faToolbox} className="icon-category" />
                 Articles
               </Link>

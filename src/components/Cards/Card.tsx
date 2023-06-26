@@ -41,7 +41,7 @@ function Card({
 
   return (
     <div className="cards-container">
-      <Link to={`produit/${id}`} className="card">
+      <Link to={`article/${id}`} className="card">
         <div className="card-img">
           {label && <span className="current-auction">{label}</span>}
           <img src={imageUrl} alt={description} />
@@ -50,7 +50,9 @@ function Card({
           <p>{nom}</p>
           <div className="card-legend__data">
             <span className="card-legend__tokens">{montant} €</span>
-            <span className="card-legend__times">{countdown}</span>
+            <span className="card-legend__times">
+              {countdown.replace(/:(\d)(?!\d)/g, ':0$1')}
+            </span>
           </div>
         </div>
       </Link>

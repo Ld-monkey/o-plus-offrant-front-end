@@ -5,16 +5,17 @@ import { Provider } from 'react-redux';
 
 import App from './components/App/App';
 import Home from './components/Home/Home';
-import Category from './components/Category/Category';
+import Articles from './components/Articles/Articles';
 import AddArticle from './components/AddArticle/AddArticle';
 import store from './store/store';
 import SingleArticle from './components/SingleArticle/SingleArticle';
+import ConditionsUse from './components/CGU/CGU';
+import Profile from './components/Profile/Profile';
+import ErrorPage from './components/ErrorPage/ErrorPage';
 
 import './styles/index.scss';
 import getAllArticles from './api/articles';
 import PrivateRoute from './components/PrivateRoute/PrivateRoute';
-import Profile from './components/Profile/Profile';
-import ErrorPage from './components/ErrorPage/ErrorPage';
 
 const router = createBrowserRouter([
   {
@@ -28,15 +29,15 @@ const router = createBrowserRouter([
         element: <Home />,
       },
       {
-        path: 'produits',
-        element: <Category />,
+        path: 'articles',
+        element: <Articles />,
       },
       {
-        path: 'produit/:idArticle',
+        path: 'article/:idArticle',
         element: <SingleArticle />,
       },
       {
-        path: 'produit/creation',
+        path: 'article/creation',
         element: <AddArticle />,
       },
       {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
             <Profile />
           </PrivateRoute>
         ),
+      },
+      {
+        path: 'conditions-generales-d-utilisation',
+        element: <ConditionsUse />,
       },
     ],
   },

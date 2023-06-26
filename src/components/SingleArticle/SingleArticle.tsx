@@ -1,7 +1,5 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faStar } from '@fortawesome/free-regular-svg-icons';
 import dayjs from 'dayjs';
 import 'dayjs/locale/fr';
 
@@ -11,6 +9,7 @@ import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import axios from '../../api/axios';
 import './SingleArticle.scss';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 interface SingleArticleProps {
   id: number;
@@ -50,6 +49,11 @@ function SingleArticle() {
 
   const { idArticle } = useParams();
 
+  /**
+   * Retrieve datas of 1 article from API
+   * @param idArticle
+   * @param article so that the UI updates whenever the "enchérir" button in clicked
+   */
   useEffect(() => {
     async function fetchArticlebyId() {
       const response = await axios.get(`/api/article/${idArticle}`);
@@ -119,7 +123,6 @@ function SingleArticle() {
                 alt={article.nom}
                 className="photo"
               />
-              <FontAwesomeIcon icon={faStar} className="fave-icon" />
             </div>
             <div className="single-product-details">
               <h2 className="single-product-title">{article.nom}</h2>
@@ -204,6 +207,10 @@ function SingleArticle() {
             )}
           </section>
         </div>
+
+        {/** Modal for confirming auction
+         * Conditions for rendering different messages
+         */}
         {openModal && (
           <>
             <div
@@ -283,13 +290,7 @@ function SingleArticle() {
       </>
     );
   }
-  return (
-    <div id="wrapper">
-      <p className="not-found">
-        Le produit que vous recherchez n&apos;existe pas.
-      </p>
-    </div>
-  );
+  return <ErrorPage />;
 }
 
 export default SingleArticle;
