@@ -12,7 +12,10 @@ function Home() {
 
   return (
     <>
-      <Notifications message="Simple notification" />
+      <Notifications message="Simple notification" type="warning" />
+      <Notifications message="Simple notification" type="success" />
+      <Notifications message="Simple notification" type="error" />
+      <Notifications message="Simple notification" type="information" />
       <CategoriesBar />
       <StackArticles articles={allArticles} />
       <CarouselItem articles={allArticles} />

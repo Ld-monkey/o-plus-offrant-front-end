@@ -1,10 +1,23 @@
+@use '../../styles/variables' as v;
+
 .notification {
   position: relative;
   margin: 2rem auto;
-  border: 1px solid gray;
+  border: 1px solid #dddddd;
   border-radius: 3px;
   padding: 8px 15px;
-  line-height: 2rem;
+  background-color: #dddddd;
+  display: flex;
+  align-items: center;
+
+  &-logo {
+    margin-right: 20px;
+
+    // icon
+    svg {
+      height: 25px;
+    }
+  }
 
   h3 {
     color: gray;
@@ -21,5 +34,38 @@
       height: 15px;
       color: gray;
     }
+  }
+
+  &.error,
+  &.warning,
+  &.success {
+    color: white;
+
+    h3 {
+      color: white;
+    }
+
+    .close-alert,
+    svg {
+      color: white;
+    }
+  }
+
+  // Error alert
+  &.error {
+    border: 1px solid v.$color-error;
+    background-color: v.$color-error;
+  }
+
+  // warning alert
+  &.warning {
+    border: 1px solid v.$color-secondary;
+    background-color: v.$color-secondary;
+  }
+
+  // success alert
+  &.success {
+    border: 1px solid v.$color-success;
+    background-color: v.$color-success;
   }
 }
