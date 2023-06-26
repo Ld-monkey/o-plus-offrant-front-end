@@ -89,7 +89,7 @@ function AddArticle() {
 
   return (
     <div id="wrapper">
-      <h2>Vendre votre article</h2>
+      <h2 className="sell-article">Vendre votre article</h2>
       <form method="post" className="add-article-form" onSubmit={handleSubmit}>
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
