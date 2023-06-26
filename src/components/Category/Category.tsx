@@ -122,10 +122,10 @@ function Category() {
     }
     setArticles(sortedArticles);
   };
-  const [page, setPage] = useState(1); // page 1
-  const resultsPerPage = 9; // limite 9 en affichage
-  const startIndex = (page - 1) * resultsPerPage; // page -1 si page 2(-1)= 1 * 9 = 9
-  const endIndex = startIndex + resultsPerPage; // si page 2 + (2*9) =
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 9;
+  const startIndex = (page - 1) * resultsPerPage;
+  const endIndex = startIndex + resultsPerPage;
   const hasNextPage = endIndex < filteredArticles.length;
 
   return (
