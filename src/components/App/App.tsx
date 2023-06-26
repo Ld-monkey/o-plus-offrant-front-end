@@ -1,5 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Outlet, useLocation } from 'react-router-dom';
+import { useAppSelector } from '../../hooks/redux';
+import Alerts from '../Alerts/Alerts';
 import AppHeader from '../AppHeader/AppHeader';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
@@ -12,6 +14,7 @@ export interface IsetIsOpenModal {
 
 function App() {
   const [isOpenModal, setIsOpenModal] = useState<boolean>(false);
+  const { message, type: alert } = useAppSelector((state) => state.alert);
   const location = useLocation();
 
   const checkOpenModal = () => {
@@ -28,6 +31,7 @@ function App() {
   return (
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
+      {alert && <Alerts message={message} type={alert} />}
       <Outlet />
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer toggleModalLogin={checkOpenModal} />
