@@ -2,8 +2,12 @@
 /* eslint-disable react/jsx-no-bind */
 import { Link, useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPenToSquare, faTrashCan } from '@fortawesome/free-regular-svg-icons';
-import { faCheck, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faEyeSlash,
+  faPenToSquare,
+  faTrashCan,
+} from '@fortawesome/free-regular-svg-icons';
+import { faCheck, faEye, faXmark } from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -120,6 +124,8 @@ function Profile() {
       [field]: event.target.value,
     }));
   }
+
+  console.log(userInfo);
 
   /**
    * Function for sending updated USER values to the API
@@ -271,6 +277,9 @@ function Profile() {
     setOpenDeleteArticleModal(false);
   }
 
+  // ===============================================================================================
+  const [isVisible, setIsVisible] = useState(false);
+
   return (
     <>
       <div id="wrapper">
@@ -330,15 +339,30 @@ function Profile() {
                   value={userInfo.adresse}
                   onChange={(e) => handleUserInputChange(e, 'adresse')}
                 />
-                <input
-                  type="password"
-                  placeholder="Nouveau mot de passe"
-                  // onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
-                />
+                <div>
+                  <input
+                    type={isVisible ? 'text' : 'password'}
+                    placeholder="Nouveau mot de passe"
+                    onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
+                  />
+                  {isVisible ? (
+                    <FontAwesomeIcon
+                      icon={faEye}
+                      onClick={() => setIsVisible(!isVisible)}
+                    />
+                  ) : (
+                    <FontAwesomeIcon
+                      icon={faEyeSlash}
+                      onClick={() => setIsVisible(!isVisible)}
+                    />
+                  )}
+                </div>
                 <input
                   type="password"
                   placeholder="Confirmer votre mot de passe"
-                  // onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
+                  onChange={(e) =>
+                    handleUserInputChange(e, 'mot_de_passe_confirmation')
+                  }
                 />
                 <div className="edit-btn">
                   <button
