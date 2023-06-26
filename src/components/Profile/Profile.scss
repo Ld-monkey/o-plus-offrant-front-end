@@ -77,6 +77,15 @@ table {
     width: 250px;
   }
 
+  .icons {
+    margin-left: 20px;
+  }
+
+  .error-pwd {
+    width: 100%;
+    color: red;
+  }
+
   .edit-btn {
     flex-direction: row;
     justify-content: end;

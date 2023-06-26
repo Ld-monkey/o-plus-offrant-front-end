@@ -22,6 +22,7 @@ interface UserProps {
   adresse_mail: string;
   adresse: string;
   mot_de_passe: string;
+  mot_de_passe_confirmation: string;
 }
 
 interface UserArticles {
@@ -62,6 +63,7 @@ function Profile() {
     adresse_mail: '',
     adresse: '',
     mot_de_passe: '',
+    mot_de_passe_confirmation: '',
   });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
@@ -72,6 +74,8 @@ function Profile() {
   const [errorMsgUser, setErrorMsgUser] = useState('');
   const [successMsgArticle, setSuccessMsgArticle] = useState('');
   const [errorMsgArticle, setErrorMsgArticle] = useState('');
+  const [errorPassword, setErrorPassword] = useState('');
+  const [passwordMatch, setPasswordMatch] = useState(true);
 
   const navigate = useNavigate();
 
@@ -125,14 +129,23 @@ function Profile() {
     }));
   }
 
-  console.log(userInfo);
-
   /**
    * Function for sending updated USER values to the API
    * @param userId
    * @param userInfo
    */
   async function handleSaveButton() {
+    if (userInfo.mot_de_passe !== userInfo.mot_de_passe_confirmation) {
+      setPasswordMatch(false);
+      setErrorPassword(
+        'Le mot de passe et sa confirmation ne correspondent pas'
+      );
+      setTimeout(() => {
+        setErrorPassword('');
+      }, 5000);
+      return;
+    }
+
     try {
       const response = await privateAxios.patch(
         `/api/profile/${userId}/update`,
@@ -310,7 +323,24 @@ function Profile() {
             <span>Adresse :</span>
             {isEditingUser ? (
               <>
-                <span>Nouveau mot de passe :</span>
+                <span>
+                  Nouveau mot de passe :
+                  <span className="icons">
+                    {isVisible ? (
+                      <FontAwesomeIcon
+                        icon={faEye}
+                        onClick={() => setIsVisible(!isVisible)}
+                        className="eye-icon"
+                      />
+                    ) : (
+                      <FontAwesomeIcon
+                        icon={faEyeSlash}
+                        onClick={() => setIsVisible(!isVisible)}
+                        className="eye-icon"
+                      />
+                    )}
+                  </span>
+                </span>
                 <span>Confirmation du mot de passe :</span>
               </>
             ) : null}
@@ -339,24 +369,11 @@ function Profile() {
                   value={userInfo.adresse}
                   onChange={(e) => handleUserInputChange(e, 'adresse')}
                 />
-                <div>
-                  <input
-                    type={isVisible ? 'text' : 'password'}
-                    placeholder="Nouveau mot de passe"
-                    onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
-                  />
-                  {isVisible ? (
-                    <FontAwesomeIcon
-                      icon={faEye}
-                      onClick={() => setIsVisible(!isVisible)}
-                    />
-                  ) : (
-                    <FontAwesomeIcon
-                      icon={faEyeSlash}
-                      onClick={() => setIsVisible(!isVisible)}
-                    />
-                  )}
-                </div>
+                <input
+                  type={isVisible ? 'text' : 'password'}
+                  placeholder="Nouveau mot de passe"
+                  onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
+                />
                 <input
                   type="password"
                   placeholder="Confirmer votre mot de passe"
@@ -364,6 +381,9 @@ function Profile() {
                     handleUserInputChange(e, 'mot_de_passe_confirmation')
                   }
                 />
+                {!passwordMatch && (
+                  <div className="error-pwd">{errorPassword}</div>
+                )}
                 <div className="edit-btn">
                   <button
                     type="button"
