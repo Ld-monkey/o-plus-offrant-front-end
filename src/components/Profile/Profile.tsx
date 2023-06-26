@@ -17,6 +17,7 @@ interface UserProps {
   prenom: string;
   adresse_mail: string;
   adresse: string;
+  mot_de_passe: string;
 }
 
 interface UserArticles {
@@ -56,6 +57,7 @@ function Profile() {
     prenom: '',
     adresse_mail: '',
     adresse: '',
+    mot_de_passe: '',
   });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
@@ -133,6 +135,7 @@ function Profile() {
           prenom: userInfo.prenom,
           adresse: userInfo.adresse,
           adresse_mail: userInfo.adresse_mail,
+          mot_de_passe: userInfo.mot_de_passe,
         }
       );
       console.log(response);
@@ -296,6 +299,12 @@ function Profile() {
             <span>Prénom :</span>
             <span>Email :</span>
             <span>Adresse :</span>
+            {isEditingUser ? (
+              <>
+                <span>Nouveau mot de passe :</span>
+                <span>Confirmation du mot de passe :</span>
+              </>
+            ) : null}
           </div>
 
           <div className="user-infos">
@@ -320,6 +329,16 @@ function Profile() {
                   type="text"
                   value={userInfo.adresse}
                   onChange={(e) => handleUserInputChange(e, 'adresse')}
+                />
+                <input
+                  type="password"
+                  placeholder="Nouveau mot de passe"
+                  // onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
+                />
+                <input
+                  type="password"
+                  placeholder="Confirmer votre mot de passe"
+                  // onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
                 />
                 <div className="edit-btn">
                   <button
