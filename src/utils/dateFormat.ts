@@ -36,6 +36,14 @@ function getFormatDuration(endTime: string | undefined): string {
     countdown = `${days} jours `;
   }
 
+  if (hours < 0 && minutes !== 0) {
+    if (minutes < 10) {
+      countdown += `0${minutes}:`;
+    } else {
+      countdown += `${minutes}:`;
+    }
+  }
+
   if (hours !== 0) {
     if (hours < 10) {
       countdown += `0${hours}:`;
@@ -43,7 +51,6 @@ function getFormatDuration(endTime: string | undefined): string {
       countdown += `${hours}:`;
     }
   }
-
   countdown += `${minutes}:${seconds}`;
 
   return countdown;
