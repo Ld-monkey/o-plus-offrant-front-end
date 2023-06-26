@@ -86,7 +86,7 @@ function Login({
         toggleModalLogin();
         dispatch(
           createAlert({
-            message: 'Vous êtes conneté ! Félicitation',
+            message: 'Vous êtes connecté ! Félicitation',
             type: 'success',
           })
         );

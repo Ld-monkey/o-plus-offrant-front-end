@@ -4,11 +4,13 @@ import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CategoriesProps from '../../@types/interfaces';
 import './AddArticle.scss';
 import axios from '../../api/axios';
-import { useAppSelector } from '../../hooks/redux';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createAlert } from '../../store/reducer/alerts';
 
 function AddArticle() {
   const privateAxios = useAxiosPrivate();
   const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
 
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
   const [image, setImage] = useState<FileList | null>();
@@ -46,6 +48,14 @@ function AddArticle() {
     event.preventDefault();
 
     if (!userId) {
+      dispatch(
+        createAlert({
+          message:
+            'Veuillez vous connecter ou vous inscrire pour vendre un article.',
+          type: 'information',
+          timeout: 6000,
+        })
+      );
       throw Error("Lidentifiant de l'utilisateur est null");
     }
 
