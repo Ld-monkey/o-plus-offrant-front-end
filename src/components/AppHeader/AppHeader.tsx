@@ -255,12 +255,14 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
               Articles
             </Link>
           </li>
-          <li>
-            <Link to="#logout" onClick={() => handleLogout()}>
-              <FontAwesomeIcon icon={faRightFromBracket} />
-              Déconnexion
-            </Link>
-          </li>
+          {isLogged && (
+            <li>
+              <Link to="#logout" onClick={() => handleLogout()}>
+                <FontAwesomeIcon icon={faRightFromBracket} />
+                Déconnexion
+              </Link>
+            </li>
+          )}
         </ul>
       </aside>
     </>
