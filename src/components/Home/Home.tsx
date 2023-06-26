@@ -2,6 +2,7 @@ import { useLoaderData } from 'react-router-dom';
 import CarouselItem from '../Carousel/Carousel';
 import CategoriesBar from '../CategoriesBar/CategoriesBar';
 import StackArticles from '../StackArticles/StackArticles';
+import Notifications from '../Notifications/Notifications';
 
 function Home() {
   const loaderData: any = useLoaderData();
@@ -11,6 +12,7 @@ function Home() {
 
   return (
     <>
+      <Notifications message="Simple notification" />
       <CategoriesBar />
       <StackArticles articles={allArticles} />
       <CarouselItem articles={allArticles} />
