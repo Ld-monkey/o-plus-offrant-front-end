@@ -37,6 +37,8 @@ function AddArticle() {
 
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setSuccessMessage('');
+    setErrorMessage('');
 
     if (!image) {
       throw Error('Custom erreur : Aucune image.');
