@@ -62,8 +62,10 @@ function Profile() {
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
   const [updateArticleId, setUpdateArticleId] = useState<number | null>(null);
   const [isEditingArticle, setIsEditingArticle] = useState(false);
-  const [successMsg, setSuccessMsg] = useState('');
-  const [errorMsg, setErrorMsg] = useState('');
+  const [successMsgUser, setSuccessMsgUser] = useState('');
+  const [errorMsgUser, setErrorMsgUser] = useState('');
+  const [successMsgArticle, setSuccessMsgArticle] = useState('');
+  const [errorMsgArticle, setErrorMsgArticle] = useState('');
 
   const navigate = useNavigate();
 
@@ -121,11 +123,11 @@ function Profile() {
       );
       console.log(response);
       if (response.status === 200) {
-        setSuccessMsg('Votre modification a bien été prise en compte.');
+        setSuccessMsgUser('Votre modification a bien été prise en compte.');
       }
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
-      setErrorMsg('Oups, veuillez réessayer.');
+      setErrorMsgUser('Oups, veuillez réessayer.');
     }
     setIsEditingUser(false);
   }
@@ -140,7 +142,7 @@ function Profile() {
       }
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
-      setErrorMsg('Oups, veuillez réessayer.');
+      setErrorMsgUser('Oups, veuillez réessayer.');
     }
     setOpenDeleteUserModal(false);
   }
@@ -190,11 +192,13 @@ function Profile() {
         );
         console.log(response);
         if (response.status === 200) {
-          setSuccessMsg('Votre modification a bien été prise en compte.');
+          setSuccessMsgArticle(
+            'Votre modification a bien été prise en compte.'
+          );
         }
       } catch (error) {
         console.error('Veuillez vous reconnecter', error);
-        setErrorMsg('Oups, veuillez réessayer.');
+        setErrorMsgArticle('Oups, veuillez réessayer.');
       }
     }
     setIsEditingArticle(false);
@@ -209,11 +213,11 @@ function Profile() {
     try {
       const response = await axios.delete(`/article/${updateArticleId}/delete`);
       if (response.status === 200) {
-        setSuccessMsg("L'article a bien été supprimé.");
+        setSuccessMsgArticle("L'article a bien été supprimé.");
       }
     } catch (error) {
       console.log('Veuillez vous reconnecter', error);
-      setErrorMsg('Oups, veuillez réessayer.');
+      setErrorMsgArticle('Oups, veuillez réessayer.');
     }
     setOpenDeleteArticleModal(false);
   }
@@ -238,8 +242,8 @@ function Profile() {
             />
           </div>
         </h2>
-        {successMsg && <div className="success-msg">{successMsg}</div>}
-        {errorMsg && <div className="error-msg">{errorMsg}</div>}
+        {successMsgUser && <div className="success-msg">{successMsgUser}</div>}
+        {errorMsgUser && <div className="error-msg">{errorMsgUser}</div>}
         <section className="user">
           <div className="user-label">
             <span>Nom :</span>
@@ -297,8 +301,12 @@ function Profile() {
 
         <section className="my-articles">
           <h2 className="section-title">Mes articles</h2>
-          {successMsg && <div className="success-msg">{successMsg}</div>}
-          {errorMsg && <div className="error-msg">{errorMsg}</div>}
+          {successMsgArticle && (
+            <div className="success-msg">{successMsgArticle}</div>
+          )}
+          {errorMsgArticle && (
+            <div className="error-msg">{errorMsgArticle}</div>
+          )}
           {userArticles.length === 0 ? (
             <p className="empty-table">
               Tu n&apos;as pas encore d&apos;objet en vente.
