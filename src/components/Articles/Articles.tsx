@@ -149,7 +149,7 @@ function Articles() {
             ))}
           </div>
           <div className="Sort">
-            <div>
+            <div className="sort-by-price">
               <span>Trier par :</span>
               <label htmlFor="Croissant" className="categoryName">
                 <input
@@ -173,7 +173,7 @@ function Articles() {
                 <span>Décroissant</span>
               </label>
             </div>
-            <div>
+            <div className="sort-by-duration">
               <label htmlFor="La plus courte" className="categoryName">
                 <input
                   type="radio"
