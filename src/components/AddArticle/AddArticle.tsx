@@ -23,6 +23,9 @@ function AddArticle() {
     photo: null,
   });
 
+  /**
+   * Retrieve categories from API to render in the menu of options
+   */
   useEffect(() => {
     async function fetchCategories() {
       try {
@@ -35,6 +38,10 @@ function AddArticle() {
     fetchCategories();
   }, []);
 
+  /**
+   * Send form values to the API in FormData
+   * @param event
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 

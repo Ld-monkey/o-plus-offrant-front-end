@@ -9,6 +9,7 @@ import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import axios from '../../api/axios';
 import './SingleArticle.scss';
+import ErrorPage from '../ErrorPage/ErrorPage';
 
 interface SingleArticleProps {
   id: number;
@@ -48,6 +49,11 @@ function SingleArticle() {
 
   const { idArticle } = useParams();
 
+  /**
+   * Retrieve datas of 1 article from API
+   * @param idArticle
+   * @param article so that the UI updates whenever the "enchérir" button in clicked
+   */
   useEffect(() => {
     async function fetchArticlebyId() {
       const response = await axios.get(`/api/article/${idArticle}`);
@@ -201,6 +207,10 @@ function SingleArticle() {
             )}
           </section>
         </div>
+
+        {/** Modal for confirming auction
+         * Conditions for rendering different messages
+         */}
         {openModal && (
           <>
             <div
@@ -280,13 +290,7 @@ function SingleArticle() {
       </>
     );
   }
-  return (
-    <div id="wrapper">
-      <p className="not-found">
-        L&aposarticle que vous recherchez n&apos;existe pas.
-      </p>
-    </div>
-  );
+  return <ErrorPage />;
 }
 
 export default SingleArticle;

@@ -69,6 +69,10 @@ function Profile() {
 
   const navigate = useNavigate();
 
+  /**
+   * Retrieve user data to render in the component
+   * @param userId
+   */
   useEffect(() => {
     async function fetchUserbyId() {
       try {
@@ -100,6 +104,11 @@ function Profile() {
     setIsEditingUser(false);
   }
 
+  /**
+   * Function for listening to user input in real-time
+   * @param event
+   * @param field
+   */
   function handleUserInputChange(
     event: React.ChangeEvent<HTMLInputElement>,
     field: string
@@ -110,6 +119,11 @@ function Profile() {
     }));
   }
 
+  /**
+   * Function for sending updated USER values to the API
+   * @param userId
+   * @param userInfo
+   */
   async function handleSaveButton() {
     try {
       const response = await privateAxios.patch(
@@ -138,6 +152,10 @@ function Profile() {
     setIsEditingUser(false);
   }
 
+  /**
+   * Function for deleting USER from the Database
+   * @param userId
+   */
   async function handleDeleteUser(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
@@ -156,6 +174,10 @@ function Profile() {
     setOpenDeleteUserModal(false);
   }
 
+  /**
+   * Function for checking if an auction is expired
+   * @param userAuction.date_de_fin
+   */
   const notExpiredAuction = userAuctions.filter((userAuction) => {
     const isAuctionExpired = dayjs().isAfter(userAuction.date_de_fin);
     return !isAuctionExpired;
@@ -180,7 +202,7 @@ function Profile() {
   }
 
   /**
-   * Send PATCH request to update Article datas
+   * Function for sending updated ARTICLE values to the API
    */
   async function handleUpdateArticle() {
     const editingArticle = userArticles.find(
@@ -222,6 +244,10 @@ function Profile() {
     setIsEditingArticle(false);
   }
 
+  /**
+   * Function for deleting an ARTICLE from the database
+   * @param updateArticleId
+   */
   async function handleDeleteArticle(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
