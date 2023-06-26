@@ -140,14 +140,14 @@ function Profile() {
         setSuccessMsgUser('Votre modification a bien été prise en compte.');
         setTimeout(() => {
           setSuccessMsgUser('');
-        }, 5000);
+        }, 3000);
       }
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
       setErrorMsgUser('Oups, veuillez réessayer.');
       setTimeout(() => {
         setErrorMsgUser('');
-      }, 5000);
+      }, 3000);
     }
     setIsEditingUser(false);
   }
@@ -169,7 +169,7 @@ function Profile() {
       setErrorMsgUser('Oups, veuillez réessayer.');
       setTimeout(() => {
         setErrorMsgUser('');
-      }, 5000);
+      }, 3000);
     }
     setOpenDeleteUserModal(false);
   }
@@ -227,14 +227,14 @@ function Profile() {
           );
           setTimeout(() => {
             setSuccessMsgArticle('');
-          }, 5000);
+          }, 3000);
         }
       } catch (error) {
         console.error('Veuillez vous reconnecter', error);
         setErrorMsgArticle('Oups, veuillez réessayer.');
         setTimeout(() => {
           setErrorMsgArticle('');
-        }, 5000);
+        }, 3000);
       }
     }
     setIsEditingArticle(false);
@@ -254,13 +254,16 @@ function Profile() {
       const response = await axios.delete(`/article/${updateArticleId}/delete`);
       if (response.status === 200) {
         setSuccessMsgArticle("L'article a bien été supprimé.");
+        setTimeout(() => {
+          setSuccessMsgArticle('');
+        }, 3000);
       }
     } catch (error) {
       console.log('Veuillez vous reconnecter', error);
       setErrorMsgArticle('Oups, veuillez réessayer.');
       setTimeout(() => {
         setErrorMsgArticle('');
-      }, 5000);
+      }, 3000);
     }
     setOpenDeleteArticleModal(false);
   }
