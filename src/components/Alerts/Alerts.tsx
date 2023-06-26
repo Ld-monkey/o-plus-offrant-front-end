@@ -8,7 +8,7 @@ import {
   faSquareXmark,
   faTriangleExclamation,
 } from '@fortawesome/free-solid-svg-icons';
-import './Notifications.scss';
+import './Alerts.scss';
 
 interface IPropsNotifications {
   message?: string | undefined;
@@ -17,7 +17,7 @@ interface IPropsNotifications {
 
 const TIMEOUT = 2000;
 
-function Notifications({ message, type = 'information' }: IPropsNotifications) {
+function Alerts({ message, type = 'information' }: IPropsNotifications) {
   const [enableNotification, setEnableNotification] = useState<boolean>(true);
 
   useEffect(() => {
@@ -78,4 +78,4 @@ function Notifications({ message, type = 'information' }: IPropsNotifications) {
   );
 }
 
-export default Notifications;
+export default Alerts;
