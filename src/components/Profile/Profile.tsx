@@ -195,7 +195,6 @@ function Profile() {
           {
             nom: editingArticle.nom,
             description: editingArticle.description,
-            photo: 'photo', // REMOVE FROM THE DATA SENT TO THE BACKEND AND TEST AGAIN !
             utilisateur_vente_id: userId,
           }
         );
