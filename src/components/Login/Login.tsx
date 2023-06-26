@@ -5,6 +5,7 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login, registrer } from '../../store/reducer/user';
 import './Login.scss';
+import { createAlert } from '../../store/reducer/alerts';
 
 function Login({
   toggleModalLogin,
@@ -83,6 +84,12 @@ function Login({
       .then(unwrapResult)
       .then(() => {
         toggleModalLogin();
+        dispatch(
+          createAlert({
+            message: 'Vous êtes conneté ! Félicitation',
+            type: 'success',
+          })
+        );
       })
       .catch(httpErrorHandler);
   };
@@ -113,8 +120,13 @@ function Login({
           // Close registrer.
           toggleModalLogin();
 
-          // Display a cool message to inform the user
-          // that the account has been created.
+          dispatch(
+            createAlert({
+              message: `Votre compte avec l'email suivant : ${email} à bien été enregistré. Connectez-vous ensuite avec nos identifiants.`,
+              type: 'success',
+              timeout: 10000, // 10s timeout
+            })
+          );
         }
       })
       .catch(httpErrorHandler);
