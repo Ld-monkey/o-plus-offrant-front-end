@@ -62,6 +62,8 @@ function Profile() {
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
   const [updateArticleId, setUpdateArticleId] = useState<number | null>(null);
   const [isEditingArticle, setIsEditingArticle] = useState(false);
+  const [successMsg, setSuccessMsg] = useState('');
+  const [errorMsg, setErrorMsg] = useState('');
 
   const navigate = useNavigate();
 
@@ -76,7 +78,11 @@ function Profile() {
         );
         setUserArticles(sortedUserArticles);
         setUserAuctions(response.data.histBuy);
-        setUserWonAuctions(response.data.wonAuction);
+        const auctionsWon = response.data.wonAuction;
+        const filteredWonAuctions = auctionsWon.filter(
+          (auctions) => auctions.prix_de_depart !== auctions.montant
+        );
+        setUserWonAuctions(filteredWonAuctions);
       } catch (error) {
         console.error('Veuillez vous connecter', error);
       }
@@ -114,8 +120,12 @@ function Profile() {
         }
       );
       console.log(response);
+      if (response.status === 200) {
+        setSuccessMsg('Votre modification a bien été prise en compte.');
+      }
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
+      setErrorMsg('Oups, veuillez réessayer.');
     }
     setIsEditingUser(false);
   }
@@ -128,9 +138,9 @@ function Profile() {
         dispatch(logout());
         navigate('/');
       }
-      console.log(response);
     } catch (error) {
       console.error('Veuillez vous reconnecter', error);
+      setErrorMsg('Oups, veuillez réessayer.');
     }
     setOpenDeleteUserModal(false);
   }
@@ -179,8 +189,12 @@ function Profile() {
           }
         );
         console.log(response);
+        if (response.status === 200) {
+          setSuccessMsg('Votre modification a bien été prise en compte.');
+        }
       } catch (error) {
         console.error('Veuillez vous reconnecter', error);
+        setErrorMsg('Oups, veuillez réessayer.');
       }
     }
     setIsEditingArticle(false);
@@ -195,10 +209,11 @@ function Profile() {
     try {
       const response = await axios.delete(`/article/${updateArticleId}/delete`);
       if (response.status === 200) {
-        console.log("L'article a bien ete supprimé");
+        setSuccessMsg("L'article a bien été supprimé.");
       }
     } catch (error) {
       console.log('Veuillez vous reconnecter', error);
+      setErrorMsg('Oups, veuillez réessayer.');
     }
     setOpenDeleteArticleModal(false);
   }
@@ -223,6 +238,8 @@ function Profile() {
             />
           </div>
         </h2>
+        {successMsg && <div className="success-msg">{successMsg}</div>}
+        {errorMsg && <div className="error-msg">{errorMsg}</div>}
         <section className="user">
           <div className="user-label">
             <span>Nom :</span>
@@ -280,6 +297,8 @@ function Profile() {
 
         <section className="my-articles">
           <h2 className="section-title">Mes articles</h2>
+          {successMsg && <div className="success-msg">{successMsg}</div>}
+          {errorMsg && <div className="error-msg">{errorMsg}</div>}
           {userArticles.length === 0 ? (
             <p className="empty-table">
               Tu n&apos;as pas encore d&apos;objet en vente.
