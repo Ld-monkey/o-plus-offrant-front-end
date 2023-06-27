@@ -22,13 +22,14 @@
       gap: 0.75rem;
     }
 
-    @media (max-width: 830px) {
+    @media screen and (max-width: 830px) {
       justify-content: space-between;
     }
   }
 
   &-link-sell,
   &-link-category {
+    display: none;
     svg {
       padding-right: 10px;
     }
@@ -40,6 +41,10 @@
         opacity: 0.8;
       }
     }
+
+    @media (min-width: 395px) {
+      display: inline-block;
+    }
   }
 
   .loging-container {
@@ -47,7 +52,7 @@
     display: none;
     height: 100%;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media screen and (min-width: v.$layout-breakpoint-tablet-navbar) {
       display: block;
     }
   }
@@ -69,7 +74,7 @@
   &-btn-online {
     display: none;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media screen and (min-width: v.$layout-breakpoint-tablet-navbar) {
       padding: 10px 20px;
       display: flex;
       justify-content: center;
@@ -165,7 +170,7 @@
   padding: 8px;
 
 
-  @media (min-width: 683px) {
+  @media screen and (min-width: 683px) {
     display: block;
     visibility: visible;
   }
@@ -243,7 +248,7 @@
     display: none;
   }
 
-  @media (min-width: 435px) {
+  @media screen and (min-width: 435px) {
     a {
       display: inline;
     }
@@ -254,7 +259,7 @@
     }
   }
 
-  @media (min-width: 620px) {
+  @media screen and (min-width: 620px) {
     display: inline;
     padding: 10px;
     background-color: v.$color-primary;

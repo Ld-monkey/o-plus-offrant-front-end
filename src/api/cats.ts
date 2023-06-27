@@ -1,4 +1,5 @@
 import axios from 'axios';
+import defaultCataas from '../assets/images/default_images_cataas_400x400.jpg';
 
 const API_CAT = 'https://cataas.com';
 
@@ -14,7 +15,7 @@ async function getRandomIdApiCat() {
 async function getLinkImageProfile() {
   const idRandomCat = await getRandomIdApiCat();
   if (!idRandomCat) {
-    return undefined;
+    return defaultCataas;
   }
   return `${API_CAT}/cat/${idRandomCat}?width=100&height=100`;
 }
