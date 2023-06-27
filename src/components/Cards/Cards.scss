@@ -10,11 +10,27 @@
 }
 
 .cards-container {
-  border-radius: 5px;
   background-color: v.$color-on-lake;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
   transition: background-color 0.3s;
-
+  padding: 5px;
+  border-radius: 5%;
+  padding: 5px;
+  img {
+    width: 15rem;
+    margin: 10px auto;
+    padding: 10px;
+    background-color: white;
+    border-radius: 8%;
+    // overflow: hidden;
+  }
+  p{
+    text-align: center;
+    font-size: 0.7rem;
+    margin: 10px;
+    font-weight: 800;
+    color: rgb(122, 119, 119);
+  }
   &:hover {
     background-color: rgba(12, 126, 180, 0.1);
   }
@@ -24,7 +40,6 @@
   height: 200px;
   position: relative;
   overflow: hidden;
-
   display: flex;
   justify-content: center;
   align-items: center;
