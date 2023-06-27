@@ -93,7 +93,7 @@ function AddArticle() {
           titre: '',
           description: '',
           categorie: '',
-          prix_de_depart: '0',
+          prix_de_depart: '10',
           temps_de_vente: '',
           photo: null,
         });
@@ -118,13 +118,14 @@ function AddArticle() {
             type="text"
             name="titre"
             id="titre"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
                 titre: e.target.value,
               }))
             }
-            value={inputsData.titre.slice(0, 30)}
+            value={inputsData.titre.slice(0, 25)}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -135,6 +136,7 @@ function AddArticle() {
             rows={5}
             name="description"
             id="description"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -175,9 +177,10 @@ function AddArticle() {
           <label htmlFor="prix-de-depart">Prix de départ (€):</label>
           <input
             type="number"
-            min="1"
+            min="10"
             name="prix_de_depart"
             id="prix-de-depart"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -195,6 +198,7 @@ function AddArticle() {
             type="datetime-local"
             name="temps_de_vente"
             id="temps-de-vente"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -212,6 +216,7 @@ function AddArticle() {
             accept="image/*"
             id="photo"
             name="photo"
+            required
             onChange={(e) => setImage(e.target?.files)}
           />
         </div>
