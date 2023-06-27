@@ -89,6 +89,11 @@ function Articles() {
     setArticles(sortedArticlesDecrease);
   };
 
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 9;
+  const startIndex = (page - 1) * resultsPerPage;
+  const endIndex = startIndex + resultsPerPage;
+  const hasNextPage = endIndex < filteredArticles.length;
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
 
@@ -114,98 +119,105 @@ function Articles() {
           <div className="Sort">
             <div className="sort-by-price">
               <span>Trier par :</span>
-              <label htmlFor="Croissant" className="categoryName">
+              <label htmlFor="Prix Croissant" className="categoryName">
                 <input
                   type="radio"
                   value="increase"
-                  name="TriPrice"
+                  name="Tri"
                   defaultChecked
                   onClick={() =>
                     setArticles(handleSortByPriceIncrease(articles))
                   }
                 />
-                <span>Croissant</span>
+                <span>Prix Croissant</span>
               </label>
-              <label htmlFor="Décroissant" className="categoryName">
+              <label htmlFor="Prix Décroissant" className="categoryName">
                 <input
                   type="radio"
                   value="decrease"
-                  name="TriPrice"
+                  name="Tri"
                   onClick={handleSortByPriceDecrease}
                 />
-                <span>Décroissant</span>
+                <span>Prix Décroissant</span>
               </label>
-            </div>
-            <div className="sort-by-duration">
-              <label htmlFor="La plus courte" className="categoryName">
+              <label htmlFor="Durée la plus courte" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   onChange={() =>
                     setArticles(handleChangeTimerSort(articles, 'increase'))
                   }
                 />
-                <span>La plus courte</span>
+                <span>Durée la plus courte</span>
               </label>
-              <label htmlFor="La plus longue" className="categoryName">
+              <label htmlFor="Durée la plus longue" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
+                  name="Tri"
                   onChange={() =>
                     setArticles(handleChangeTimerSort(articles, 'decrease'))
                   }
                 />
-                <span>La plus longue</span>
+                <span>Durée la plus longue</span>
               </label>
             </div>
           </div>
         </form>
       </div>
       <div id="wrapper" className="containerCardCat">
-        {filteredArticles.map((filteredArticle) => {
-          const formattedDate = dayjs(filteredArticle.date_de_fin).format(
-            'DD-MM-YYYY [à] HH:mm'
-          );
-          return (
-            <Link
-              key={filteredArticle.id}
-              to={`/article/${filteredArticle.id}`}
-              className="cardCat"
-            >
-              <h3 className="nameItem">{filteredArticle.nom}</h3>
-              <div className="imgContainer">
-                <img
-                  className="pictureItem"
-                  src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-                  alt={filteredArticle.nom}
-                />
-              </div>
-              <div className="liveAuction">
-                <p className="priceItem">
-                  Prix initial : {filteredArticle.prix_de_depart}€
-                </p>
+        {filteredArticles.slice(startIndex, endIndex).map((filteredArticle) => (
+          <Link
+            key={filteredArticle.id}
+            to={`/produit/${filteredArticle.id}`}
+            className="cardCat"
+          >
+            <h3 className="nameItem">{filteredArticle.nom}</h3>
+            <div className="imgContainer">
+              <img
+                className="pictureItem"
+                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                alt={filteredArticle.nom}
+              />
+            </div>
+            <p className="priceItem">
+              Prix initial : {filteredArticle.prix_de_depart}€
+            </p>
 
-                <p className="timerAuction">Date de fin : {formattedDate}</p>
-                <p className="liveAuction__proceNow">
-                  Prix enchère actuelle : {filteredArticle.montant}€
-                </p>
+            <div className="liveAuction">
+              <p className="timerAuction">
+                Temps restant : {filteredArticle.date_de_fin}
+              </p>
+              <p className="liveAuction__proceNow">
+                Prix enchère actuelle : {filteredArticle.montant} €
                 <button type="button" className="liveAuction-button">
                   Surenchérir !
                 </button>
-              </div>
-            </Link>
-          );
-        })}
+              </p>
+            </div>
+          </Link>
+        ))}
       </div>
 
       <div id="wrapper">
         <div className="button_container">
-          <button type="button" className="buttonPage">
-            Page précédente
-          </button>
-          <button type="button" className="buttonPage">
-            Page suivante
-          </button>
+          {page > 1 && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page - 1)}
+            >
+              Page précédente
+            </button>
+          )}
+          {hasNextPage && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page + 1)} // bloqué plus de serveur back mais ici peut etre mettre une condition au +1 page si filtreredArticles.length
+            >
+              Page suivante
+            </button>
+          )}
         </div>
       </div>
     </>

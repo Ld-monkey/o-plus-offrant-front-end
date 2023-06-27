@@ -21,18 +21,7 @@
   font-weight: bolder;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-around;
-  @media screen and (max-width: 712px) {
-    flex-direction: column;
-  }
-  .sort-by-duration,
-  .sort-by-price {
-    @media screen and (max-width: 712px) {
-      display: flex;
-      flex-direction: column;
-    }
-  }
-
+  justify-content: space-evenly;
   input {
     margin: 20px;
   }
