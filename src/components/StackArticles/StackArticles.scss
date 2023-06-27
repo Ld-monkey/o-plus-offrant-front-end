@@ -1,5 +1,9 @@
 @use "../../styles/variables" as v;
 
+.header-stackArticles {
+  margin-bottom: 22px;
+}
+
 .stackArticles {
   .cards-container:nth-child(1) {
     flex: 2;

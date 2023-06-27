@@ -59,7 +59,7 @@ function CarouselItem({ articles }: { articles: ArticlesProps[] }) {
       )}
       <h2 className="title-carousel">Ventes longues</h2>
       {articles && (
-        <Carousel responsive={responsive}>
+        <Carousel responsive={responsive} containerClass="carousel-container">
           {olderItems &&
             olderItems.map((item) => (
               <div key={item.id}>
