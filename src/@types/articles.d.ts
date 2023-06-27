@@ -7,3 +7,15 @@ export interface IRandomItems {
   date_de_fin: string;
   label: undefined | string;
 }
+
+export interface ArticlesProps {
+  id: number;
+  nom: string;
+  photo: string;
+  prix_de_depart: string;
+  date_de_fin: string;
+  montant: string;
+  categorie_id: number;
+  categorie: string;
+  categorie_nom: string;
+}

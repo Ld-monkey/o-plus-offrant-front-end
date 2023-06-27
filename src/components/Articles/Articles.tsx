@@ -4,18 +4,8 @@ import dayjs from 'dayjs';
 import axios from '../../api/axios';
 import './Articles.scss';
 import getFormatDuration from '../../utils/dateFormat';
-
-interface ArticlesProps {
-  id: number;
-  nom: string;
-  photo: string;
-  prix_de_depart: string;
-  date_de_fin: string;
-  montant: string;
-  categorie_id: number;
-  categorie: string;
-  categorie_nom: string;
-}
+import { ArticlesProps } from '../../@types/articles';
+import handleChangeTimerSort from './sortArticles';
 
 interface CategoriesProps {
   id: number;
@@ -99,33 +89,6 @@ function Articles() {
     setArticles(sortedArticlesDecrease);
   };
 
-  /**
-   * Sort items based on end date time.
-   * @param items - All articles.
-   * @param action - 2 types of actions 'increase' or 'decrease'
-   */
-  const handleChangeTimerSort = (
-    items: ArticlesProps[],
-    action: 'increase' | 'decrease'
-  ): void => {
-    const now = Number(new Date());
-    const sortedArticles = [...articles];
-    if (action === 'increase') {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(a.date_de_fin)) - now) -
-          Math.abs(Number(new Date(b.date_de_fin)) - now)
-      );
-    } else {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(b.date_de_fin)) - now) -
-          Math.abs(Number(new Date(a.date_de_fin)) - now)
-      );
-    }
-    setArticles(sortedArticles);
-  };
-
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
 
@@ -178,7 +141,9 @@ function Articles() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  onChange={() => handleChangeTimerSort(articles, 'increase')}
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'increase'))
+                  }
                 />
                 <span>La plus courte</span>
               </label>
@@ -186,7 +151,9 @@ function Articles() {
                 <input
                   type="radio"
                   name="TriTimer"
-                  onChange={() => handleChangeTimerSort(articles, 'decrease')}
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'decrease'))
+                  }
                 />
                 <span>La plus longue</span>
               </label>
