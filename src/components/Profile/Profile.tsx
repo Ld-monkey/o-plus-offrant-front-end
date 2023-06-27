@@ -77,6 +77,7 @@ function Profile() {
   const [errorPassword, setErrorPassword] = useState('');
   const [errorPasswordLength, setErrorPasswordLength] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
+  const [isVisible, setIsVisible] = useState(false);
 
   const navigate = useNavigate();
 
@@ -301,8 +302,6 @@ function Profile() {
     }
     setOpenDeleteArticleModal(false);
   }
-
-  const [isVisible, setIsVisible] = useState(false);
 
   return (
     <>
