@@ -32,9 +32,6 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
       // Get two random index.
       const [firstItem, secondItem] = getRandomItems(products.length);
 
-      // Custom span top left message.
-      const messageLabel = 'Dernière chance';
-
       // Build data.
       const itemsArticles = [
         {
@@ -44,7 +41,7 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
           description: products[firstItem].description,
           montant: products[firstItem].montant,
           date_de_fin: products[firstItem].date_de_fin,
-          label: messageLabel,
+          label: 'Dernière chance',
         },
         {
           id: products[secondItem].id,
@@ -53,7 +50,7 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
           description: products[secondItem].description,
           montant: products[secondItem].montant,
           date_de_fin: products[secondItem].date_de_fin,
-          label: messageLabel,
+          label: 'À ne pas manquer',
         },
       ];
 
@@ -68,7 +65,7 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
 
   return (
     <div id="wrapper">
-      <h2>Enchères</h2>
+      <h2 className="header-stackArticles">Enchères</h2>
       <div className="stackArticles">{items && <Cards items={items} />}</div>
     </div>
   );

@@ -1,9 +1,10 @@
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
-import { IRandomItems } from '../../@types/articles';
+import { ArticlesProps, IRandomItems } from '../../@types/articles';
 import Card from '../Cards/Card';
 import '../Cards/Cards.scss';
 import './Carousel.scss';
+import handleChangeTimerSort from '../Articles/sortArticles';
 
 const responsive = {
   superLargeDesktop: {
@@ -25,9 +26,12 @@ const responsive = {
   },
 };
 
-function CarouselItem({ articles }: { articles: IRandomItems[] }) {
-  const mostRecentItems = articles ? articles.slice(0, 5) : undefined;
-  const olderItems = articles ? articles.slice(6, 12) : undefined;
+function CarouselItem({ articles }: { articles: ArticlesProps[] }) {
+  const currentArticles = handleChangeTimerSort(articles, 'increase');
+  const oldArticles = handleChangeTimerSort(articles, 'decrease');
+
+  const mostRecentItems = articles ? currentArticles.slice(0, 5) : undefined;
+  const olderItems = articles ? oldArticles.slice(0, 5) : undefined;
   return (
     <div id="wrapper">
       <h2 className="title-carousel">Ventes courtes</h2>
@@ -55,7 +59,7 @@ function CarouselItem({ articles }: { articles: IRandomItems[] }) {
       )}
       <h2 className="title-carousel">Ventes longues</h2>
       {articles && (
-        <Carousel responsive={responsive}>
+        <Carousel responsive={responsive} containerClass="carousel-container">
           {olderItems &&
             olderItems.map((item) => (
               <div key={item.id}>
