@@ -7,7 +7,7 @@
 ## :books: Description
 
 Le projet 6 nommé **O + Offrant** est un site d'enchère destiné aux particuliers majeurs.
-Il permet de déposer un article de son choix et ou d'enchérir avec des tokens afin de remporter un lot.
+Il permet de déposer un article de son choix et ou d'enchérir avec des euros afin de remporter un lot.
 
 ## 📦 Installation
 
