@@ -529,6 +529,7 @@ function Profile() {
                           <input
                             type="text"
                             name="nom"
+                            maxLength={25}
                             onChange={handleArticleInput}
                             value={userArticle.nom}
                           />
