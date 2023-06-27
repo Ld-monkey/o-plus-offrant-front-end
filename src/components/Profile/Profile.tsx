@@ -7,7 +7,13 @@ import {
   faPenToSquare,
   faTrashCan,
 } from '@fortawesome/free-regular-svg-icons';
-import { faCheck, faEye, faXmark } from '@fortawesome/free-solid-svg-icons';
+import {
+  faCheck,
+  faEye,
+  faLock,
+  faUnlock,
+  faXmark,
+} from '@fortawesome/free-solid-svg-icons';
 import dayjs from 'dayjs';
 import { useEffect, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -21,8 +27,6 @@ interface UserProps {
   prenom: string;
   adresse_mail: string;
   adresse: string;
-  mot_de_passe: string;
-  mot_de_passe_confirmation: string;
 }
 
 interface UserArticles {
@@ -57,14 +61,6 @@ function Profile() {
   const [isEditingUser, setIsEditingUser] = useState(false);
   const [openDeleteUserModal, setOpenDeleteUserModal] = useState(false);
   const [openDeleteArticleModal, setOpenDeleteArticleModal] = useState(false);
-  const [userInfo, setUserInfo] = useState<UserProps>({
-    nom: '',
-    prenom: '',
-    adresse_mail: '',
-    adresse: '',
-    mot_de_passe: '',
-    mot_de_passe_confirmation: '',
-  });
   const [userArticles, setUserArticles] = useState<UserArticles[]>([]);
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
@@ -78,6 +74,17 @@ function Profile() {
   const [errorPasswordLength, setErrorPasswordLength] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [isVisible, setIsVisible] = useState(false);
+  const [userInfo, setUserInfo] = useState<UserProps>({
+    nom: '',
+    prenom: '',
+    adresse_mail: '',
+    adresse: '',
+  });
+  const [isEditingPwd, setIsEditingPwd] = useState(false);
+  const [passwordInfo, setPasswordInfo] = useState({
+    mot_de_passe: '',
+    mot_de_passe_confirmation: '',
+  });
 
   const navigate = useNavigate();
 
@@ -138,27 +145,6 @@ function Profile() {
    * @param userInfo
    */
   async function handleSaveButton() {
-    if (userInfo.mot_de_passe !== userInfo.mot_de_passe_confirmation) {
-      setPasswordMatch(false);
-      setErrorPassword(
-        'Le mot de passe et sa confirmation ne correspondent pas'
-      );
-      setTimeout(() => {
-        setErrorPassword('');
-      }, 3000);
-      return;
-    }
-
-    if (userInfo.mot_de_passe.length < 4) {
-      setErrorPasswordLength(
-        'Le mot de passe doit contenir un minimum de 4 caractères.'
-      );
-      setTimeout(() => {
-        setErrorPasswordLength('');
-      }, 3000);
-      return;
-    }
-
     try {
       const response = await privateAxios.patch(
         `/api/profile/${userId}/update`,
@@ -167,7 +153,6 @@ function Profile() {
           prenom: userInfo.prenom,
           adresse: userInfo.adresse,
           adresse_mail: userInfo.adresse_mail,
-          mot_de_passe: userInfo.mot_de_passe,
         }
       );
       console.log(response);
@@ -185,6 +170,62 @@ function Profile() {
       }, 3000);
     }
     setIsEditingUser(false);
+  }
+
+  function handlePwdInputChange(
+    event: React.ChangeEvent<HTMLInputElement>,
+    field: string
+  ) {
+    setPasswordInfo((prevUserInfo) => ({
+      ...prevUserInfo,
+      [field]: event.target.value,
+    }));
+  }
+
+  async function handleEditPassword() {
+    if (passwordInfo.mot_de_passe !== passwordInfo.mot_de_passe_confirmation) {
+      setPasswordMatch(false);
+      setErrorPassword(
+        'Le mot de passe et sa confirmation ne correspondent pas'
+      );
+      setTimeout(() => {
+        setErrorPassword('');
+      }, 3000);
+      return;
+    }
+
+    if (passwordInfo.mot_de_passe) {
+      if (passwordInfo.mot_de_passe.length < 4) {
+        setErrorPasswordLength(
+          'Le mot de passe doit contenir un minimum de 4 caractères.'
+        );
+        setTimeout(() => {
+          setErrorPasswordLength('');
+        }, 3000);
+        return;
+      }
+    }
+
+    try {
+      const response = await axios.put(`/api/profile/${userId}/pwdupdate`, {
+        mot_de_passe: passwordInfo.mot_de_passe,
+      });
+      console.log(response);
+
+      if (response.status === 200) {
+        setSuccessMsgUser('Votre modification a bien été prise en compte.');
+        setTimeout(() => {
+          setSuccessMsgUser('');
+        }, 3000);
+      }
+    } catch (error) {
+      console.error('Veuillez vous reconnecter', error);
+      setErrorMsgUser('Oups, veuillez réessayer.');
+      setTimeout(() => {
+        setErrorMsgUser('');
+      }, 3000);
+    }
+    setIsEditingPwd(false);
   }
 
   /**
@@ -314,6 +355,19 @@ function Profile() {
               className="icon-update"
               onClick={handleEditUser}
             />
+            {isEditingPwd ? (
+              <FontAwesomeIcon
+                icon={faUnlock}
+                className="icon-update"
+                onClick={() => setIsEditingPwd(!isEditingPwd)}
+              />
+            ) : (
+              <FontAwesomeIcon
+                icon={faLock}
+                className="icon-update"
+                onClick={() => setIsEditingPwd(!isEditingPwd)}
+              />
+            )}
             <FontAwesomeIcon
               icon={faTrashCan}
               className="icon-delete"
@@ -331,7 +385,7 @@ function Profile() {
             <span>Prénom :</span>
             <span>Email :</span>
             <span>Adresse :</span>
-            {isEditingUser ? (
+            {isEditingPwd ? (
               <>
                 <span>
                   Nouveau mot de passe :
@@ -379,25 +433,6 @@ function Profile() {
                   value={userInfo.adresse}
                   onChange={(e) => handleUserInputChange(e, 'adresse')}
                 />
-                <input
-                  type={isVisible ? 'text' : 'password'}
-                  minLength={4}
-                  placeholder="Nouveau mot de passe"
-                  onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
-                />
-                <input
-                  type="password"
-                  placeholder="Confirmer votre mot de passe"
-                  onChange={(e) =>
-                    handleUserInputChange(e, 'mot_de_passe_confirmation')
-                  }
-                />
-                {!passwordMatch && (
-                  <div className="error-pwd">{errorPassword}</div>
-                )}
-                {errorPasswordLength && (
-                  <div className="error-pwd">{errorPasswordLength}</div>
-                )}
                 <div className="edit-btn">
                   <button
                     type="button"
@@ -419,6 +454,41 @@ function Profile() {
                 <span>{userInfo.adresse}</span>
               </>
             )}
+            {isEditingPwd ? (
+              <>
+                <input
+                  type={isVisible ? 'text' : 'password'}
+                  minLength={4}
+                  placeholder="Nouveau mot de passe"
+                  onChange={(e) => handlePwdInputChange(e, 'mot_de_passe')}
+                />
+                <input
+                  type="password"
+                  placeholder="Confirmer votre mot de passe"
+                  onChange={(e) =>
+                    handlePwdInputChange(e, 'mot_de_passe_confirmation')
+                  }
+                />
+                {!passwordMatch && (
+                  <div className="error-pwd">{errorPassword}</div>
+                )}
+                {errorPasswordLength && (
+                  <div className="error-pwd">{errorPasswordLength}</div>
+                )}
+                <div className="edit-btn">
+                  <button
+                    type="button"
+                    className="cancel-edit-btn"
+                    onClick={() => setIsEditingPwd(false)}
+                  >
+                    Annuler
+                  </button>
+                  <button type="button" onClick={handleEditPassword}>
+                    Enregistrer
+                  </button>
+                </div>
+              </>
+            ) : null}
           </div>
         </section>
 
