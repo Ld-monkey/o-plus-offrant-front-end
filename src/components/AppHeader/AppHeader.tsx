@@ -48,7 +48,9 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
     if (!isLogged) {
       setOpenPopup(false);
     }
+  }, [isLogged]);
 
+  useEffect(() => {
     async function fetchArticles() {
       try {
         const response = await axios.get('/api/articles');
@@ -57,8 +59,12 @@ function AppHeader({ toggleModalLogin }: { toggleModalLogin: () => void }) {
         console.error('error');
       }
     }
-    fetchArticles();
-  }, [isLogged]);
+
+    // Easy solution to update article.
+    if (contentSearchBar.trim().length === 1) {
+      fetchArticles();
+    }
+  }, [contentSearchBar]);
 
   /**
    * Split name when to long.
