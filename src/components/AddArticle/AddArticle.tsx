@@ -100,10 +100,16 @@ function AddArticle() {
         setImage(null);
       }
     } catch (error) {
-      setErrorMessage('Veuillez vous connecter / inscrire');
+      setErrorMessage('Image trop lourde');
       setTimeout(() => {
         setErrorMessage('');
       }, 3000);
+      if (!userId) {
+        setErrorMessage('Veuillez-vous connecter / inscrire');
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 3000);
+      }
       console.error('Veuillez-vous connecter / inscrire', error);
     }
   };
