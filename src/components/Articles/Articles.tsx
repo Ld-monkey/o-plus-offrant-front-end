@@ -165,37 +165,41 @@ function Articles() {
         </form>
       </div>
       <div id="wrapper" className="containerCardCat">
-        {filteredArticles.slice(startIndex, endIndex).map((filteredArticle) => (
-          <Link
-            key={filteredArticle.id}
-            to={`/article/${filteredArticle.id}`}
-            className="cardCat"
-          >
-            <h3 className="nameItem">{filteredArticle.nom}</h3>
-            <div className="imgContainer">
-              <img
-                className="pictureItem"
-                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-                alt={filteredArticle.nom}
-              />
-            </div>
-            <p className="priceItem">
-              Prix initial : {filteredArticle.prix_de_depart}€
-            </p>
+        {filteredArticles.slice(startIndex, endIndex).map((filteredArticle) => {
+          const formattedDate = dayjs(filteredArticle.date_de_fin).format(
+            'DD-MM-YYYY [à] HH:mm'
+          );
+          return (
+            <Link
+              key={filteredArticle.id}
+              to={`/article/${filteredArticle.id}`}
+              className="cardCat"
+            >
+              <h3 className="nameItem">{filteredArticle.nom}</h3>
+              <div className="imgContainer">
+                <img
+                  className="pictureItem"
+                  src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                  alt={filteredArticle.nom}
+                />
+              </div>
+              <p className="priceItem">
+                Prix initial : {filteredArticle.prix_de_depart}€
+              </p>
 
-            <div className="liveAuction">
-              <p className="timerAuction">
-                Temps restant : {filteredArticle.date_de_fin}
-              </p>
-              <p className="liveAuction__proceNow">
-                Prix enchère actuelle : {filteredArticle.montant} €
-                <button type="button" className="liveAuction-button">
-                  Surenchérir !
-                </button>
-              </p>
-            </div>
-          </Link>
-        ))}
+              <div className="liveAuction">
+                <p className="timerAuction">Date de fin : {formattedDate}</p>
+                <p className="liveAuction__proceNow">
+                  Prix enchère actuelle : {filteredArticle.montant} €
+                  <button type="button" className="liveAuction-button">
+                    Surenchérir !
+                  </button>
+                </p>
+              </div>
+            </Link>
+          );
+        })}
+        ;
       </div>
 
       <div id="wrapper">
