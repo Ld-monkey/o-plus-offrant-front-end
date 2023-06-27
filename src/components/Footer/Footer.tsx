@@ -39,17 +39,17 @@ function Footer({
           Estelle Li Zheng
         </a>
         <a href="https://github.com/Ld-monkey" rel="noreferrer" target="_blank">
-          Ld-monkey
+          Ludovic Fourteau
         </a>
         <a href="https://github.com/DidierLam" rel="noreferrer" target="_blank">
-          Didier Lam
+          Didier Lambert
         </a>
         <a
           href="https://github.com/stephanebidard"
           rel="noreferrer"
           target="_blank"
         >
-          Stephane Bidard
+          Stéphane Bidard
         </a>
       </div>
     </footer>
