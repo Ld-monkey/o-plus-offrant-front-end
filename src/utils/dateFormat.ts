@@ -9,10 +9,12 @@ dayjs.extend(duration);
  * @param endTime { number } - The end time.
  * @returns Return the time difference in the format: x jours heures:minutes:secondes.
  */
+
 function getFormatDuration(endTime: string | undefined): string {
   if (!endTime) {
     return 'x jours h:min:sec';
   }
+
   const nowTime = dayjs();
   const endDateTime = dayjs(endTime);
   const durationTime = dayjs.duration(endDateTime.diff(nowTime));
@@ -29,12 +31,20 @@ function getFormatDuration(endTime: string | undefined): string {
   }
 
   if (days === 1) {
-    countdown = `${days} jour ${hours}:${minutes}:${seconds}`;
-  } else if (days === 0) {
-    countdown = `${hours}:${minutes}:${seconds}`;
-  } else {
-    countdown = `${days} jours ${hours}:${minutes}:${seconds}`;
+    countdown = `${days} jour `;
+  } else if (days > 1) {
+    countdown = `${days} jours `;
   }
+
+  if (hours !== 0) {
+    if (hours < 10) {
+      countdown += `0${hours}:`;
+    } else {
+      countdown += `${hours}:`;
+    }
+  }
+
+  countdown += `${minutes}:${seconds}`;
 
   return countdown;
 }

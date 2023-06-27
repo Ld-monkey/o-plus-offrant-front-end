@@ -1,0 +1,17 @@
+@use '../../styles/variables' as v;
+
+.conditions-use {
+  margin-top: 3rem;
+}
+
+.article-title {
+  margin-top: 2.5rem;
+  margin-bottom: 1rem;
+  font-size: 1.4rem;
+  color: v.$color-primary;
+}
+
+.conditions-use {
+  text-align: center;
+  font-size: 2.5rem;
+}

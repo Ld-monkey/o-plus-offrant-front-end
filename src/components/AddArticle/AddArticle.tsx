@@ -1,28 +1,21 @@
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import CategoriesProps from '../../@types/interfaces';
 import './AddArticle.scss';
+import axios from '../../api/axios';
+import { useAppDispatch, useAppSelector } from '../../hooks/redux';
+import { createAlert } from '../../store/reducer/alerts';
 
 function AddArticle() {
   const privateAxios = useAxiosPrivate();
+  const userId = useAppSelector((state) => state.user.id);
+  const dispatch = useAppDispatch();
 
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const response = await axios.get(
-          'https://didierlam-server.eddi.cloud/api/categories'
-        );
-        setCategories(response.data);
-      } catch (error) {
-        console.error(error);
-      }
-    }
-    fetchCategories();
-  }, []);
-
+  const [image, setImage] = useState<FileList | null>();
+  const [successMessage, setSuccessMessage] = useState('');
+  const [errorMessage, setErrorMessage] = useState('');
   const [inputsData, setInputsData] = useState({
     titre: '',
     description: '',
@@ -32,35 +25,92 @@ function AddArticle() {
     photo: null,
   });
 
-  const [image, setImage] = useState<FileList | null>();
+  /**
+   * Retrieve categories from API to render in the menu of options
+   */
+  useEffect(() => {
+    async function fetchCategories() {
+      try {
+        const response = await axios.get('/api/categories');
+        setCategories(response.data);
+      } catch (error) {
+        console.error(error);
+      }
+    }
+    fetchCategories();
+  }, []);
 
+  /**
+   * Send form values to the API in FormData
+   * @param event
+   */
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+
+    if (!userId) {
+      dispatch(
+        createAlert({
+          message:
+            'Veuillez vous connecter ou vous inscrire pour vendre un article.',
+          type: 'information',
+          timeout: 6000,
+        })
+      );
+      throw Error("Lidentifiant de l'utilisateur est null");
+    }
 
     if (!image) {
       throw Error('Custom erreur : Aucune image.');
     }
-    console.log(image);
 
     const imageUpload = image[0];
-    console.log(imageUpload);
 
     const formData = new FormData();
+    formData.append('nom', inputsData.titre);
+    formData.append('description', inputsData.description);
+    formData.append('categorie_id', inputsData.categorie);
+    formData.append('prix_de_depart', inputsData.prix_de_depart);
+    formData.append('date_de_fin', inputsData.temps_de_vente);
     formData.append('photo', imageUpload);
+    formData.append('date_et_heure', new Date().toJSON());
+    formData.append('utilisateur_vente_id', userId.toString());
+    formData.append('montant', inputsData.prix_de_depart);
+
     try {
-      const result = await privateAxios.post('/api/images', formData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
-      });
-      console.log(result);
-      console.log(formData);
+      const response = await privateAxios.post(
+        '/article/creation/add',
+        formData,
+        {
+          headers: { 'Content-Type': 'multipart/form-data' },
+        }
+      );
+      if (response.status === 200) {
+        setSuccessMessage('Votre article a bien été enregistré');
+        setTimeout(() => {
+          setSuccessMessage('');
+        }, 3000);
+        setInputsData({
+          titre: '',
+          description: '',
+          categorie: '',
+          prix_de_depart: '10',
+          temps_de_vente: '',
+          photo: null,
+        });
+        setImage(null);
+      }
     } catch (error) {
+      setErrorMessage('Veuillez vous connecter / inscrire');
+      setTimeout(() => {
+        setErrorMessage('');
+      }, 3000);
       console.error('Veuillez-vous connecter / inscrire', error);
     }
   };
 
   return (
     <div id="wrapper">
-      <h2>Vendre votre article</h2>
+      <h2 className="sell-article">Vendre votre article</h2>
       <form method="post" className="add-article-form" onSubmit={handleSubmit}>
         <div className="article-name">
           <label htmlFor="titre">Titre :</label>
@@ -68,13 +118,14 @@ function AddArticle() {
             type="text"
             name="titre"
             id="titre"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
                 titre: e.target.value,
               }))
             }
-            value={inputsData.titre}
+            value={inputsData.titre.slice(0, 25)}
             placeholder="Mug O'Clock"
           />
         </div>
@@ -85,6 +136,7 @@ function AddArticle() {
             rows={5}
             name="description"
             id="description"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -100,7 +152,7 @@ function AddArticle() {
           <label htmlFor="categorie">Catégorie :</label>
           <select
             id="categorie"
-            // defaultValue="default-value"
+            defaultValue="default-value"
             name="categorie"
             onChange={(e) =>
               setInputsData((prevState) => ({
@@ -108,7 +160,6 @@ function AddArticle() {
                 categorie: e.target.value,
               }))
             }
-            value={inputsData.categorie}
             required
           >
             <option className="default-option" value="default-value" disabled>
@@ -126,9 +177,10 @@ function AddArticle() {
           <label htmlFor="prix-de-depart">Prix de départ (€):</label>
           <input
             type="number"
-            min="1"
+            min="10"
             name="prix_de_depart"
             id="prix-de-depart"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -143,9 +195,10 @@ function AddArticle() {
         <div className="article-timer">
           <label htmlFor="temps-de-vente">Temps de vente :</label>
           <input
-            type="date"
+            type="datetime-local"
             name="temps_de_vente"
             id="temps-de-vente"
+            required
             onChange={(e) =>
               setInputsData((prevState) => ({
                 ...prevState,
@@ -163,6 +216,7 @@ function AddArticle() {
             accept="image/*"
             id="photo"
             name="photo"
+            required
             onChange={(e) => setImage(e.target?.files)}
           />
         </div>
@@ -173,6 +227,8 @@ function AddArticle() {
           </button>
         </div>
       </form>
+      {successMessage && <div className="success-msg">{successMessage}</div>}
+      {errorMessage && <div className="error-msg">{errorMessage}</div>}
     </div>
   );
 }

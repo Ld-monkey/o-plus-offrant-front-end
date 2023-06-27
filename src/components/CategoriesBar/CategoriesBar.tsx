@@ -29,7 +29,7 @@ function CategoriesBar() {
         {categories.map((category) => (
           <NavLink
             key={category.id}
-            to="/produits"
+            to="/articles"
             className="categories-link"
             state={{ nameCategory: `${category.nom}` }}
           >

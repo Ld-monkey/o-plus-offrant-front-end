@@ -1,19 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import dayjs from 'dayjs';
 import axios from '../../api/axios';
-import './Category.scss';
-
-interface ArticlesProps {
-  id: number;
-  nom: string;
-  photo: string;
-  prix_de_depart: string;
-  date_de_fin: string;
-  montant: string;
-  categorie_id: number;
-  categorie: string;
-  categorie_nom: string;
-}
+import './Articles.scss';
+import getFormatDuration from '../../utils/dateFormat';
+import { ArticlesProps } from '../../@types/articles';
+import handleChangeTimerSort from './sortArticles';
 
 interface CategoriesProps {
   id: number;
@@ -21,12 +13,13 @@ interface CategoriesProps {
 }
 type CategoryChecked = string;
 
-function Category() {
+function Articles() {
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
+
   const location = useLocation();
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
@@ -96,37 +89,13 @@ function Category() {
     setArticles(sortedArticlesDecrease);
   };
 
-  /**
-   * Sort items based on end date time.
-   * @param items - All articles.
-   * @param action - 2 types of actions 'increase' or 'decrease'
-   */
-  const handleChangeTimerSort = (
-    items: ArticlesProps[],
-    action: 'increase' | 'decrease'
-  ): void => {
-    const now = Number(new Date());
-    const sortedArticles = [...articles];
-    if (action === 'increase') {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(a.date_de_fin)) - now) -
-          Math.abs(Number(new Date(b.date_de_fin)) - now)
-      );
-    } else {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(b.date_de_fin)) - now) -
-          Math.abs(Number(new Date(a.date_de_fin)) - now)
-      );
-    }
-    setArticles(sortedArticles);
-  };
   const [page, setPage] = useState(1);
   const resultsPerPage = 9;
   const startIndex = (page - 1) * resultsPerPage;
   const endIndex = startIndex + resultsPerPage;
   const hasNextPage = endIndex < filteredArticles.length;
+  //  const [sortvalue; Setsortvalue] = useState("");
+  //   const sortOptions = ["montant"]
 
   return (
     <>
@@ -148,7 +117,7 @@ function Category() {
             ))}
           </div>
           <div className="Sort">
-            <div>
+            <div className="sort-by-price">
               <span>Trier par :</span>
               <label htmlFor="Prix Croissant" className="categoryName">
                 <input
@@ -175,7 +144,9 @@ function Category() {
                 <input
                   type="radio"
                   name="Tri"
-                  onChange={() => handleChangeTimerSort(articles, 'increase')}
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'increase'))
+                  }
                 />
                 <span>Durée la plus courte</span>
               </label>
@@ -183,7 +154,9 @@ function Category() {
                 <input
                   type="radio"
                   name="Tri"
-                  onChange={() => handleChangeTimerSort(articles, 'decrease')}
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'decrease'))
+                  }
                 />
                 <span>Durée la plus longue</span>
               </label>
@@ -251,4 +224,4 @@ function Category() {
   );
 }
 
-export default Category;
+export default Articles;

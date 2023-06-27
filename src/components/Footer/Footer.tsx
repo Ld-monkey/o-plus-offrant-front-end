@@ -16,8 +16,11 @@ function Footer({
         <Link to="#login" onClick={() => toggleModalLogin()}>
           Connectez-vous
         </Link>
-        <Link to="/produit/creation">Vendre</Link>
-        <Link to="/produits">Catégories</Link>
+        <Link to="/article/creation">Vendre</Link>
+        <Link to="/articles">Articles</Link>
+        <Link to="/conditions-generales-d-utilisation">
+          Conditions générales d&apos;utilisation
+        </Link>
       </div>
       <div className="Footer__Pseudo">
         <h2>Contactez-nous</h2>
@@ -36,17 +39,17 @@ function Footer({
           Estelle Li Zheng
         </a>
         <a href="https://github.com/Ld-monkey" rel="noreferrer" target="_blank">
-          Ld-monkey
+          Ludovic Fourteau
         </a>
         <a href="https://github.com/DidierLam" rel="noreferrer" target="_blank">
-          Didier Lam
+          Didier Lambert
         </a>
         <a
           href="https://github.com/stephanebidard"
           rel="noreferrer"
           target="_blank"
         >
-          Stephane Bidard
+          Stéphane Bidard
         </a>
       </div>
     </footer>
