@@ -14,7 +14,7 @@ export interface ArticlesProps {
   photo: string;
   prix_de_depart: string;
   date_de_fin: string;
-  montant: string;
+  montant: number;
   categorie_id: number;
   categorie: string;
   categorie_nom: string;
