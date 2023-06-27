@@ -75,6 +75,7 @@ function Profile() {
   const [successMsgArticle, setSuccessMsgArticle] = useState('');
   const [errorMsgArticle, setErrorMsgArticle] = useState('');
   const [errorPassword, setErrorPassword] = useState('');
+  const [errorPasswordLength, setErrorPasswordLength] = useState('');
   const [passwordMatch, setPasswordMatch] = useState(true);
 
   const navigate = useNavigate();
@@ -143,7 +144,17 @@ function Profile() {
       );
       setTimeout(() => {
         setErrorPassword('');
-      }, 5000);
+      }, 3000);
+      return;
+    }
+
+    if (userInfo.mot_de_passe.length < 4) {
+      setErrorPasswordLength(
+        'Le mot de passe doit contenir un minimum de 4 caractères.'
+      );
+      setTimeout(() => {
+        setErrorPasswordLength('');
+      }, 3000);
       return;
     }
 
@@ -291,7 +302,6 @@ function Profile() {
     setOpenDeleteArticleModal(false);
   }
 
-  // ===============================================================================================
   const [isVisible, setIsVisible] = useState(false);
 
   return (
@@ -372,6 +382,7 @@ function Profile() {
                 />
                 <input
                   type={isVisible ? 'text' : 'password'}
+                  minLength={4}
                   placeholder="Nouveau mot de passe"
                   onChange={(e) => handleUserInputChange(e, 'mot_de_passe')}
                 />
@@ -384,6 +395,9 @@ function Profile() {
                 />
                 {!passwordMatch && (
                   <div className="error-pwd">{errorPassword}</div>
+                )}
+                {errorPasswordLength && (
+                  <div className="error-pwd">{errorPasswordLength}</div>
                 )}
                 <div className="edit-btn">
                   <button

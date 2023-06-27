@@ -20,7 +20,7 @@ function AddArticle() {
     titre: '',
     description: '',
     categorie: '',
-    prix_de_depart: '0',
+    prix_de_depart: '10',
     temps_de_vente: '',
     photo: null,
   });
