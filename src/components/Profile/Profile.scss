@@ -174,7 +174,7 @@ table {
 
 .modal-delete {
   &.is-active {
-    z-index: 2;
+    z-index: 1004;
     position: fixed;
     top: 30%;
     left: 0;
@@ -228,7 +228,7 @@ table {
 
 .modal-delete-article {
   &.is-active {
-    z-index: 2;
+    z-index: 1004;
     position: fixed;
     top: 30%;
     left: 0;

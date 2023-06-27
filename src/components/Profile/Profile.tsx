@@ -65,6 +65,7 @@ function Profile() {
   const [userAuctions, setUserAuctions] = useState<UserAuctions[]>([]);
   const [userWonAuctions, setUserWonAuctions] = useState<UserWonAuctions[]>([]);
   const [updateArticleId, setUpdateArticleId] = useState<number | null>(null);
+  const [deleteArticleId, setDeleteArticleId] = useState<number | null>(null);
   const [isEditingArticle, setIsEditingArticle] = useState(false);
   const [successMsgUser, setSuccessMsgUser] = useState('');
   const [errorMsgUser, setErrorMsgUser] = useState('');
@@ -320,6 +321,11 @@ function Profile() {
     setIsEditingArticle(false);
   }
 
+  function handleDeleteArticleId(id: number) {
+    setDeleteArticleId(id);
+    setOpenDeleteArticleModal(true);
+  }
+
   /**
    * Function for deleting an ARTICLE from the database
    * @param updateArticleId
@@ -327,7 +333,7 @@ function Profile() {
   async function handleDeleteArticle(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
     try {
-      const response = await axios.delete(`/article/${updateArticleId}/delete`);
+      const response = await axios.delete(`/article/${deleteArticleId}/delete`);
       if (response.status === 200) {
         setSuccessMsgArticle("L'article a bien été supprimé.");
         setTimeout(() => {
@@ -592,9 +598,9 @@ function Profile() {
                             <FontAwesomeIcon
                               icon={faTrashCan}
                               className="icon-delete"
-                              onClick={() => {
-                                setOpenDeleteArticleModal(true);
-                              }}
+                              onClick={() =>
+                                handleDeleteArticleId(userArticle.id)
+                              }
                             />
                           </>
                         ) : (
