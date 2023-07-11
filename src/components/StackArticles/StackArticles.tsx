@@ -57,9 +57,20 @@ function StackArticles({ articles }: { articles: IRandomItems[] }) {
       return itemsArticles;
     }
 
-    if (articles) {
+    if (articles.length > 1) {
       const result = buildArticle(articles);
       setItems(result);
+    } else {
+      const item = {
+        id: articles[0].id,
+        nom: articles[0].nom,
+        photo: articles[0].photo,
+        description: articles[0].description,
+        montant: articles[0].montant,
+        date_de_fin: articles[0].date_de_fin,
+        label: 'À ne pas manquer',
+      };
+      setItems([item]);
     }
   }, [articles]);
 

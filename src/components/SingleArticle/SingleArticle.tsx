@@ -11,6 +11,8 @@ import axios from '../../api/axios';
 import './SingleArticle.scss';
 import ErrorPage from '../ErrorPage/ErrorPage';
 
+const API = import.meta.env.VITE_AXIOS_SERVER;
+
 interface SingleArticleProps {
   id: number;
   photo: string;
@@ -119,7 +121,7 @@ function SingleArticle() {
           <section className="single-product">
             <div className="single-product-media">
               <img
-                src={`https://didierlam-server.eddi.cloud/${article.photo}`}
+                src={`${API}/${article.photo}`}
                 alt={article.nom}
                 className="photo"
               />

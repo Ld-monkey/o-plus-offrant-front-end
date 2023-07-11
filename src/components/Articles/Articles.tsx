@@ -7,6 +7,8 @@ import getFormatDuration from '../../utils/dateFormat';
 import { ArticlesProps } from '../../@types/articles';
 import handleChangeTimerSort from './sortArticles';
 
+const API = import.meta.env.VITE_AXIOS_SERVER;
+
 interface CategoriesProps {
   id: number;
   nom: string;
@@ -179,7 +181,7 @@ function Articles() {
               <div className="imgContainer">
                 <img
                   className="pictureItem"
-                  src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                  src={`${API}/${filteredArticle.photo}`}
                   alt={filteredArticle.nom}
                 />
               </div>
