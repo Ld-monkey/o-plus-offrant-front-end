@@ -12,10 +12,10 @@ import axios from '../../api/axios';
 import './SingleArticle.scss';
 import ErrorPage from '../ErrorPage/ErrorPage';
 
-// Exemple for socket.io
-const socket = io('http://localhost:4000');
-
 const API = import.meta.env.VITE_AXIOS_SERVER;
+
+// Exemple for socket.io
+const socket = io(API);
 
 interface SingleArticleProps {
   id: number;
@@ -88,6 +88,10 @@ function SingleArticle() {
     }
 
     fetchArticlebyId();
+
+    socket.on('update_history_article', () => {
+      fetchArticlebyId();
+    });
   }, [idArticle]);
 
   /**
@@ -110,7 +114,6 @@ function SingleArticle() {
 
   // socket.io emit to join the room.
   useEffect(() => {
-    console.log(`Connecté à la room de l'article ${idArticle}`);
     const room = idArticle;
     socket.emit('room', room);
   }, [idArticle]);
@@ -128,6 +131,9 @@ function SingleArticle() {
           articleId: idArticle,
           acheteurId: userId,
         });
+
+        // Bidding action sent to server socket.io.
+        socket.emit('bid_event', idArticle);
       } catch (error) {
         console.error('Veuillez vous reconnecter', error);
       }
