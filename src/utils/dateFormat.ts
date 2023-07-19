@@ -19,6 +19,7 @@ function getFormatDuration(endTime: string | undefined): string {
   const endDateTime = dayjs(endTime);
   const durationTime = dayjs.duration(endDateTime.diff(nowTime));
 
+  const months = durationTime.months();
   const days = durationTime.days();
   const hours = durationTime.hours();
   const minutes = durationTime.minutes();
@@ -30,10 +31,14 @@ function getFormatDuration(endTime: string | undefined): string {
     return '0';
   }
 
+  if (months > 0) {
+    countdown = `${months} mois `;
+  }
+
   if (days === 1) {
-    countdown = `${days} jour `;
+    countdown += `${days} jour `;
   } else if (days > 1) {
-    countdown = `${days} jours `;
+    countdown += `${days} jours `;
   }
 
   if (hours !== 0) {
