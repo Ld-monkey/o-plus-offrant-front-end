@@ -181,7 +181,7 @@ function Articles() {
               <div className="imgContainer">
                 <img
                   className="pictureItem"
-                  src={`${API}/${filteredArticle.photo}`}
+                  src={`${API}${filteredArticle.photo}`}
                   alt={filteredArticle.nom}
                 />
               </div>
