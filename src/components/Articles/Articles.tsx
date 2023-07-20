@@ -3,7 +3,6 @@ import { Link, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import axios from '../../api/axios';
 import './Articles.scss';
-import getFormatDuration from '../../utils/dateFormat';
 import { ArticlesProps } from '../../@types/articles';
 import handleChangeTimerSort from './sortArticles';
 
@@ -201,7 +200,6 @@ function Articles() {
             </Link>
           );
         })}
-        ;
       </div>
 
       <div id="wrapper">
