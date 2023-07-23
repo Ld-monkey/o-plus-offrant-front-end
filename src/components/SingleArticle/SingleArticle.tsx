@@ -10,7 +10,7 @@ import { useAppSelector } from '../../hooks/redux';
 import useAxiosPrivate from '../../hooks/useAxiosPrivate';
 import axios from '../../api/axios';
 import './SingleArticle.scss';
-import ErrorPage from '../ErrorPage/ErrorPage';
+import Loader from '../Loader/Loader';
 
 const API = import.meta.env.VITE_AXIOS_SERVER;
 
@@ -142,7 +142,9 @@ function SingleArticle() {
   return (
     <>
       <div id="wrapper">
-        {article && (
+        {!article ? (
+          <Loader />
+        ) : (
           <>
             <section className="single-product">
               <div className="single-product-media">
