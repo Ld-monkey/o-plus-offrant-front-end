@@ -19,31 +19,42 @@ Pour installer les dépendances du projet :
 yarn
 ```
 
-### Configuration l'API back-end
+### Configuration de l'application
 
-Configurer l'url par défault du serveur back-end:
+L'application front-end ne peut marcher sans l'application [back-end](https://github.com/O-clock-Starship/projet-06-o-plus-offrant-back) qui lui renvoie et traite toutes les données. Il est donc essentiel de configurer et de pointer l'application front-end sur l'URL du serveur **back-end**.
+
+Si par exemple le serveur back-end tourne en **localhost** dans un **terminal**, il faudra :
+
+   1. Copier la configuration de l'environnement
 
 ```bash
-# Copier l'exemple de l'environnement
+# Copier l'exemple de l'environnement.
 cp .env.example .env
+```
 
-# Configurer l'url
+  2. Ouvrir le fichier avec notre IDE préféré (ici nous utilisons nano) :
+
+```bash
+# Ouvrir avec l'IDE de votre choix.
 nano .env
 ```
 
-Dans le fichier **.env** définir l'url (exemple):
+  3. Enfin, si le serveur back-end tourne en localhost sur le port 4000, la configuration de la variable d'environnement du projet sera **http://localhost:4000** .Si le service back-end tourne sur une autre instance que le localhost, il faut alors changer la variable par la nouvelle URL correspondante.
 
 ```bash
-VITE_AXIOS_SERVER='https://vote-url-api-par-default.com'
-```
+# Exemple de la configuration de URL d'une l'instance back-end tournant en localhost sur le port 4000.
+VITE_AXIOS_SERVER='http://localhost:4000'
+``````
 
-## 🪄 Usage
+## 🪄 Usage (coté Front-end)
 
-Pour lancer le site en [localhost](http://localhost:5173/) :
+Pour lancer l'application coté front-end en [localhost](http://localhost:5173/) :
 
 ```bash
 yarn dev
 ```
+
+Pour lancer l'application coté *back-end*, voir les instructions fournies sur le [repository](https://github.com/O-clock-Starship/projet-06-o-plus-offrant-back) dédié.
 
 ## ✨ Contributeurs
 
@@ -55,3 +66,7 @@ yarn dev
    * Coté Back-end
       + [DidierLam](https://github.com/DidierLam)
       + [stephanebidard](https://github.com/stephanebidard)
+
+# Référence
+
+   * [GitHub - projet Back-end](https://github.com/O-clock-Starship/projet-06-o-plus-offrant-back)
