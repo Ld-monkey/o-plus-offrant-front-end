@@ -3,9 +3,10 @@ import { Link, useLocation } from 'react-router-dom';
 import dayjs from 'dayjs';
 import axios from '../../api/axios';
 import './Articles.scss';
-import getFormatDuration from '../../utils/dateFormat';
 import { ArticlesProps } from '../../@types/articles';
 import handleChangeTimerSort from './sortArticles';
+
+const API = import.meta.env.VITE_AXIOS_SERVER;
 
 interface CategoriesProps {
   id: number;
@@ -179,7 +180,7 @@ function Articles() {
               <div className="imgContainer">
                 <img
                   className="pictureItem"
-                  src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
+                  src={`${API}${filteredArticle.photo}`}
                   alt={filteredArticle.nom}
                 />
               </div>
@@ -199,7 +200,6 @@ function Articles() {
             </Link>
           );
         })}
-        ;
       </div>
 
       <div id="wrapper">

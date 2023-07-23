@@ -12,8 +12,12 @@ function Home() {
   return (
     <>
       <CategoriesBar />
-      <StackArticles articles={allArticles} />
-      <CarouselItem articles={allArticles} />
+      {allArticles && allArticles.length > 0 && (
+        <>
+          <StackArticles articles={allArticles} />
+          <CarouselItem articles={allArticles} />
+        </>
+      )}
     </>
   );
 }

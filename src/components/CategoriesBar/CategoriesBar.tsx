@@ -1,9 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../api/axios';
 
 import './CategoriesBar.scss';
 import CategoriesProps from '../../@types/interfaces';
+
+const API = import.meta.env.VITE_AXIOS_SERVER;
 
 function CategoriesBar() {
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
@@ -11,9 +13,7 @@ function CategoriesBar() {
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get(
-          'https://didierlam-server.eddi.cloud/api/categories'
-        );
+        const response = await axios.get('/api/categories');
         setCategories(response.data);
       } catch (error) {
         // eslint-disable-next-line no-console
