@@ -21,8 +21,12 @@ const responsive = {
     items: 3,
   },
   mobile: {
-    breakpoint: { max: 576, min: 0 },
+    breakpoint: { max: 576, min: 381 },
     items: 2,
+  },
+  verySmallScreen: {
+    breakpoint: { max: 380, min: 0 },
+    items: 1,
   },
 };
 
@@ -36,11 +40,7 @@ function CarouselItem({ articles }: { articles: ArticlesProps[] }) {
     <div id="wrapper">
       <h2 className="title-carousel">Ventes courtes</h2>
       {articles && (
-        <Carousel
-          responsive={responsive}
-          containerClass="carousel-container"
-          partialVisible={false}
-        >
+        <Carousel responsive={responsive} containerClass="carousel-container">
           {mostRecentItems &&
             mostRecentItems.map((item) => (
               <div key={item.id}>
