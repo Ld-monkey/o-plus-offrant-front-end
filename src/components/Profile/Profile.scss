@@ -4,6 +4,12 @@ section {
   margin-bottom: 2.5rem;
 }
 
+.user-title,
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
 table {
   text-align: center;
   width: 100%;
@@ -29,7 +35,7 @@ table {
 .user-title {
   display: flex;
   justify-content: center;
-  margin: 1.5rem 0;
+  margin: 2rem 0;
 
   .icons-user {
     font-size: 1.5rem;
@@ -52,7 +58,6 @@ table {
   }
 }
 
-// USER
 .user {
   display: flex;
   justify-content: center;
@@ -64,13 +69,38 @@ table {
     }
   }
 
+  .user-label {
+    width: 250px;
+  }
+
+  .user-infos {
+    width: 250px;
+  }
+
+  .icons {
+    margin-left: 20px;
+  }
+
+  .error-pwd {
+    width: 100%;
+    color: red;
+  }
+
+  .edit-btn {
+    flex-direction: row;
+    justify-content: end;
+    gap: 15px;
+    width: 100%;
+    margin-top: 1rem;
+  }
+
   div {
     display: flex;
     flex-direction: column;
     width: 15%;
 
     input {
-      width: 200px;
+      width: 250px;
       margin-bottom: 0.5rem;
     }
 
@@ -87,17 +117,52 @@ table {
     button:hover {
       box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
     }
+
+    .cancel-edit-btn {
+      background-color: v.$color-searchbar;
+      color: black;
+    }
   }
 }
 
-.icons-column {
-  width: 80px;
-  padding: 0;
+.my-articles {
+  .icons-column {
+    width: 80px;
+    padding: 0;
 
-  .icon-update,
-  .icon-delete {
-    font-size: 1.2rem;
+    .icon-update,
+    .icon-delete {
+      font-size: 1.2rem;
+      padding: 5px;
+      cursor: pointer;
+    }
+
+    .icon-update:hover {
+      color: v.$color-secondary;
+    }
+
+    .icon-delete:hover {
+      color: red;
+    }
+  }
+
+  input {
+    outline: none;
+  }
+
+  .icon-cancel,
+  .icon-confirm {
+    font-size: 1.5rem;
     padding: 5px;
+    cursor: pointer;
+  }
+
+  .icon-confirm {
+    color: rgb(57, 223, 57);
+  }
+
+  .icon-cancel {
+    color: red;
   }
 }
 
@@ -109,7 +174,7 @@ table {
 
 .modal-delete {
   &.is-active {
-    z-index: 2;
+    z-index: 1004;
     position: fixed;
     top: 30%;
     left: 0;
@@ -119,21 +184,24 @@ table {
     text-align: center;
     background-color: #ffffff;
     max-width: 28rem;
-    height: 300px;
+    height: 350px;
     padding: 3.375rem;
     border-radius: 5px;
   }
 
-  .user-delete-title {
+  .delete-title {
     font-size: 1.5rem;
     margin-bottom: 2rem;
   }
 
-  .user-delete-action {
-    margin-bottom: 2rem;
+  .delete-action,
+  .error-message {
+    font-size: 1.2rem;
+    color: rgb(219, 0, 0);
   }
 
   .modal-footer {
+    margin: 3rem 0;
     display: flex;
     justify-content: center;
     gap: 1rem;
@@ -156,4 +224,66 @@ table {
       color: black;
     }
   }
+}
+
+.modal-delete-article {
+  &.is-active {
+    z-index: 1004;
+    position: fixed;
+    top: 30%;
+    left: 0;
+    transform: translate(calc(50vw - 50%), -30%);
+    display: flex;
+    align-items: center;
+    text-align: center;
+    background-color: #ffffff;
+    max-width: 28rem;
+    height: 350px;
+    padding: 3.375rem;
+    border-radius: 5px;
+  }
+
+  .article-delete-title {
+    font-size: 1.5rem;
+    margin-bottom: 2rem;
+  }
+
+  .article-delete-action,
+  .error-message {
+    font-size: 1.2rem;
+    color: rgb(219, 0, 0);
+  }
+
+  .modal-footer {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+
+    button {
+      border: none;
+      width: 50%;
+      padding: 1rem;
+      justify-content: center;
+      border-radius: 5px;
+      color: v.$color-text;
+      cursor: pointer;
+    }
+
+    .modal-confirm-btn {
+      background-color: red;
+    }
+
+    .modal-cancel-btn {
+      color: black;
+    }
+  }
+}
+
+.success-msg {
+  margin-bottom: 2rem;
+}
+
+.error-msg {
+  margin-bottom: 1.5rem;
 }

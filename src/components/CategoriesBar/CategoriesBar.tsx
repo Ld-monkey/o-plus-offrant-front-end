@@ -1,23 +1,19 @@
 import { NavLink } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from '../../api/axios';
 
 import './CategoriesBar.scss';
+import CategoriesProps from '../../@types/interfaces';
 
-interface Category {
-  id: number;
-  nom: string;
-}
+const API = import.meta.env.VITE_AXIOS_SERVER;
 
 function CategoriesBar() {
-  const [categories, setCategories] = useState<Category[]>([]);
+  const [categories, setCategories] = useState<CategoriesProps[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const response = await axios.get(
-          'https://didierlam-server.eddi.cloud/api/categories'
-        );
+        const response = await axios.get('/api/categories');
         setCategories(response.data);
       } catch (error) {
         // eslint-disable-next-line no-console
@@ -33,7 +29,7 @@ function CategoriesBar() {
         {categories.map((category) => (
           <NavLink
             key={category.id}
-            to="/produits"
+            to="/articles"
             className="categories-link"
             state={{ nameCategory: `${category.nom}` }}
           >

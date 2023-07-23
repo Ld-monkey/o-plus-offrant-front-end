@@ -5,6 +5,7 @@ import { unwrapResult } from '@reduxjs/toolkit';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { login, registrer } from '../../store/reducer/user';
 import './Login.scss';
+import { createAlert } from '../../store/reducer/alerts';
 
 function Login({
   toggleModalLogin,
@@ -16,8 +17,10 @@ function Login({
   const [isRegistrerView, setIsRegisterView] = useState<boolean>(false);
   const [email, setEmail] = useState<string>('');
   const [pwd, setPwd] = useState<string>('');
+  const [pwdConfirmation, setPwdConfirmation] = useState<string>('');
   const [firstname, setFirstName] = useState<string>('');
   const [lastname, setLastName] = useState<string>('');
+  const [street, setStreet] = useState<string>('');
 
   const [isLegalAge, setIsLegalAge] = useState<boolean>(false);
 
@@ -39,6 +42,8 @@ function Login({
       setLastName('');
       setEmail('');
       setPwd('');
+      setPwdConfirmation('');
+      setStreet('');
 
       setErrMsg('');
     };
@@ -75,7 +80,18 @@ function Login({
   const handleSubmitLogin = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
-    dispatch(login({ email, pwd })).then(unwrapResult).catch(httpErrorHandler);
+    dispatch(login({ email, pwd }))
+      .then(unwrapResult)
+      .then(() => {
+        toggleModalLogin();
+        dispatch(
+          createAlert({
+            message: 'Vous êtes connecté ! Félicitation',
+            type: 'success',
+          })
+        );
+      })
+      .catch(httpErrorHandler);
   };
 
   /**
@@ -85,20 +101,32 @@ function Login({
   const handleSubmitRegister = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
 
+    if (pwd !== pwdConfirmation) {
+      setErrMsg('Les mots de passe ne correspondent pas');
+      setPwd('');
+      setPwdConfirmation('');
+      return;
+    }
+
     if (!isLegalAge) {
       setErrMsg('Vous devez avoir 18 ans ou plus.');
       return;
     }
 
-    dispatch(registrer({ firstname, lastname, email, pwd }))
+    dispatch(registrer({ firstname, lastname, street, email, pwd }))
       .then(unwrapResult)
       .then((response) => {
         if (response === 200) {
           // Close registrer.
           toggleModalLogin();
 
-          // Display a cool message to inform the user
-          // that the account has been created.
+          dispatch(
+            createAlert({
+              message: `Votre compte avec l'email suivant : ${email} à bien été enregistré. Connectez-vous ensuite avec nos identifiants.`,
+              type: 'success',
+              timeout: 10000, // 10s timeout
+            })
+          );
         }
       })
       .catch(httpErrorHandler);
@@ -190,11 +218,28 @@ function Login({
               required
             />
             <input
+              value={street}
+              onChange={(e) => setStreet(e.target.value)}
+              type="text"
+              placeholder="Adresse principale"
+              name="adresse"
+              required
+            />
+            <input
               value={pwd}
               onChange={(e) => setPwd(e.target.value)}
               type="password"
-              placeholder="Password"
+              placeholder="Mot de passe"
               name="password"
+              autoComplete="new-password"
+              required
+            />
+            <input
+              value={pwdConfirmation}
+              onChange={(e) => setPwdConfirmation(e.target.value)}
+              type="password"
+              placeholder="Confirmation du mot de passe"
+              name="Confirmation password"
               autoComplete="new-password"
               required
             />

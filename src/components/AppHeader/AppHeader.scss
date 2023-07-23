@@ -18,46 +18,42 @@
     &-container {
       display: flex;
       justify-content: center;
+      align-items: center;
       gap: 0.75rem;
     }
 
-    @media (max-width: 830px) {
+    @media screen and (max-width: 830px) {
       justify-content: space-between;
     }
   }
 
-  &-btn-sell,
-  &-btn-category,
-  &-btn-login {
-    border: none;
-    outline: none;
-    background: none;
-    cursor: pointer;
-
-    a {
-      display: none;
+  &-link-sell,
+  &-link-category {
+    display: none;
+    svg {
+      padding-right: 10px;
     }
 
-    @media (min-width: 435px) {
-      a {
-        display: inline;
-      }
-
-      svg {
-        padding-right: 10px;
-      }
-    }
-  }
-
-  &-btn-sell,
-  &-btn-category {
     &:hover {
+      text-decoration: underline;
+
       svg {
         opacity: 0.8;
       }
-      a {
-        text-decoration: underline;
-      }
+    }
+
+    @media (min-width: 395px) {
+      display: inline-block;
+    }
+  }
+
+  .loging-container {
+    position: relative;
+    display: none;
+    height: 100%;
+
+    @media screen and (min-width: v.$layout-breakpoint-tablet-navbar) {
+      display: block;
     }
   }
 
@@ -75,27 +71,10 @@
     color: v.$color-primary;
   }
 
-  &-btn-login {
-    display: none;
-
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
-      display: inline;
-      padding: 10px;
-      background-color: v.$color-primary;
-      color: v.$color-text;
-      border-radius: 5px;
-      border: 3px solid #fff;
-
-      &:hover {
-        border: 3px solid #88b4ba;
-      }
-    }
-  }
-
   &-btn-online {
     display: none;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media screen and (min-width: v.$layout-breakpoint-tablet-navbar) {
       padding: 10px 20px;
       display: flex;
       justify-content: center;
@@ -132,8 +111,9 @@
   .hamburger-menu {
     display: inline-block;
     position: relative;
+    z-index: 1002;
 
-    @media (min-width: v.$layout-breakpoint-tablet-navbar) {
+    @media (min-width: 620px) {
       display: none;
     }
   }
@@ -145,7 +125,7 @@
   }
 
   .toggler-hamburger {
-    z-index: 1;
+    z-index: 2;
     opacity: 0;
     width: 100%;
     height: 100%;
@@ -178,55 +158,204 @@
   }
 }
 
-// Searchbar inside & outside.
-.searchbar {
+// Searchbar
+.container-searchbar {
+  visibility: hidden;
+  display: none;
   flex: 2;
 
-  display: flex;
-  justify-content: center;
-
-  padding: 8px;
+  border: 2px solid v.$color-searchbar;
   background-color: v.$color-searchbar;
   border-radius: 30px;
+  padding: 8px;
 
-  button {
-    outline: none;
-    border: none;
-    background: none;
-    padding-top: 5px;
+
+  @media screen and (min-width: 683px) {
+    display: block;
+    visibility: visible;
   }
 
-  input {
-    outline: none;
-    border: none;
-    background-color: inherit;
-    width: 100%;
+  .searchbar {
+    form {
+      display: flex;
+      flex-wrap: nowrap;
+    }
+
+    button {
+      outline: none;
+      border: none;
+      background: none;
+    }
+
+    input {
+      width: 100%;
+      outline: none;
+      border: none;
+      background-color: inherit;
+    }
   }
 
-  &.inside-navbar {
-    @media (max-width: 900px) {
-      background-color: white;
-      justify-content: start;
-
-      button {
-        display: none;
-      }
-
-      input {
-        display: none;
-      }
-    }
-
-    @media (max-width: 640px) {
-      display: none;
-    }
+  &:focus-within {
+    border: 2px solid v.$color-primary;
   }
 
   &.outside-navbar {
     margin-top: 15px;
+  }
+}
 
-    @media (min-width: 901px) {
-      display: none;
+// Search suggestions
+.resultSearch {
+  position: relative;
+  z-index: 2;
+
+  .arraySearch {
+    margin-top: 12px;
+    position: absolute;
+    padding: 0;
+    width: 100%;
+    box-shadow: 1px 1px 3px #bdc5c8, -1px 1px 3px #bdc5c8;
+    background-color: white;
+    border-radius: 5px;
+    list-style: none;
+  }
+
+  .list-inside {
+    margin: 0;
+
+    a {
+      display: block;
+      padding: 10px 30px;
+
+      &:hover {
+        background-color: #efefef;
+        cursor: pointer;
+      }
+    }
+  }
+}
+
+.btn-login {
+  display: none;
+}
+
+.btn-login {
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  a {
+    display: none;
+  }
+
+  @media screen and (min-width: 435px) {
+    a {
+      display: inline;
+    }
+
+    svg {
+      margin-top: 4px;
+      padding-right: 10px;
+    }
+  }
+
+  @media screen and (min-width: 620px) {
+    display: inline;
+    padding: 10px;
+    background-color: v.$color-primary;
+    color: v.$color-text;
+    border-radius: 5px;
+    border: 3px solid #fff;
+
+    &:hover {
+      border: 3px solid #88b4ba;
+    }
+  }
+}
+
+.btn-sidebar {
+  border: none;
+  background: none;
+  cursor: pointer;
+  display: inline;
+  padding: 10px;
+  background-color: v.$color-primary;
+  color: v.$color-text;
+  border-radius: 5px;
+  border: 3px solid #fff;
+}
+
+// sidebar menu
+.aside-menu {
+  position: fixed;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 15px;
+  padding-top: 80px;
+  background-color: v.$color-primary;
+  z-index: 1001;
+  top: 0;
+  width: 100%;
+  left: -100%;
+  height: 100vh; 
+  overflow: hidden;
+  -webkit-transition: all 0.3s ease-in-out;
+  -o-transition: all 0.3s ease-in-out;
+  transition: all 0.3s ease-in-out;
+
+  &.is-open {
+    left: 0;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+  }
+
+  a {
+    color: white;
+  }
+
+  // profile sidebar
+  .profile {
+    img {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+    }
+
+    h3 {
+      text-align: center;
+      margin: 10px auto 5px;
+      color: white;
+    }
+  }
+
+  // sidebar menu items
+  .menu-items {
+    li a {
+      display: block;
+      padding: 13px 30px;
+      border-bottom: 1px solid #10558d;
+
+      &:hover {
+        color: #10558d;
+        background-color: white;
+        border-left: 3px solid v.$color-lake;
+
+        svg {
+          color: #10558d;
+        }
+
+      }
+    }
+
+    // icon
+    svg {
+      display: inline-block;
+      color: white;
+      width: 30px;
     }
   }
 }

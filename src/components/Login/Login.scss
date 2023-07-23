@@ -6,7 +6,7 @@
 
   &.is-active {
     visibility: visible;
-    z-index: 1;
+    z-index: 1003;
     position: fixed;
     top: 0;
     background-color: rgba(0, 0, 0, 0.5);
@@ -30,7 +30,7 @@
   }
 
   &.is-active {
-    z-index: 2;
+    z-index: 1004;
     position: fixed;
     top: 10%;
     left: 0;

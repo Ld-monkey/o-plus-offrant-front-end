@@ -1,19 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import axios from 'axios';
-import './Category.scss';
+import dayjs from 'dayjs';
+import axios from '../../api/axios';
+import './Articles.scss';
+import { ArticlesProps } from '../../@types/articles';
+import handleChangeTimerSort from './sortArticles';
 
-interface ArticlesProps {
-  id: number;
-  nom: string;
-  photo: string;
-  prix_de_depart: string;
-  date_de_fin: string;
-  montant: string;
-  categorie_id: number;
-  categorie: string;
-  categorie_nom: string;
-}
+const API = import.meta.env.VITE_AXIOS_SERVER;
 
 interface CategoriesProps {
   id: number;
@@ -21,12 +14,13 @@ interface CategoriesProps {
 }
 type CategoryChecked = string;
 
-function Category() {
+function Articles() {
   const [articles, setArticles] = useState<ArticlesProps[]>([]);
   const [categories, setCategories] = useState<CategoriesProps[]>([]);
   const [categoriesChecked, setCategoriesChecked] = useState<CategoryChecked[]>(
     []
   );
+
   const location = useLocation();
 
   const categoryClicked = location.state ? location.state.nameCategory : '';
@@ -41,7 +35,7 @@ function Category() {
 
   useEffect(() => {
     async function fetchArticles() {
-      const apiReq = `https://didierlam-server.eddi.cloud/api/articles`;
+      const apiReq = `/api/articles`;
 
       try {
         const response = await axios.get(apiReq);
@@ -96,36 +90,14 @@ function Category() {
     setArticles(sortedArticlesDecrease);
   };
 
-  /**
-   * Sort items based on end date time.
-   * @param items - All articles.
-   * @param action - 2 types of actions 'increase' or 'decrease'
-   */
-  const handleChangeTimerSort = (
-    items: ArticlesProps[],
-    action: 'increase' | 'decrease'
-  ): void => {
-    console.log(items);
-    const now = Number(new Date());
-    const sortedArticles = [...articles];
-    if (action === 'increase') {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(a.date_de_fin)) - now) -
-          Math.abs(Number(new Date(b.date_de_fin)) - now)
-      );
-    } else {
-      sortedArticles.sort(
-        (a, b) =>
-          Math.abs(Number(new Date(b.date_de_fin)) - now) -
-          Math.abs(Number(new Date(a.date_de_fin)) - now)
-      );
-    }
-    setArticles(sortedArticles);
-  };
-
+  const [page, setPage] = useState(1);
+  const resultsPerPage = 9;
+  const startIndex = (page - 1) * resultsPerPage;
+  const endIndex = startIndex + resultsPerPage;
+  const hasNextPage = endIndex < filteredArticles.length;
   //  const [sortvalue; Setsortvalue] = useState("");
   //   const sortOptions = ["montant"]
+
   return (
     <>
       <div id="wrapper">
@@ -146,97 +118,114 @@ function Category() {
             ))}
           </div>
           <div className="Sort">
-            <div>
+            <div className="sort-by-price">
               <span>Trier par :</span>
-              <label htmlFor="Croissant" className="categoryName">
+              <label htmlFor="Prix Croissant" className="categoryName">
                 <input
                   type="radio"
                   value="increase"
-                  name="TriPrice"
+                  name="Tri"
                   defaultChecked
                   onClick={() =>
                     setArticles(handleSortByPriceIncrease(articles))
                   }
                 />
-                <span>Croissant</span>
+                <span>Prix Croissant</span>
               </label>
-              <label htmlFor="Décroissant" className="categoryName">
+              <label htmlFor="Prix Décroissant" className="categoryName">
                 <input
                   type="radio"
                   value="decrease"
-                  name="TriPrice"
+                  name="Tri"
                   onClick={handleSortByPriceDecrease}
                 />
-                <span>Décroissant</span>
+                <span>Prix Décroissant</span>
               </label>
-            </div>
-            <div>
-              <label htmlFor="La plus courte" className="categoryName">
+              <label htmlFor="Durée la plus courte" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
-                  onChange={() => handleChangeTimerSort(articles, 'increase')}
+                  name="Tri"
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'increase'))
+                  }
                 />
-                <span>La plus courte</span>
+                <span>Durée la plus courte</span>
               </label>
-              <label htmlFor="La plus longue" className="categoryName">
+              <label htmlFor="Durée la plus longue" className="categoryName">
                 <input
                   type="radio"
-                  name="TriTimer"
-                  onChange={() => handleChangeTimerSort(articles, 'decrease')}
+                  name="Tri"
+                  onChange={() =>
+                    setArticles(handleChangeTimerSort(articles, 'decrease'))
+                  }
                 />
-                <span>La plus longue</span>
+                <span>Durée la plus longue</span>
               </label>
             </div>
           </div>
         </form>
       </div>
       <div id="wrapper" className="containerCardCat">
-        {filteredArticles.map((filteredArticle) => (
-          <Link
-            key={filteredArticle.id}
-            to={`/produit/${filteredArticle.id}`}
-            className="cardCat"
-          >
-            <h3 className="nameItem">{filteredArticle.nom}</h3>
-            <div className="imgContainer">
-              <img
-                className="pictureItem"
-                src={`https://didierlam-server.eddi.cloud/${filteredArticle.photo}`}
-                alt={filteredArticle.nom}
-              />
-            </div>
-            <p className="priceItem">
-              Prix initial : {filteredArticle.prix_de_depart}€
-            </p>
+        {filteredArticles.slice(startIndex, endIndex).map((filteredArticle) => {
+          const formattedDate = dayjs(filteredArticle.date_de_fin).format(
+            'DD-MM-YYYY [à] HH:mm'
+          );
+          return (
+            <Link
+              key={filteredArticle.id}
+              to={`/article/${filteredArticle.id}`}
+              className="cardCat"
+            >
+              <h3 className="nameItem">{filteredArticle.nom}</h3>
+              <div className="imgContainer">
+                <img
+                  className="pictureItem"
+                  src={`${API}${filteredArticle.photo}`}
+                  alt={filteredArticle.nom}
+                />
+              </div>
+              <p className="priceItem">
+                Prix initial : {filteredArticle.prix_de_depart}€
+              </p>
 
-            <div className="liveAuction">
-              <p className="timerAuction">
-                Temps restant : {filteredArticle.date_de_fin}
-              </p>
-              <p className="liveAuction__proceNow">
-                Prix enchère actuelle : {filteredArticle.montant} €
-                <button type="button" className="liveAuction-button">
-                  Surenchérir !
-                </button>
-              </p>
-            </div>
-          </Link>
-        ))}
+              <div className="liveAuction">
+                <p className="timerAuction">Date de fin : {formattedDate}</p>
+                <p className="liveAuction__proceNow">
+                  Prix enchère actuelle : {filteredArticle.montant} €
+                  <button type="button" className="liveAuction-button">
+                    Surenchérir !
+                  </button>
+                </p>
+              </div>
+            </Link>
+          );
+        })}
       </div>
 
       <div id="wrapper">
         <div className="button_container">
-          <button type="button" className="buttonPage">
-            Page précédente
-          </button>
-          <button type="button" className="buttonPage">
-            Page suivante
-          </button>
+          {page > 1 && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page - 1)}
+            >
+              Page précédente
+            </button>
+          )}
+          {hasNextPage && (
+            <button
+              type="button"
+              className="buttonPage"
+              onClick={() => setPage(page + 1)} // bloqué plus de serveur back mais ici peut etre mettre une condition au +1 page si filtreredArticles.length
+            >
+              Page suivante
+            </button>
+          )}
         </div>
       </div>
     </>
   );
 }
 
-export default Category;
+export default Articles;

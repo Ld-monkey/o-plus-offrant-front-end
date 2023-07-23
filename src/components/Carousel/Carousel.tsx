@@ -1,101 +1,81 @@
 import Carousel from 'react-multi-carousel';
-import { Link } from 'react-router-dom';
 import 'react-multi-carousel/lib/styles.css';
-import bike from '../../assets/images/bike.jpg';
-import banana from '../../assets/images/banane.jpg';
+import { ArticlesProps, IRandomItems } from '../../@types/articles';
+import Card from '../Cards/Card';
 import '../Cards/Cards.scss';
+import './Carousel.scss';
+import handleChangeTimerSort from '../Articles/sortArticles';
 
-function CarouselItem() {
-  const responsive = {
-    superLargeDesktop: {
-      // the naming can be any, depends on you.
-      breakpoint: { max: 4000, min: 3000 },
-      items: 6,
-    },
-    desktop: {
-      breakpoint: { max: 3000, min: 960 },
-      items: 4,
-    },
-    tablet: {
-      breakpoint: { max: 960, min: 577 },
-      items: 3,
-    },
-    mobile: {
-      breakpoint: { max: 576, min: 0 },
-      items: 2,
-    },
-  };
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 6,
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 960 },
+    items: 4,
+  },
+  tablet: {
+    breakpoint: { max: 960, min: 577 },
+    items: 3,
+  },
+  mobile: {
+    breakpoint: { max: 576, min: 381 },
+    items: 2,
+  },
+  verySmallScreen: {
+    breakpoint: { max: 380, min: 0 },
+    items: 1,
+  },
+};
+
+function CarouselItem({ articles }: { articles: ArticlesProps[] }) {
+  const currentArticles = handleChangeTimerSort(articles, 'increase');
+  const oldArticles = handleChangeTimerSort(articles, 'decrease');
+
+  const mostRecentItems = articles ? currentArticles.slice(0, 5) : undefined;
+  const olderItems = articles ? oldArticles.slice(0, 5) : undefined;
   return (
     <div id="wrapper">
-      <h3>Ventes courtes</h3>
-      <Carousel responsive={responsive}>
-        <div>
-          <div
-            className="cards-container first-card"
-            style={{ backgroundColor: '#FDF5EA' }}
-          >
-            <Link to="produit/1" className="card">
-              <div className="card-img">
-                <img src={bike} alt="bike" />
+      <h2 className="title-carousel">Ventes courtes</h2>
+      {articles && (
+        <Carousel responsive={responsive} containerClass="carousel-container">
+          {mostRecentItems &&
+            mostRecentItems.map((item) => (
+              <div key={item.id}>
+                <Card
+                  id={item.id}
+                  description=""
+                  photo={item.photo}
+                  nom={item.nom}
+                  montant={item.montant}
+                  date_de_fin={item.date_de_fin}
+                  label={undefined}
+                />
               </div>
-              <div className="card-legend">
-                <p>Vélo (en carbone)</p>
-                <div className="card-legend__data">
-                  <span className="card-legend__tokens">100 Tokens</span>
-                  <span className="card-legend__times">00:01:20</span>
-                </div>
+            ))}
+        </Carousel>
+      )}
+      <h2 className="title-carousel">Ventes longues</h2>
+      {articles && (
+        <Carousel responsive={responsive} containerClass="carousel-container">
+          {olderItems &&
+            olderItems.map((item) => (
+              <div key={item.id}>
+                <Card
+                  id={item.id}
+                  description=""
+                  photo={item.photo}
+                  nom={item.nom}
+                  montant={item.montant}
+                  date_de_fin={item.date_de_fin}
+                  label={undefined}
+                />
               </div>
-            </Link>
-          </div>
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-      </Carousel>
-
-      <h3>Ventes longues</h3>
-      <Carousel responsive={responsive} centerMode={true}>
-        <div>
-          <div
-            className="cards-container first-card"
-            style={{ backgroundColor: '#FDF5EA' }}
-          >
-            <Link to="produit/1" className="card">
-              <div className="card-img">
-                <img src={bike} alt="bike" />
-              </div>
-              <div className="card-legend">
-                <p>Vélo (en carbone)</p>
-                <div className="card-legend__data">
-                  <span className="card-legend__tokens">100 Tokens</span>
-                  <span className="card-legend__times">00:01:20</span>
-                </div>
-              </div>
-            </Link>
-          </div>
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-        <div>
-          <img src={banana} alt="banana" />
-        </div>
-        <div>
-          <img src={bike} alt="bike" />
-        </div>
-      </Carousel>
+            ))}
+        </Carousel>
+      )}
     </div>
   );
 }
