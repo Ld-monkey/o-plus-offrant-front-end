@@ -17,6 +17,8 @@
   background-color: v.$color-on-lake;
   box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.25);
   transition: background-color 0.3s;
+  padding: 5px;
+  overflow: hidden;
 
   &:hover {
     background-color: rgba(12, 126, 180, 0.1);
@@ -27,10 +29,16 @@
   height: 60%;
   position: relative;
   overflow: hidden;
-
   display: flex;
   justify-content: center;
   align-items: center;
+
+  img {
+    height: 100%;
+    width: 100%;
+    padding: 4px;
+    object-fit: cover;
+  }
 
   span {
     font-family: 'Open Sans';
@@ -42,10 +50,6 @@
     color: #ffff;
     padding: 4px;
     border-radius: 5px;
-  }
-
-  img {
-    height: auto;
   }
 }
 
@@ -60,6 +64,8 @@
   p {
     text-align: center;
     font-size: 1.5rem;
+    margin: 10px;
+    color: rgb(122, 119, 119);
     overflow-y: hidden;
     white-space: nowrap;
   }
