@@ -36,7 +36,9 @@ function App() {
     <div className="app">
       <AppHeader toggleModalLogin={checkOpenModal} />
       {alert && <Alerts message={message} type={alert} timeout={timeout} />}
-      <Outlet />
+      <main>
+        <Outlet />
+      </main>
       <Login toggleModalLogin={checkOpenModal} isOpenModal={isOpenModal} />
       <Footer toggleModalLogin={checkOpenModal} />
     </div>
