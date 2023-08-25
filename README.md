@@ -9,6 +9,10 @@
 Le projet 6 nommé **O + Offrant** est un site d'enchère destiné aux particuliers majeurs.
 Il permet de déposer un article de son choix et ou d'enchérir avec des euros afin de remporter un lot.
 
+## 🌐 Déploiement
+
+Le site est déployé sur railway à l'adresse suivante : [o-plus-offrant](https://o-plus-offrant-front-end-production.up.railway.app/)
+
 ## 📦 Installation
 
 ### Dépendances 

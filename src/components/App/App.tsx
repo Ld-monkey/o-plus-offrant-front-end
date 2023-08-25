@@ -6,6 +6,7 @@ import AppHeader from '../AppHeader/AppHeader';
 import Login from '../Login/Login';
 import Footer from '../Footer/Footer';
 import './App.scss';
+import Loader from '../Loader/Loader';
 
 export interface IsetIsOpenModal {
   isOpenModal: boolean | undefined;
